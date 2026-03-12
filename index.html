@@ -4,1098 +4,1518 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=390, initial-scale=1.0">
 <title>Akoma · Prototype</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body {
-    background: #E8E2DA;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .device {
-    width: 390px;
-    height: 844px;
-    background: #F6F1EB;
-    border-radius: 48px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.25), 0 0 0 10px #1C1C1C, inset 0 0 0 1px rgba(255,255,255,0.15);
-  }
-  .screen {
-    width: 100%; height: 100%;
-    position: absolute; top: 0; left: 0;
-    display: none; flex-direction: column;
-    overflow: hidden;
-  }
-  .screen.active { display: flex; }
-  .screen { transition: opacity 0.2s ease; }
-  .status-bar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 14px 24px 0; height: 44px; flex-shrink: 0;
-  }
-  .status-bar span { font-size: 15px; font-weight: 600; color: #1C3530; }
-  .status-icons { display: flex; gap: 6px; align-items: center; }
-  .nav-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 24px 4px; flex-shrink: 0;
-  }
-  .back-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: #E8E2DA; border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .nav-title { font-size: 17px; font-weight: 600; color: #1C3530; letter-spacing: -0.3px; }
-  .spacer { width: 40px; }
-  .section { flex: 1; overflow-y: auto; padding: 0 24px; }
-  .cta-area { padding: 16px 24px 32px; flex-shrink: 0; }
-  .btn-primary {
-    width: 100%; background: #C4623A; border: none;
-    border-radius: 16px; padding: 18px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px; font-weight: 700; color: #fff;
-    cursor: pointer; letter-spacing: -0.2px; transition: opacity 0.15s;
-  }
-  .btn-primary:active { opacity: 0.85; }
-  .btn-secondary {
-    width: 100%; background: transparent; border: 1.5px solid #D0C8BF;
-    border-radius: 16px; padding: 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 500; color: #1C3530;
-    cursor: pointer; margin-top: 12px; transition: background 0.15s;
-  }
-  .btn-secondary:active { background: #E8E2DA; }
-  .btn-outline {
-    width: 100%; background: transparent; border: 1.5px solid rgba(246,241,235,0.25);
-    border-radius: 16px; padding: 16px; font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 500; color: rgba(246,241,235,0.7);
-    cursor: pointer; transition: background 0.15s;
-  }
-  .btn-outline:active { background: rgba(246,241,235,0.07); }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  background: #E8E2DA;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+}
+.device {
+  width: 390px; height: 844px;
+  background: #F6F1EB;
+  border-radius: 48px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.25), 0 0 0 10px #1C1C1C, inset 0 0 0 1px rgba(255,255,255,0.15);
+}
+.screen {
+  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
+  display: none; flex-direction: column;
+  overflow: hidden;
+}
+.screen.active { display: flex; }
 
-  /* BOTTOM NAV (shared) */
-  .bottom-nav {
-    display: flex;
-    border-top: 1px solid rgba(28,53,48,0.08);
-    padding: 10px 0 20px;
-    flex-shrink: 0;
-    background: #F6F1EB;
-  }
-  .bottom-nav.dark {
-    background: rgba(28,53,48,0.95);
-    border-top: 1px solid rgba(246,241,235,0.08);
-  }
-  .bn-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; }
-  .bn-item span { font-size: 10px; color: rgba(28,53,48,0.4); font-weight: 500; }
-  .bn-item.active span { color: #C4623A; }
-  .bn-item.dark-tab span { color: rgba(246,241,235,0.4); }
-  .bn-item.dark-tab.active span { color: #C4623A; }
+/* ── STATUS BAR ── */
+.status-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px 0; height: 44px; flex-shrink: 0;
+}
+.status-bar span { font-size: 15px; font-weight: 600; color: #1C3530; }
+.status-icons { display: flex; gap: 6px; align-items: center; }
 
-  /* ====== SCREEN 1: HOME ====== */
-  #screen-home { background: #1C3530; }
-  .home-header {
-    padding: 8px 24px 20px;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-shrink: 0;
-  }
-  .home-greeting { display: flex; flex-direction: column; gap: 2px; }
-  .home-greeting .hello { font-size: 13px; color: rgba(246,241,235,0.5); }
-  .home-greeting .name { font-size: 20px; font-weight: 700; color: #F6F1EB; letter-spacing: -0.3px; }
-  .avatar { width: 40px; height: 40px; border-radius: 50%; background: #C4623A; display: flex; align-items: center; justify-content: center; }
-  .avatar span { font-size: 14px; font-weight: 700; color: #fff; }
-  .balance-card {
-    margin: 0 24px 16px;
-    background: rgba(246,241,235,0.08);
-    border-radius: 20px; padding: 24px;
-    border: 1px solid rgba(246,241,235,0.1); flex-shrink: 0;
-  }
-  .balance-label { font-size: 12px; color: rgba(246,241,235,0.45); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
-  .balance-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 48px; font-weight: 700; color: #F6F1EB; letter-spacing: -1.5px; line-height: 1; }
-  .balance-sub { font-size: 13px; color: rgba(246,241,235,0.4); margin-top: 4px; }
-  .quick-actions { display: flex; gap: 12px; padding: 0 24px 16px; flex-shrink: 0; }
-  .quick-action {
-    flex: 1; background: #C4623A; border: none; border-radius: 16px;
-    padding: 14px 10px; cursor: pointer;
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    transition: opacity 0.15s;
-  }
-  .quick-action:active { opacity: 0.85; }
-  .quick-action span { font-size: 12px; font-weight: 600; color: #fff; }
-  .quick-action.ghost { background: rgba(246,241,235,0.08); border: 1px solid rgba(246,241,235,0.12); }
-  .quick-action.ghost span { color: rgba(246,241,235,0.7); }
-  .recent-header { padding: 0 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .recent-header span { font-size: 12px; font-weight: 600; color: rgba(246,241,235,0.5); letter-spacing: 0.04em; text-transform: uppercase; }
-  .recent-header a { font-size: 13px; color: #C4623A; text-decoration: none; cursor: pointer; }
-  .recent-items { padding: 0 24px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; flex: 1; }
-  .recent-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 0; border-bottom: 1px solid rgba(246,241,235,0.08); cursor: pointer;
-  }
-  .ri-avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(246,241,235,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .ri-avatar span { font-size: 13px; font-weight: 700; color: #F6F1EB; }
-  .ri-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-  .ri-name { font-size: 14px; font-weight: 600; color: #F6F1EB; }
-  .ri-detail { font-size: 12px; color: rgba(246,241,235,0.4); }
-  .ri-amount { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-  .ri-amt { font-size: 15px; font-weight: 700; color: #F6F1EB; }
-  .ri-status { font-size: 11px; font-weight: 600; color: #4CAF50; background: rgba(76,175,80,0.15); padding: 2px 7px; border-radius: 20px; }
-  .ri-status.sched { color: #C4623A; background: rgba(196,98,58,0.15); }
+/* ── NAV HEADER ── */
+.nav-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px 4px; flex-shrink: 0;
+}
+.back-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #E8E2DA; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-title { font-size: 17px; font-weight: 600; color: #1C3530; letter-spacing: -0.3px; }
+.nav-spacer { width: 40px; }
 
-  /* ====== SCREEN 2: AMOUNT ====== */
-  #screen-amount { background: #F6F1EB; }
-  .amount-display {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; padding: 0 24px; gap: 8px;
-  }
-  .amount-label { font-size: 14px; color: #8A7E72; font-weight: 500; }
-  .amount-input { display: flex; align-items: baseline; gap: 8px; }
-  .amount-currency { font-family: 'DM Sans', sans-serif; font-size: 32px; font-weight: 600; color: #1C3530; }
-  .amount-number { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 88px; font-weight: 700; color: #1C3530; letter-spacing: -3px; line-height: 1; }
-  .amount-gets {
-    background: #fff; border-radius: 14px; padding: 14px 20px;
-    display: flex; justify-content: space-between; align-items: center;
-    width: 100%; margin-top: 8px;
-  }
-  .amount-gets span:first-child { font-size: 14px; color: #8A7E72; }
-  .amount-gets span:last-child { font-size: 16px; font-weight: 700; color: #1C3530; }
-  .fee-line { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 8px 4px; }
-  .fee-line span:first-child { font-size: 13px; color: #8A7E72; }
-  .fee-line .free { font-size: 13px; font-weight: 700; color: #1C3530; }
-  .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 16px 24px 8px; flex-shrink: 0; }
-  .key {
-    background: #fff; border: none; border-radius: 14px; height: 64px;
-    font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 500;
-    color: #1C3530; cursor: pointer; transition: background 0.1s;
-  }
-  .key:active { background: #E8E2DA; }
-  .key.del { font-size: 18px; }
-  .key.empty { background: transparent; pointer-events: none; }
-  .exchange-rate { text-align: center; font-size: 12px; color: #8A7E72; padding: 4px 24px 8px; flex-shrink: 0; }
-  .exchange-rate strong { color: #1C3530; }
-  .schedule-link { text-align: center; padding: 0 24px 4px; flex-shrink: 0; }
-  .schedule-link button {
-    background: none; border: none; font-family: 'DM Sans', sans-serif;
-    font-size: 13px; color: #C4623A; cursor: pointer; font-weight: 500;
-  }
+/* ── SCROLL BODY ── */
+.scroll-body {
+  flex: 1; overflow-y: auto; padding: 0 24px 24px;
+}
+.scroll-body::-webkit-scrollbar { display: none; }
 
-  /* ====== SCREEN 3: RECIPIENT ====== */
-  #screen-recipient { background: #F6F1EB; }
-  .recipient-list { padding: 16px 24px; display: flex; flex-direction: column; gap: 10px; }
-  .recipient-card {
-    background: #fff; border-radius: 16px; padding: 16px;
-    display: flex; align-items: center; gap: 12px; cursor: pointer;
-    border: 2px solid transparent; transition: border-color 0.15s, background 0.15s;
-  }
-  .recipient-card:active { background: #F6F1EB; }
-  .recipient-card.selected { border-color: #1C3530; background: #F6F1EB; }
-  .rc-avatar { width: 44px; height: 44px; border-radius: 50%; background: #1C3530; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .rc-avatar span { font-size: 16px; font-weight: 700; color: #F6F1EB; }
-  .rc-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-  .rc-name { font-size: 15px; font-weight: 600; color: #1C3530; }
-  .rc-detail { font-size: 12px; color: #8A7E72; display: flex; align-items: center; gap: 6px; }
-  .mtn-badge { font-size: 10px; font-weight: 700; color: #E6A817; background: #FFF8E7; padding: 2px 6px; border-radius: 10px; }
-  .mpesa-badge { font-size: 10px; font-weight: 700; color: #fff; background: #00A651; padding: 2px 6px; border-radius: 10px; }
-  .rc-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #D0C8BF; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-  .rc-check.checked { background: #1C3530; border-color: #1C3530; }
-  .add-new {
-    margin: 4px 24px 0; background: transparent; border: 1.5px dashed #D0C8BF;
-    border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 12px; cursor: pointer;
-  }
-  .add-new span { font-size: 14px; font-weight: 500; color: #8A7E72; }
-  .add-icon { width: 36px; height: 36px; border-radius: 50%; background: #F0EAE0; display: flex; align-items: center; justify-content: center; }
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  display: flex; justify-content: space-around; align-items: flex-end;
+  padding: 10px 0 28px;
+  background: #F6F1EB;
+  border-top: 1px solid rgba(28,53,48,0.08);
+  flex-shrink: 0;
+}
+.bnav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  cursor: pointer; padding: 0 12px; background: none; border: none;
+}
+.bnav-icon { font-size: 22px; }
+.bnav-label { font-size: 10px; font-weight: 500; color: #8B8680; letter-spacing: 0.3px; }
+.bnav-item.active .bnav-label { color: #C4623A; font-weight: 600; }
+.bnav-item.active .bnav-icon { filter: none; }
 
-  /* ====== SCREEN 4: REVIEW ====== */
-  #screen-review { background: #F6F1EB; }
-  .rate-lock-banner {
-    margin: 16px 24px 0; background: #1C3530; border-radius: 16px;
-    padding: 16px 20px; display: flex; align-items: center; gap: 14px; flex-shrink: 0;
-  }
-  .lock-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(196,98,58,0.2); border: 2px solid #C4623A; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .lock-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-  .lock-title { font-size: 15px; font-weight: 700; color: #fff; }
-  .lock-sub { font-size: 12px; color: rgba(246,241,235,0.55); }
-  .lock-timer { font-size: 24px; font-weight: 800; color: #C4623A; font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
-  .summary-card { margin: 14px 24px 0; background: #fff; border-radius: 20px; padding: 20px; flex-shrink: 0; }
-  .summary-top { display: flex; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #F0EAE0; }
-  .summary-side { display: flex; flex-direction: column; gap: 4px; }
-  .summary-side .s-label { font-size: 12px; color: #8A7E72; }
-  .summary-side .s-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 700; color: #1C3530; letter-spacing: -0.8px; }
-  .summary-rows { padding-top: 16px; display: flex; flex-direction: column; gap: 12px; }
-  .summary-row { display: flex; justify-content: space-between; align-items: center; }
-  .summary-row .sr-label { font-size: 14px; color: #8A7E72; }
-  .summary-row .sr-value { font-size: 14px; font-weight: 600; color: #1C3530; display: flex; align-items: center; gap: 6px; }
-  .locked-badge { font-size: 10px; font-weight: 700; color: #2E7D32; background: #E8F5E9; padding: 2px 7px; border-radius: 20px; }
-  .summary-total { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #F0EAE0; margin-top: 4px; }
-  .summary-total span:first-child { font-size: 15px; font-weight: 700; color: #1C3530; }
-  .summary-total span:last-child { font-size: 15px; font-weight: 800; color: #1C3530; }
-  .recipient-row {
-    margin: 14px 24px 0; background: #fff; border-radius: 16px;
-    padding: 14px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
-  }
-  .rr-avatar { width: 38px; height: 38px; border-radius: 50%; background: #1C3530; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .rr-avatar span { font-size: 12px; font-weight: 700; color: #F6F1EB; }
-  .rr-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-  .rr-name { font-size: 14px; font-weight: 600; color: #1C3530; }
-  .rr-detail { font-size: 12px; color: #8A7E72; }
-  .cfpb-notice { margin: 12px 24px 0; padding: 12px 16px; background: rgba(28,53,48,0.04); border-radius: 12px; border-left: 3px solid #1C3530; flex-shrink: 0; }
-  .cfpb-notice p { font-size: 11px; color: #8A7E72; line-height: 1.5; }
-  .cfpb-notice strong { color: #1C3530; }
+/* ── FLOW DOTS ── */
+.flow-bar {
+  display: flex; justify-content: center; gap: 6px;
+  padding: 8px 0 4px; flex-shrink: 0;
+}
+.fd {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #D0C9C1; transition: background 0.2s, width 0.2s;
+}
+.fd.active { background: #C4623A; width: 18px; border-radius: 3px; }
 
-  /* ====== SCREEN 5: SENDING ====== */
-  #screen-sending { background: #1C3530; }
-  .sending-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; padding: 0 40px; }
-  .sending-icon { width: 96px; height: 96px; border-radius: 50%; background: rgba(196,98,58,0.15); border: 3px solid #C4623A; display: flex; align-items: center; justify-content: center; animation: pulse 1.5s ease-in-out infinite; }
-  @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.85; } }
-  .sending-text { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .sending-text h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 40px; font-weight: 700; color: #F6F1EB; letter-spacing: -1px; text-align: center; }
-  .sending-text p { font-size: 15px; color: rgba(246,241,235,0.5); text-align: center; line-height: 1.5; }
-  .sending-detail { background: rgba(246,241,235,0.07); border-radius: 16px; padding: 20px 24px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
-  .sd-row { display: flex; justify-content: space-between; align-items: center; }
-  .sd-row span:first-child { font-size: 13px; color: rgba(246,241,235,0.45); }
-  .sd-row span:last-child { font-size: 14px; font-weight: 600; color: #F6F1EB; }
-  .progress-bar { height: 3px; background: rgba(246,241,235,0.1); border-radius: 2px; overflow: hidden; }
-  .progress-fill { height: 100%; background: #C4623A; border-radius: 2px; animation: progress 2.5s ease-out forwards; }
-  @keyframes progress { from { width: 0%; } to { width: 90%; } }
+/* ── BUTTONS ── */
+.btn-primary {
+  width: 100%; padding: 17px; border-radius: 16px;
+  background: #1C3530; color: #F6F1EB;
+  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+  border: none; cursor: pointer; letter-spacing: -0.2px;
+  transition: opacity 0.15s;
+}
+.btn-primary:active { opacity: 0.85; }
+.btn-ghost {
+  width: 100%; padding: 15px; border-radius: 16px;
+  background: transparent; color: #1C3530;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+  border: 2px solid rgba(28,53,48,0.2); cursor: pointer;
+}
 
-  /* ====== SCREEN 6: SUCCESS ====== */
-  #screen-success { background: #1C3530; }
-  .success-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 0 32px; }
-  .success-icon { width: 80px; height: 80px; border-radius: 50%; background: rgba(196,98,58,0.15); border: 2px solid #C4623A; display: flex; align-items: center; justify-content: center; }
-  .success-text { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .success-text .s-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 64px; font-weight: 700; color: #F6F1EB; letter-spacing: -2px; line-height: 1; }
-  .success-text h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 700; color: #C4623A; }
-  .success-text p { font-size: 14px; color: rgba(246,241,235,0.5); text-align: center; line-height: 1.5; }
-  .success-detail { background: rgba(246,241,235,0.07); border-radius: 16px; padding: 20px 24px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
-  .success-cta { padding: 0 24px 32px; display: flex; flex-direction: column; gap: 10px; }
+/* ── CARDS ── */
+.card {
+  background: #fff; border-radius: 20px;
+  padding: 20px; margin-bottom: 12px;
+  border: 1px solid rgba(28,53,48,0.06);
+}
 
-  /* ====== SCREEN 7: COMMUNITY ====== */
-  #screen-community { background: #F6F1EB; }
-  .community-hero { padding: 28px 24px 8px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
-  .community-hero h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 48px; font-weight: 700; color: #1C3530; letter-spacing: -1.5px; line-height: 1.05; }
-  .community-hero h1 span { color: #C4623A; }
-  .community-hero p { font-size: 14px; color: #8A7E72; margin-top: 8px; line-height: 1.5; }
-  .referral-card { margin: 20px 24px 0; background: #1C3530; border-radius: 20px; padding: 24px; flex-shrink: 0; }
-  .referral-label { font-size: 11px; color: rgba(246,241,235,0.45); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
-  .referral-code-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .referral-code { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; font-weight: 700; color: #F6F1EB; letter-spacing: 2px; }
-  .copy-btn { background: #C4623A; border: none; border-radius: 10px; padding: 8px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #fff; cursor: pointer; transition: opacity 0.15s; }
-  .copy-btn:active { opacity: 0.8; }
-  .referral-stats { display: flex; gap: 10px; }
-  .ref-stat { flex: 1; background: rgba(246,241,235,0.08); border-radius: 12px; padding: 14px 12px; display: flex; flex-direction: column; gap: 4px; }
-  .ref-stat .rs-val { font-size: 22px; font-weight: 700; color: #F6F1EB; }
-  .ref-stat .rs-val.accent { color: #C4623A; }
-  .ref-stat .rs-lbl { font-size: 11px; color: rgba(246,241,235,0.45); }
-  .referral-how { margin: 20px 24px 0; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
-  .how-step { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 16px; padding: 14px 16px; }
-  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #F0EAE0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #1C3530; flex-shrink: 0; }
-  .step-text { display: flex; flex-direction: column; gap: 2px; }
-  .step-text strong { font-size: 14px; font-weight: 600; color: #1C3530; }
-  .step-text span { font-size: 12px; color: #8A7E72; }
+/* ── FORM INPUTS ── */
+.form-label { font-size: 12px; font-weight: 600; color: #8B8680; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+.form-input {
+  width: 100%; padding: 14px 16px; border-radius: 12px;
+  background: #fff; border: 1.5px solid rgba(28,53,48,0.12);
+  font-family: 'DM Sans', sans-serif; font-size: 16px; color: #1C3530;
+  outline: none;
+}
+.form-input:focus { border-color: #C4623A; }
 
-  /* ====== SCREEN 8: SCHEDULED ====== */
-  #screen-scheduled { background: #F6F1EB; }
-  .sched-recipient { margin: 8px 24px 0; background: #fff; border-radius: 16px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-  .sched-amount { font-size: 16px; font-weight: 700; color: #1C3530; }
-  .sched-sub { font-size: 12px; color: #8A7E72; }
-  .sched-section { padding: 20px 24px 0; flex-shrink: 0; }
-  .sched-label { font-size: 11px; font-weight: 700; color: rgba(28,53,48,0.45); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
-  .freq-pills { display: flex; gap: 10px; }
-  .freq-pill {
-    flex: 1; padding: 12px 8px; border-radius: 14px; border: 2px solid #E8E2DA;
-    background: #fff; text-align: center; cursor: pointer; transition: all 0.15s;
-  }
-  .freq-pill.active { background: #1C3530; border-color: #1C3530; }
-  .freq-pill .fp-main { font-size: 14px; font-weight: 700; color: #1C3530; }
-  .freq-pill.active .fp-main { color: #F6F1EB; }
-  .freq-pill .fp-sub { font-size: 11px; color: #8A7E72; margin-top: 2px; }
-  .freq-pill.active .fp-sub { color: rgba(246,241,235,0.6); }
-  .date-tiles { display: flex; gap: 8px; flex-wrap: wrap; }
-  .date-tile {
-    width: 52px; height: 52px; border-radius: 14px; background: #fff;
-    border: 2px solid transparent; display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 600; color: #1C3530; cursor: pointer; transition: all 0.15s;
-  }
-  .date-tile.wide { width: auto; padding: 0 14px; }
-  .date-tile.active { background: #1C3530; color: #F6F1EB; }
-  .sched-helper { font-size: 13px; color: #8A7E72; margin-top: 10px; }
-  .sched-helper strong { color: #1C3530; font-weight: 600; }
-  .until-options { display: flex; gap: 10px; }
-  .until-opt {
-    flex: 1; padding: 14px 16px; border-radius: 14px; background: #fff;
-    border: 2px solid transparent; display: flex; align-items: center; gap: 10px;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .until-opt.active { border-color: #1C3530; }
-  .until-radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #D0C8BF; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-  .until-opt.active .until-radio { border-color: #1C3530; background: #1C3530; }
-  .until-opt.active .until-radio::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #fff; display: block; }
-  .until-opt span { font-size: 14px; font-weight: 600; color: #1C3530; }
+/* ── AVATARS ── */
+.avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 700; color: #F6F1EB; flex-shrink: 0;
+}
+.av-kwame { background: #1C3530; }
+.av-amara { background: #C4623A; }
+.av-fatou  { background: #7A6B5A; }
 
-  /* ====== SCREEN 9: HISTORY ====== */
-  #screen-history { background: #F6F1EB; }
-  .history-list { flex: 1; overflow-y: auto; padding: 0 24px; }
-  .history-month { font-size: 11px; font-weight: 700; color: rgba(28,53,48,0.4); letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 0 8px; }
-  .history-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 0; border-bottom: 1px solid rgba(28,53,48,0.07); cursor: pointer;
-  }
-  .h-avatar { width: 42px; height: 42px; border-radius: 50%; background: #1C3530; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .h-avatar span { font-size: 13px; font-weight: 700; color: #F6F1EB; }
-  .h-avatar.sched-av { background: rgba(196,98,58,0.15); border: 1.5px solid #C4623A; }
-  .h-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-  .h-name { font-size: 14px; font-weight: 600; color: #1C3530; }
-  .h-detail { font-size: 12px; color: #8A7E72; display: flex; align-items: center; gap: 5px; }
-  .h-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-  .h-amount { font-size: 15px; font-weight: 700; color: #1C3530; }
-  .h-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; }
-  .h-badge.delivered { color: #2E7D32; background: #E8F5E9; }
-  .h-badge.scheduled { color: #C4623A; background: rgba(196,98,58,0.12); }
-  .h-badge.pending { color: #8A7E72; background: rgba(28,53,48,0.08); }
-  .filter-tabs { display: flex; gap: 8px; padding: 12px 24px; flex-shrink: 0; overflow-x: auto; }
-  .filter-tab { padding: 7px 16px; border-radius: 20px; background: #E8E2DA; border: none; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: #8A7E72; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
-  .filter-tab.active { background: #1C3530; color: #F6F1EB; }
+/* ── NETWORK BADGES ── */
+.net-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+  letter-spacing: 0.4px;
+}
+.mtn-badge   { background: #FFF0C0; color: #A07000; }
+.mpesa-badge { background: #D4EDDA; color: #1A6B2F; }
+.orange-badge { background: #FFE5CC; color: #B84A00; }
 
-  /* ====== SCREEN 10: PROFILE ====== */
-  #screen-profile { background: #F6F1EB; }
-  .profile-header { padding: 20px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 12px; flex-shrink: 0; }
-  .profile-avatar { width: 72px; height: 72px; border-radius: 50%; background: #1C3530; display: flex; align-items: center; justify-content: center; }
-  .profile-avatar span { font-size: 24px; font-weight: 700; color: #F6F1EB; }
-  .profile-name { font-size: 20px; font-weight: 700; color: #1C3530; letter-spacing: -0.3px; }
-  .profile-email { font-size: 13px; color: #8A7E72; }
-  .profile-stats { display: flex; gap: 1px; background: #E8E2DA; border-radius: 16px; overflow: hidden; margin: 0 24px; flex-shrink: 0; }
-  .p-stat { flex: 1; background: #fff; padding: 14px 12px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .p-stat .pv { font-size: 20px; font-weight: 700; color: #1C3530; letter-spacing: -0.5px; }
-  .p-stat .pl { font-size: 11px; color: #8A7E72; text-align: center; }
-  .settings-list { flex: 1; overflow-y: auto; padding: 16px 24px; display: flex; flex-direction: column; gap: 8px; }
-  .settings-group { background: #fff; border-radius: 16px; overflow: hidden; }
-  .settings-row {
-    display: flex; align-items: center; gap: 14px;
-    padding: 16px; border-bottom: 1px solid rgba(28,53,48,0.06); cursor: pointer;
-    transition: background 0.1s;
-  }
-  .settings-row:active { background: #F6F1EB; }
-  .settings-row:last-child { border-bottom: none; }
-  .sr-icon { width: 36px; height: 36px; border-radius: 10px; background: #F0EAE0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .sr-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-  .sr-text strong { font-size: 14px; font-weight: 600; color: #1C3530; }
-  .sr-text span { font-size: 12px; color: #8A7E72; }
-  .sr-arrow { color: #D0C8BF; }
+/* ══════════════════════════════════════════
+   SCREEN 1 · HOME
+══════════════════════════════════════════ */
+#s-home .home-hero {
+  background: #1C3530; margin: 0 0 0; padding: 28px 24px 32px;
+  flex-shrink: 0;
+}
+#s-home .home-greeting {
+  font-family: 'Cormorant Garamond', serif; font-size: 14px;
+  color: rgba(246,241,235,0.6); letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+#s-home .home-balance-label {
+  font-size: 12px; color: rgba(246,241,235,0.5); letter-spacing: 0.8px;
+  text-transform: uppercase; margin-bottom: 8px; margin-top: 20px;
+}
+#s-home .home-balance {
+  font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600;
+  color: #F6F1EB; letter-spacing: -1px; line-height: 1;
+}
+#s-home .home-balance sup { font-size: 24px; vertical-align: super; margin-right: 2px; }
+#s-home .quick-actions {
+  display: flex; gap: 10px; padding: 20px 24px 0;
+  flex-shrink: 0;
+}
+#s-home .qa-btn {
+  flex: 1; padding: 14px 8px; border-radius: 14px;
+  background: #fff; border: 1px solid rgba(28,53,48,0.08);
+  cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+#s-home .qa-icon { font-size: 22px; }
+#s-home .qa-label { font-size: 12px; font-weight: 600; color: #1C3530; }
+#s-home .section-heading {
+  font-size: 13px; font-weight: 700; color: #8B8680;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  padding: 20px 24px 12px; flex-shrink: 0;
+}
+#s-home .recip-list { padding: 0 24px; flex: 1; overflow-y: auto; }
+#s-home .recip-list::-webkit-scrollbar { display: none; }
+#s-home .recip-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0; border-bottom: 1px solid rgba(28,53,48,0.06);
+  cursor: pointer;
+}
+#s-home .recip-info { flex: 1; }
+#s-home .recip-name { font-size: 15px; font-weight: 600; color: #1C3530; margin-bottom: 2px; }
+#s-home .recip-sub { font-size: 13px; color: #8B8680; }
+#s-home .recip-arrow { color: #C4623A; font-size: 18px; }
 
-  /* Restart button */
-  .restart { position: fixed; bottom: 20px; right: 20px; background: #1C3530; border: none; color: #F6F1EB; font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 8px 14px; border-radius: 20px; cursor: pointer; opacity: 0.6; z-index: 100; }
-  .restart:hover { opacity: 1; }
+/* ══════════════════════════════════════════
+   SCREEN 2 · AMOUNT
+══════════════════════════════════════════ */
+#s-amount .amt-header {
+  padding: 24px 24px 0; flex-shrink: 0;
+  display: flex; align-items: center; gap: 12px;
+}
+#s-amount .recip-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; border-radius: 24px; padding: 6px 14px 6px 8px;
+  border: 1px solid rgba(28,53,48,0.1);
+}
+#s-amount .recip-pill-init {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #F6F1EB;
+}
+#s-amount .recip-pill-name { font-size: 13px; font-weight: 600; color: #1C3530; }
+#s-amount .big-amount {
+  text-align: center; padding: 36px 24px 8px; flex-shrink: 0;
+}
+#s-amount .amt-currency { font-size: 20px; color: #8B8680; font-weight: 500; margin-bottom: 4px; }
+#s-amount .amt-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 700;
+  color: #1C3530; letter-spacing: -2px; line-height: 1;
+}
+#s-amount .gets-row {
+  display: flex; justify-content: center; align-items: center; gap: 6px;
+  padding: 0 24px 24px; flex-shrink: 0;
+}
+#s-amount .gets-lbl { font-size: 15px; color: #8B8680; font-weight: 500; }
+#s-amount .gets-val { font-size: 17px; font-weight: 700; color: #1C3530; }
+#s-amount .rate-note { font-size: 12px; color: #A09890; text-align: center; padding-bottom: 8px; flex-shrink: 0; }
+.keypad {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; flex-shrink: 0;
+  border-top: 1px solid rgba(28,53,48,0.06);
+}
+.key {
+  padding: 20px 0; text-align: center; cursor: pointer;
+  font-size: 24px; font-weight: 500; color: #1C3530;
+  background: #F6F1EB; border: none;
+  transition: background 0.1s;
+}
+.key:active { background: #E8E2DA; }
+.key.key-del { font-size: 20px; color: #8B8680; }
+.amt-footer { padding: 16px 24px 28px; flex-shrink: 0; }
 
-  /* Flow indicator */
-  .flow-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(28,53,48,0.9); border-radius: 20px; padding: 6px 16px; display: flex; gap: 6px; align-items: center; z-index: 100; }
-  .fb-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(246,241,235,0.2); }
-  .fb-dot.active { background: #C4623A; width: 16px; border-radius: 3px; }
-  .fb-dot.done { background: rgba(246,241,235,0.5); }
+/* ══════════════════════════════════════════
+   SCREEN 3 · RECIPIENT
+══════════════════════════════════════════ */
+#s-recipient .rec-list { padding: 8px 0 0; }
+#s-recipient .rec-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 24px; cursor: pointer;
+  border-bottom: 1px solid rgba(28,53,48,0.06);
+  transition: background 0.1s;
+}
+#s-recipient .rec-row:active { background: #EDE8E2; }
+#s-recipient .rec-info { flex: 1; }
+#s-recipient .rec-name { font-size: 16px; font-weight: 600; color: #1C3530; margin-bottom: 3px; }
+#s-recipient .rec-phone { font-size: 13px; color: #8B8680; margin-bottom: 4px; }
+#s-recipient .rec-row.selected { background: rgba(196,98,58,0.05); }
+#s-recipient .rec-check { color: #C4623A; font-size: 20px; opacity: 0; }
+#s-recipient .rec-row.selected .rec-check { opacity: 1; }
+
+/* ══════════════════════════════════════════
+   SCREEN 4 · REVIEW  (USD-primary, CFPB §1073)
+══════════════════════════════════════════ */
+#s-review .review-body { padding: 0 24px 28px; }
+
+.rv-hero {
+  background: #1C3530; border-radius: 24px;
+  padding: 28px 24px 24px; margin-bottom: 16px; text-align: center;
+}
+.rv-hero-label {
+  font-size: 11px; font-weight: 700; color: rgba(246,241,235,0.5);
+  letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 6px;
+}
+.rv-hero-usd {
+  font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700;
+  color: #F6F1EB; letter-spacing: -1px; line-height: 1;
+}
+.rv-hero-sub {
+  font-size: 14px; color: rgba(246,241,235,0.55); margin-top: 6px;
+}
+
+.rv-card {
+  background: #fff; border-radius: 20px;
+  border: 1px solid rgba(28,53,48,0.07);
+  overflow: hidden; margin-bottom: 12px;
+}
+.rv-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(28,53,48,0.06);
+}
+.rv-row:last-child { border-bottom: none; }
+.rv-row-label { font-size: 13px; color: #8B8680; font-weight: 500; }
+.rv-row-value { font-size: 14px; font-weight: 600; color: #1C3530; text-align: right; }
+.rv-row-value.accent { color: #C4623A; }
+.rv-row-value.large { font-size: 16px; }
+
+.rv-recip-card {
+  background: #fff; border-radius: 20px;
+  border: 1px solid rgba(28,53,48,0.07);
+  padding: 16px 18px; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.rv-recip-info { flex: 1; }
+.rv-recip-name { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 4px; }
+.rv-recip-net { font-size: 13px; color: #8B8680; display: flex; align-items: center; gap: 6px; }
+
+.rv-timer {
+  display: flex; align-items: center; gap: 8px;
+  background: #FFF7ED; border-radius: 12px; padding: 12px 16px;
+  border: 1px solid rgba(196,98,58,0.2); margin-bottom: 12px;
+}
+.rv-timer-icon { font-size: 18px; }
+.rv-timer-text { font-size: 13px; color: #8B8680; flex: 1; }
+.rv-timer-num { font-size: 15px; font-weight: 700; color: #C4623A; font-variant-numeric: tabular-nums; }
+
+.rv-cfpb {
+  background: rgba(28,53,48,0.04); border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 16px;
+}
+.rv-cfpb p {
+  font-size: 11px; line-height: 1.6; color: #7A6B5A;
+}
+.rv-cfpb strong { color: #1C3530; }
+
+/* ══════════════════════════════════════════
+   SCREEN 5 · SENDING
+══════════════════════════════════════════ */
+#s-sending {
+  background: #1C3530; align-items: center; justify-content: center;
+}
+#s-sending .snd-icon { font-size: 56px; margin-bottom: 24px; animation: pulse 1.5s ease-in-out infinite; }
+#s-sending .snd-h2 {
+  font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
+  color: #F6F1EB; text-align: center; margin-bottom: 10px; padding: 0 32px;
+}
+#s-sending .snd-p {
+  font-size: 14px; color: rgba(246,241,235,0.6); text-align: center;
+  padding: 0 40px; line-height: 1.6; margin-bottom: 32px;
+}
+.prog-bar {
+  width: 240px; height: 4px; background: rgba(246,241,235,0.15);
+  border-radius: 2px; overflow: hidden;
+}
+.prog-fill {
+  height: 100%; border-radius: 2px; background: #C4623A;
+  animation: prog 2.8s ease-in-out forwards;
+}
+@keyframes prog { from { width: 0; } to { width: 100%; } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+/* ══════════════════════════════════════════
+   SCREEN 6 · SUCCESS
+══════════════════════════════════════════ */
+#s-success {
+  background: #1C3530; align-items: center; justify-content: center;
+}
+#s-success .suc-icon { font-size: 64px; margin-bottom: 20px; }
+#s-success .suc-amt {
+  font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 700;
+  color: #F6F1EB; letter-spacing: -1px; margin-bottom: 6px;
+}
+#s-success .suc-p { font-size: 15px; color: rgba(246,241,235,0.65); text-align: center; padding: 0 32px; line-height: 1.6; margin-bottom: 40px; }
+#s-success .suc-details { width: 100%; padding: 0 24px; margin-bottom: 32px; }
+#s-success .suc-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(246,241,235,0.1);
+}
+#s-success .suc-row:last-child { border-bottom: none; }
+#s-success .suc-row span:first-child { font-size: 13px; color: rgba(246,241,235,0.5); }
+#s-success .suc-row span:last-child  { font-size: 13px; font-weight: 600; color: #F6F1EB; }
+#s-success .suc-btn-wrap { padding: 0 24px; width: 100%; }
+
+/* ══════════════════════════════════════════
+   SCREEN 7 · COMMUNITY
+══════════════════════════════════════════ */
+#s-community .comm-hero {
+  background: #1C3530; padding: 28px 24px 28px;
+  display: flex; align-items: center; gap: 16px; flex-shrink: 0;
+}
+#s-community .comm-logo { font-size: 36px; }
+#s-community .comm-hero-text {}
+#s-community .comm-hero-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600;
+  color: #F6F1EB; margin-bottom: 4px;
+}
+#s-community .comm-hero-sub { font-size: 13px; color: rgba(246,241,235,0.6); }
+
+.comm-card {
+  background: #fff; border-radius: 20px;
+  border: 1px solid rgba(28,53,48,0.07); padding: 20px;
+  margin-bottom: 12px;
+}
+.comm-card-title { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 6px; }
+.comm-card-body { font-size: 13px; color: #7A6B5A; line-height: 1.6; margin-bottom: 14px; }
+.comm-invite-row {
+  display: flex; align-items: center; gap: 12px;
+  background: #F6F1EB; border-radius: 12px; padding: 12px;
+}
+.comm-invite-code {
+  flex: 1; font-size: 17px; font-weight: 700; color: #1C3530;
+  letter-spacing: 2px; font-family: 'DM Sans', monospace;
+}
+.comm-copy-btn {
+  padding: 8px 16px; border-radius: 10px;
+  background: #1C3530; color: #F6F1EB;
+  font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+}
+.comm-stat-row {
+  display: flex; gap: 10px; margin-bottom: 12px;
+}
+.comm-stat {
+  flex: 1; background: #fff; border-radius: 16px;
+  border: 1px solid rgba(28,53,48,0.07);
+  padding: 16px 14px; text-align: center;
+}
+.comm-stat-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700;
+  color: #C4623A; margin-bottom: 2px;
+}
+.comm-stat-lbl { font-size: 11px; color: #8B8680; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.activity-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid rgba(28,53,48,0.06);
+}
+.activity-row:last-child { border-bottom: none; }
+.act-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #E8E2DA; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #1C3530; flex-shrink: 0;
+}
+.act-text { flex: 1; font-size: 13px; color: #7A6B5A; line-height: 1.4; }
+.act-time { font-size: 11px; color: #A09890; }
+
+/* ══════════════════════════════════════════
+   SCREEN 8 · SCHEDULED TRANSFERS
+══════════════════════════════════════════ */
+#s-scheduled .sched-list { padding: 8px 0 0; }
+.sched-card {
+  background: #fff; border-radius: 20px;
+  border: 1px solid rgba(28,53,48,0.07);
+  padding: 18px; margin: 0 24px 12px;
+}
+.sched-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.sched-card-info { flex: 1; }
+.sched-card-name { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 2px; }
+.sched-card-next { font-size: 12px; color: #8B8680; }
+.sched-card-amt { font-size: 16px; font-weight: 700; color: #C4623A; }
+.sched-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 12px; border-top: 1px solid rgba(28,53,48,0.06);
+}
+.sched-freq-pill {
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+  background: rgba(28,53,48,0.07); color: #1C3530; letter-spacing: 0.3px;
+}
+.sched-pause-btn {
+  font-size: 12px; font-weight: 600; color: #8B8680;
+  background: none; border: none; cursor: pointer;
+}
+
+.sched-form-section { padding: 0 24px 0; }
+.sched-field { margin-bottom: 16px; }
+
+.sched-toggle {
+  display: flex; background: #E8E2DA; border-radius: 12px; padding: 4px; margin-bottom: 16px;
+}
+.stog-opt {
+  flex: 1; padding: 10px; border-radius: 9px; text-align: center;
+  font-size: 14px; font-weight: 600; color: #8B8680;
+  cursor: pointer; background: none; border: none;
+}
+.stog-opt.active { background: #fff; color: #1C3530; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+#send-on-sec { margin-bottom: 16px; }
+.sched-days {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.sched-day {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: #8B8680;
+  background: #E8E2DA; border: none; cursor: pointer;
+}
+.sched-day.active { background: #1C3530; color: #F6F1EB; }
+
+/* ══════════════════════════════════════════
+   SCREEN 9 · TRANSACTION HISTORY
+══════════════════════════════════════════ */
+.tx-filter {
+  display: flex; gap: 8px; padding: 4px 24px 12px; flex-shrink: 0; overflow-x: auto;
+}
+.tx-filter::-webkit-scrollbar { display: none; }
+.tx-chip {
+  padding: 7px 14px; border-radius: 20px; white-space: nowrap;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  background: #E8E2DA; color: #8B8680; border: none;
+}
+.tx-chip.active { background: #1C3530; color: #F6F1EB; }
+
+.tx-month { font-size: 11px; font-weight: 700; color: #A09890; letter-spacing: 0.8px; text-transform: uppercase; padding: 12px 24px 6px; }
+.tx-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 24px; border-bottom: 1px solid rgba(28,53,48,0.05);
+  cursor: pointer;
+}
+.tx-row:active { background: #EDE8E2; }
+.tx-icon {
+  width: 44px; height: 44px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.tx-icon.sent { background: rgba(28,53,48,0.07); }
+.tx-icon.recv { background: rgba(196,98,58,0.1); }
+.tx-icon.sched { background: rgba(120,100,80,0.1); }
+.tx-info { flex: 1; }
+.tx-name { font-size: 15px; font-weight: 600; color: #1C3530; margin-bottom: 2px; }
+.tx-date { font-size: 12px; color: #8B8680; }
+.tx-right { text-align: right; }
+.tx-amt { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 2px; }
+.tx-recv { font-size: 12px; color: #8B8680; }
+.tx-recurring { font-size: 11px; font-weight: 600; color: #C4623A; margin-top: 2px; cursor: pointer; }
+
+/* ══════════════════════════════════════════
+   SCREEN 10 · PROFILE
+══════════════════════════════════════════ */
+#s-profile .prof-hero {
+  background: #1C3530; padding: 32px 24px 28px; text-align: center; flex-shrink: 0;
+}
+#s-profile .prof-avatar-wrap {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(246,241,235,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 700; color: #F6F1EB;
+  margin: 0 auto 12px;
+}
+#s-profile .prof-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600;
+  color: #F6F1EB; margin-bottom: 4px;
+}
+#s-profile .prof-email { font-size: 13px; color: rgba(246,241,235,0.55); }
+#s-profile .prof-verified {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(196,98,58,0.3); color: #F6C095;
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+  letter-spacing: 0.4px; margin-top: 10px;
+}
+
+.prof-section-title {
+  font-size: 11px; font-weight: 700; color: #A09890;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  padding: 20px 24px 8px; flex-shrink: 0;
+}
+.prof-menu-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 24px; border-bottom: 1px solid rgba(28,53,48,0.05);
+  cursor: pointer;
+}
+.prof-menu-icon {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.prof-menu-icon.green { background: rgba(28,53,48,0.08); }
+.prof-menu-icon.orange { background: rgba(196,98,58,0.1); }
+.prof-menu-icon.gray { background: rgba(139,134,128,0.12); }
+.prof-menu-label { flex: 1; font-size: 15px; font-weight: 500; color: #1C3530; }
+.prof-menu-arrow { color: #C4623A; font-size: 16px; }
+.prof-menu-badge {
+  font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+  background: #C4623A; color: #fff;
+}
+
+.prof-scroll { flex: 1; overflow-y: auto; }
+.prof-scroll::-webkit-scrollbar { display: none; }
 </style>
 </head>
 <body>
-
-<!-- Flow indicator (send flow only) -->
-<div class="flow-bar" id="flow-bar">
-  <div class="fb-dot active" id="fd-1"></div>
-  <div class="fb-dot" id="fd-2"></div>
-  <div class="fb-dot" id="fd-3"></div>
-  <div class="fb-dot" id="fd-4"></div>
-  <div class="fb-dot" id="fd-5"></div>
-</div>
-
 <div class="device">
 
-  <!-- ===== SCREEN 1: HOME ===== -->
-  <div class="screen active" id="screen-home">
-    <div class="status-bar" style="background:#1C3530;">
-      <span style="color:#F6F1EB;">9:41</span>
-      <div class="status-icons">
-        <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#F6F1EB"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#F6F1EB"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#F6F1EB"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#F6F1EB" opacity="0.3"/></svg>
-        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#F6F1EB" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#F6F1EB"/></svg>
-      </div>
-    </div>
-    <div class="home-header" style="background:#1C3530;">
-      <div class="home-greeting">
-        <span class="hello">Good morning,</span>
-        <span class="name">Kofi</span>
-      </div>
-      <div class="avatar"><span>KA</span></div>
-    </div>
-    <div class="balance-card">
-      <div class="balance-label">Wallet Balance</div>
-      <div class="balance-amount">$1,240</div>
-      <div class="balance-sub">Available to send</div>
-    </div>
-    <div class="quick-actions" style="background:#1C3530;">
-      <button class="quick-action" onclick="go('screen-amount')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Send</span>
-      </button>
-      <button class="quick-action ghost" onclick="openScheduled('screen-home')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="rgba(246,241,235,0.7)" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="rgba(246,241,235,0.7)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Schedule</span>
-      </button>
-      <button class="quick-action ghost" onclick="go('screen-history')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(246,241,235,0.7)" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="rgba(246,241,235,0.7)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>History</span>
-      </button>
-      <button class="quick-action ghost" onclick="go('screen-community')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="rgba(246,241,235,0.7)" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="rgba(246,241,235,0.7)" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="rgba(246,241,235,0.7)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Refer</span>
-      </button>
-    </div>
-    <div class="recent-header" style="background:#1C3530;">
-      <span>Recent Transfers</span>
-      <a onclick="go('screen-history')">See all</a>
-    </div>
-    <div class="recent-items" style="background:#1C3530;">
-      <div class="recent-item">
-        <div class="ri-avatar"><span>KM</span></div>
-        <div class="ri-info"><span class="ri-name">Kwame Mensah</span><span class="ri-detail">MTN MoMo · Ghana · 2 days ago</span></div>
-        <div class="ri-amount"><span class="ri-amt">$200</span><span class="ri-status">Delivered</span></div>
-      </div>
-      <div class="recent-item">
-        <div class="ri-avatar"><span>AC</span></div>
-        <div class="ri-info"><span class="ri-name">Amara Conteh</span><span class="ri-detail">M-Pesa · Kenya · 1 week ago</span></div>
-        <div class="ri-amount"><span class="ri-amt">$150</span><span class="ri-status">Delivered</span></div>
-      </div>
-      <div class="recent-item">
-        <div class="ri-avatar"><span>KM</span></div>
-        <div class="ri-info"><span class="ri-name">Kwame Mensah</span><span class="ri-detail">MTN MoMo · Recurring · Monthly</span></div>
-        <div class="ri-amount"><span class="ri-amt">$200</span><span class="ri-status sched">Scheduled</span></div>
-      </div>
-    </div>
-    <div class="bottom-nav dark">
-      <div class="bn-item dark-tab active">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span style="color:#C4623A;">Home</span>
-      </div>
-      <div class="bn-item dark-tab" onclick="go('screen-amount')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Send</span>
-      </div>
-      <div class="bn-item dark-tab" onclick="go('screen-history')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>History</span>
-      </div>
-      <div class="bn-item dark-tab" onclick="go('screen-profile')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Profile</span>
-      </div>
+<!-- ══════════════════════════════════════════
+     SCREEN 1 · HOME
+══════════════════════════════════════════ -->
+<div class="screen active" id="s-home">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="16" height="12" viewBox="0 0 24 12" fill="#1C3530"><path d="M1 3.5C3.6 1.3 7.1 0 11 0s7.4 1.3 10 3.5" stroke="#1C3530" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M4 7c1.8-1.7 4.3-2.8 7-2.8s5.2 1.1 7 2.8" stroke="#1C3530" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="11" cy="11" r="1.5" fill="#1C3530"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
     </div>
   </div>
 
-  <!-- ===== SCREEN 2: AMOUNT ===== -->
-  <div class="screen" id="screen-amount">
-    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
-    <div class="nav-header">
-      <button class="back-btn" onclick="go('screen-home')"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-      <span class="nav-title">Send Money</span>
-      <div class="spacer"></div>
-    </div>
-    <div class="amount-display">
-      <span class="amount-label">You send</span>
-      <div class="amount-input">
-        <span class="amount-currency">$</span>
-        <span class="amount-number" id="amount-display">200</span>
+  <div class="home-hero">
+    <div class="home-greeting">Good morning, Kofi ✦</div>
+    <div class="home-balance-label">Available Balance</div>
+    <div class="home-balance"><sup>$</sup>1,240<span style="font-size:28px">.00</span></div>
+  </div>
+
+  <div class="quick-actions">
+    <button class="qa-btn" onclick="go('s-amount')">
+      <span class="qa-icon">↑</span>
+      <span class="qa-label">Send</span>
+    </button>
+    <button class="qa-btn" onclick="openScheduled('s-home')">
+      <span class="qa-icon">🗓</span>
+      <span class="qa-label">Schedule</span>
+    </button>
+    <button class="qa-btn" onclick="go('s-history')">
+      <span class="qa-icon">↓</span>
+      <span class="qa-label">History</span>
+    </button>
+  </div>
+
+  <div class="section-heading">Recent Recipients</div>
+
+  <div class="recip-list">
+    <div class="recip-row" onclick="pickRec('kwame'); go('s-amount')">
+      <div class="avatar av-kwame">KM</div>
+      <div class="recip-info">
+        <div class="recip-name">Kwame Mensah</div>
+        <div class="recip-sub">MTN MoMo · Ghana</div>
       </div>
-      <div class="fee-line">
-        <span>Transfer fee</span>
-        <span class="free">$0.00 · Free</span>
+      <span class="recip-arrow">›</span>
+    </div>
+    <div class="recip-row" onclick="pickRec('amara'); go('s-amount')">
+      <div class="avatar av-amara">AC</div>
+      <div class="recip-info">
+        <div class="recip-name">Amara Conteh</div>
+        <div class="recip-sub">M-Pesa · Kenya</div>
       </div>
-      <div class="amount-gets">
-        <span id="recipient-label">Kwame gets</span>
-        <span id="recipient-gets">GHS 3,200</span>
+      <span class="recip-arrow">›</span>
+    </div>
+    <div class="recip-row" onclick="pickRec('fatou'); go('s-amount')">
+      <div class="avatar av-fatou">FD</div>
+      <div class="recip-info">
+        <div class="recip-name">Fatou Diallo</div>
+        <div class="recip-sub">Orange Money · Senegal</div>
       </div>
-    </div>
-    <div class="exchange-rate">1 USD = 16.00 GHS · <strong>Rate locked for 30 min</strong></div>
-    <div class="schedule-link">
-      <button onclick="openScheduled('screen-amount')">Set up a recurring transfer instead</button>
-    </div>
-    <div class="numpad">
-      <button class="key" onclick="numPress('1')">1</button>
-      <button class="key" onclick="numPress('2')">2</button>
-      <button class="key" onclick="numPress('3')">3</button>
-      <button class="key" onclick="numPress('4')">4</button>
-      <button class="key" onclick="numPress('5')">5</button>
-      <button class="key" onclick="numPress('6')">6</button>
-      <button class="key" onclick="numPress('7')">7</button>
-      <button class="key" onclick="numPress('8')">8</button>
-      <button class="key" onclick="numPress('9')">9</button>
-      <button class="key empty"></button>
-      <button class="key" onclick="numPress('0')">0</button>
-      <button class="key del" onclick="numPress('del')">&#9003;</button>
-    </div>
-    <div class="cta-area">
-      <button class="btn-primary" onclick="go('screen-recipient')">Continue</button>
+      <span class="recip-arrow">›</span>
     </div>
   </div>
 
-  <!-- ===== SCREEN 3: RECIPIENT ===== -->
-  <div class="screen" id="screen-recipient">
-    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
-    <div class="nav-header">
-      <button class="back-btn" onclick="go('screen-amount')"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-      <span class="nav-title">Select Recipient</span>
-      <div class="spacer"></div>
-    </div>
-    <div class="recipient-list">
-      <div class="recipient-card selected" id="rc-kwame" onclick="selectRecipient('kwame')">
-        <div class="rc-avatar"><span>KM</span></div>
-        <div class="rc-info">
-          <span class="rc-name">Kwame Mensah</span>
-          <div class="rc-detail"><span class="mtn-badge">MTN</span> MoMo · +233 24 123 4567 · Ghana</div>
-        </div>
-        <div class="rc-check checked" id="check-kwame"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F6F1EB" stroke-width="2" stroke-linecap="round"/></svg></div>
-      </div>
-      <div class="recipient-card" id="rc-amara" onclick="selectRecipient('amara')">
-        <div class="rc-avatar"><span>AC</span></div>
-        <div class="rc-info">
-          <span class="rc-name">Amara Conteh</span>
-          <div class="rc-detail"><span class="mpesa-badge">M-Pesa</span> +254 712 345 678 · Kenya</div>
-        </div>
-        <div class="rc-check" id="check-amara"></div>
-      </div>
-      <div class="recipient-card" id="rc-fatou" onclick="selectRecipient('fatou')">
-        <div class="rc-avatar"><span>FD</span></div>
-        <div class="rc-info">
-          <span class="rc-name">Fatou Diallo</span>
-          <div class="rc-detail"><span style="font-size:10px;font-weight:700;color:#fff;background:#FF6600;padding:2px 6px;border-radius:10px;">Orange</span> Orange Money · Senegal</div>
-        </div>
-        <div class="rc-check" id="check-fatou"></div>
-      </div>
-    </div>
-    <div class="add-new">
-      <div class="add-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="#8A7E72" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-      <span>Add new recipient</span>
-    </div>
-    <div style="flex:1;"></div>
-    <div class="cta-area">
-      <button class="btn-primary" onclick="go('screen-review')">Continue to review</button>
-    </div>
+  <div class="bottom-nav">
+    <button class="bnav-item active" onclick="go('s-home')">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-label">Home</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-history')">
+      <span class="bnav-icon">🕐</span>
+      <span class="bnav-label">History</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-community')">
+      <span class="bnav-icon">🤝</span>
+      <span class="bnav-label">Community</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-profile')">
+      <span class="bnav-icon">👤</span>
+      <span class="bnav-label">Profile</span>
+    </button>
   </div>
-
-  <!-- ===== SCREEN 4: REVIEW ===== -->
-  <div class="screen" id="screen-review">
-    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
-    <div class="nav-header">
-      <button class="back-btn" onclick="go('screen-recipient')"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-      <span class="nav-title">Review Transfer</span>
-      <div class="spacer"></div>
-    </div>
-    <div class="rate-lock-banner">
-      <div class="lock-icon"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="4" y="10" width="14" height="10" rx="2.5" stroke="#C4623A" stroke-width="1.8"/><path d="M7 10V7a4 4 0 018 0v3" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-      <div class="lock-info">
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <span class="lock-title">Rate locked</span>
-          <span class="lock-timer" id="timer">28:43</span>
-        </div>
-        <span class="lock-sub">Confirm now to guarantee this rate</span>
-      </div>
-    </div>
-    <div class="summary-card">
-      <div class="summary-top">
-        <div class="summary-side"><span class="s-label">You send</span><span class="s-amount">$200.00</span></div>
-        <div class="summary-side" style="align-items:flex-end;"><span class="s-label">They receive</span><span class="s-amount">GHS 3,200</span></div>
-      </div>
-      <div class="summary-rows">
-        <div class="summary-row"><span class="sr-label">Exchange rate</span><span class="sr-value"><span class="locked-badge">LOCKED</span> 1 USD = 16.00 GHS</span></div>
-        <div class="summary-row"><span class="sr-label">Transfer fee</span><span class="sr-value">$0.00</span></div>
-        <div class="summary-row"><span class="sr-label">Delivery</span><span class="sr-value">Within minutes</span></div>
-      </div>
-      <div class="summary-total"><span>Total you pay</span><span>$200.00</span></div>
-    </div>
-    <div class="recipient-row">
-      <div class="rr-avatar"><span>KM</span></div>
-      <div class="rr-info"><span class="rr-name">Kwame Mensah</span><span class="rr-detail">MTN MoMo · +233 24 123 4567</span></div>
-      <span class="mtn-badge">MTN</span>
-    </div>
-    <div class="cfpb-notice">
-      <p><strong>CFPB §1073:</strong> $200.00 USD · GHS 3,200 · $0.00 fee · Rate locked 30 min. Cancel within 30 min of payment. Error resolution: 180 days.</p>
-    </div>
-    <div style="flex:1;min-height:8px;"></div>
-    <div class="cta-area">
-      <button class="btn-primary" onclick="go('screen-sending')">Confirm transfer</button>
-      <button class="btn-secondary" onclick="go('screen-recipient')">Change recipient</button>
-    </div>
-  </div>
-
-  <!-- ===== SCREEN 5: SENDING ===== -->
-  <div class="screen" id="screen-sending">
-    <div class="status-bar" style="background:#1C3530;"><span style="color:#F6F1EB;">9:41</span></div>
-    <div class="sending-body">
-      <div class="sending-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#C4623A" stroke-width="2" stroke-linecap="round"/></svg></div>
-      <div class="sending-text">
-        <h2>Sending $200<br/>to Kwame…</h2>
-        <p>Processing your transfer via<br/>MTN Mobile Money</p>
-      </div>
-      <div class="sending-detail">
-        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-        <div class="sd-row"><span>Status</span><span>Processing payment…</span></div>
-        <div class="sd-row"><span>Estimated time</span><span>Under 2 minutes</span></div>
-        <div class="sd-row"><span>Reference</span><span>AK-2025-7821</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== SCREEN 6: SUCCESS ===== -->
-  <div class="screen" id="screen-success">
-    <div class="status-bar" style="background:#1C3530;"><span style="color:#F6F1EB;">9:41</span></div>
-    <div class="success-body">
-      <div class="success-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-9" stroke="#C4623A" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-      <div class="success-text">
-        <span class="s-amount">$200</span>
-        <h2>Delivered.</h2>
-        <p>Kwame Mensah received<br/>GHS 3,200 via MTN MoMo</p>
-      </div>
-      <div class="success-detail">
-        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Amount sent</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">$200.00</span></div>
-        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Amount received</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">GHS 3,200</span></div>
-        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Transfer fee</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">$0.00</span></div>
-        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Delivered in</span><span style="font-size:14px;font-weight:600;color:#C4623A;">1 min 42 sec</span></div>
-        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Reference</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">AK-2025-7821</span></div>
-      </div>
-    </div>
-    <div class="success-cta">
-      <button class="btn-primary" onclick="go('screen-amount')">Send again</button>
-      <button class="btn-outline" onclick="go('screen-community')" style="border-color:rgba(196,98,58,0.4);color:#C4623A;">Refer a friend · earn $10</button>
-      <button class="btn-outline" onclick="go('screen-home')">Back to home</button>
-    </div>
-  </div>
-
-  <!-- ===== SCREEN 7: COMMUNITY ===== -->
-  <div class="screen" id="screen-community">
-    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
-    <div class="community-hero">
-      <h1>Send together.<br/><span>Earn together.</span></h1>
-      <p>Refer a friend — you both get $10 to send home.</p>
-    </div>
-    <div class="referral-card">
-      <div class="referral-label">Your referral code</div>
-      <div class="referral-code-row">
-        <span class="referral-code">AKOMA-KA3</span>
-        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-      </div>
-      <div class="referral-stats">
-        <div class="ref-stat"><span class="rs-val">3</span><span class="rs-lbl">Friends invited</span></div>
-        <div class="ref-stat"><span class="rs-val accent">$30</span><span class="rs-lbl">Earned</span></div>
-        <div class="ref-stat"><span class="rs-val">2</span><span class="rs-lbl">Pending</span></div>
-      </div>
-    </div>
-    <div class="referral-how">
-      <div class="how-step">
-        <div class="step-num">1</div>
-        <div class="step-text"><strong>Share your code</strong><span>Send it to friends &amp; family</span></div>
-      </div>
-      <div class="how-step">
-        <div class="step-num">2</div>
-        <div class="step-text"><strong>They sign up &amp; send</strong><span>Friend completes their first transfer</span></div>
-      </div>
-      <div class="how-step">
-        <div class="step-num">3</div>
-        <div class="step-text"><strong>You both get $10</strong><span>Added to your wallet instantly</span></div>
-      </div>
-    </div>
-    <div style="flex:1;"></div>
-    <div class="cta-area" style="padding-bottom:16px;">
-      <button class="btn-primary" onclick="shareCode()">Share your code</button>
-    </div>
-    <div class="bottom-nav">
-      <div class="bn-item" onclick="go('screen-home')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Home</span>
-      </div>
-      <div class="bn-item" onclick="go('screen-amount')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Send</span>
-      </div>
-      <div class="bn-item" onclick="go('screen-history')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(28,53,48,0.3)" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>History</span>
-      </div>
-      <div class="bn-item" onclick="go('screen-profile')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgba(28,53,48,0.3)" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Profile</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== SCREEN 8: SCHEDULED ===== -->
-  <div class="screen" id="screen-scheduled">
-    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
-    <div class="nav-header">
-      <button class="back-btn" onclick="goSchedBack()"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-      <span class="nav-title">Scheduled Transfer</span>
-      <div class="spacer"></div>
-    </div>
-    <div class="sched-recipient">
-      <div class="rc-avatar" style="width:38px;height:38px;"><span style="font-size:13px;">KM</span></div>
-      <div style="flex:1;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:14px;font-weight:600;color:#1C3530;">Kwame Mensah</span>
-          <span class="sched-amount">$200</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
-          <span class="mtn-badge">MTN</span>
-          <span class="sched-sub">MoMo · GH · ≈ GHS 3,200</span>
-        </div>
-      </div>
-    </div>
-    <div class="sched-section">
-      <div class="sched-label">Frequency</div>
-      <div class="freq-pills">
-        <div class="freq-pill active" id="freq-weekly" onclick="setFreq('weekly')">
-          <div class="fp-main">Weekly</div><div class="fp-sub">Every 7 days</div>
-        </div>
-        <div class="freq-pill" id="freq-monthly" onclick="setFreq('monthly')">
-          <div class="fp-main">Monthly</div><div class="fp-sub">Once a month</div>
-        </div>
-        <div class="freq-pill" id="freq-custom" onclick="setFreq('custom')">
-          <div class="fp-main">Custom</div><div class="fp-sub">You choose</div>
-        </div>
-      </div>
-    </div>
-    <div class="sched-section" id="send-on-section" style="display:none;">
-      <div class="sched-label">Send on</div>
-      <div class="date-tiles">
-        <div class="date-tile active" id="dt-1" onclick="setDate('1')">1</div>
-        <div class="date-tile" id="dt-7" onclick="setDate('7')">7</div>
-        <div class="date-tile" id="dt-14" onclick="setDate('14')">14</div>
-        <div class="date-tile" id="dt-21" onclick="setDate('21')">21</div>
-        <div class="date-tile" id="dt-28" onclick="setDate('28')">28</div>
-        <div class="date-tile wide" id="dt-last" onclick="setDate('last')">Last day</div>
-      </div>
-      <div class="sched-helper" id="date-helper">Sends on the <strong>1st of every month</strong> — next send Mar 1</div>
-    </div>
-    <div class="sched-section">
-      <div class="sched-label">Until</div>
-      <div class="until-options">
-        <div class="until-opt active" id="until-forever" onclick="setUntil('forever')">
-          <div class="until-radio"></div><span>Forever</span>
-        </div>
-        <div class="until-opt" id="until-enddate" onclick="setUntil('enddate')">
-          <div class="until-radio"></div><span>Set end date</span>
-        </div>
-      </div>
-    </div>
-    <div style="flex:1;"></div>
-    <div class="cta-area">
-      <button class="btn-primary" onclick="go('screen-history')" style="display:flex;align-items:center;justify-content:center;gap:10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-        Set up recurring transfer
-      </button>
-      <p style="text-align:center;font-size:12px;color:#8A7E72;margin-top:10px;">You can pause or cancel any time from History</p>
-    </div>
-  </div>
-
-  <!-- ===== SCREEN 9: HISTORY ===== -->
-  <div class="screen" id="screen-history">
-    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
-    <div class="nav-header">
-      <button class="back-btn" onclick="go('screen-home')"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-      <span class="nav-title">History</span>
-      <div class="spacer"></div>
-    </div>
-    <div class="filter-tabs">
-      <button class="filter-tab active">All</button>
-      <button class="filter-tab">Sent</button>
-      <button class="filter-tab">Scheduled</button>
-      <button class="filter-tab">Pending</button>
-    </div>
-    <div class="history-list">
-      <div class="history-month">March 2025</div>
-      <div class="history-item">
-        <div class="h-avatar"><span>KM</span></div>
-        <div class="h-info">
-          <span class="h-name">Kwame Mensah</span>
-          <div class="h-detail"><span class="mtn-badge">MTN</span> MoMo · Ghana · Mar 10</div>
-        </div>
-        <div class="h-right"><span class="h-amount">$200</span><span class="h-badge delivered">Delivered</span></div>
-      </div>
-      <div class="history-item" onclick="openScheduled('screen-home')">
-        <div class="h-avatar sched-av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="#C4623A" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <div class="h-info">
-          <span class="h-name">Kwame Mensah · Recurring</span>
-          <div class="h-detail">Monthly · 1st · MTN MoMo · Ghana</div>
-        </div>
-        <div class="h-right"><span class="h-amount">$200</span><span class="h-badge scheduled">Mar 1</span></div>
-      </div>
-      <div class="history-month">February 2025</div>
-      <div class="history-item">
-        <div class="h-avatar"><span>AC</span></div>
-        <div class="h-info">
-          <span class="h-name">Amara Conteh</span>
-          <div class="h-detail"><span class="mpesa-badge">M-Pesa</span> Kenya · Feb 22</div>
-        </div>
-        <div class="h-right"><span class="h-amount">$150</span><span class="h-badge delivered">Delivered</span></div>
-      </div>
-      <div class="history-item">
-        <div class="h-avatar"><span>KM</span></div>
-        <div class="h-info">
-          <span class="h-name">Kwame Mensah</span>
-          <div class="h-detail"><span class="mtn-badge">MTN</span> MoMo · Ghana · Feb 1</div>
-        </div>
-        <div class="h-right"><span class="h-amount">$200</span><span class="h-badge delivered">Delivered</span></div>
-      </div>
-      <div class="history-item">
-        <div class="h-avatar"><span>FD</span></div>
-        <div class="h-info">
-          <span class="h-name">Fatou Diallo</span>
-          <div class="h-detail"><span style="font-size:10px;font-weight:700;color:#fff;background:#FF6600;padding:2px 6px;border-radius:10px;">Orange</span> Senegal · Feb 14</div>
-        </div>
-        <div class="h-right"><span class="h-amount">$100</span><span class="h-badge delivered">Delivered</span></div>
-      </div>
-      <div class="history-month">January 2025</div>
-      <div class="history-item">
-        <div class="h-avatar"><span>KM</span></div>
-        <div class="h-info">
-          <span class="h-name">Kwame Mensah</span>
-          <div class="h-detail"><span class="mtn-badge">MTN</span> MoMo · Ghana · Jan 1</div>
-        </div>
-        <div class="h-right"><span class="h-amount">$200</span><span class="h-badge delivered">Delivered</span></div>
-      </div>
-    </div>
-    <div class="bottom-nav">
-      <div class="bn-item" onclick="go('screen-home')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Home</span>
-      </div>
-      <div class="bn-item" onclick="go('screen-amount')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Send</span>
-      </div>
-      <div class="bn-item active">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#C4623A" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span style="color:#C4623A;">History</span>
-      </div>
-      <div class="bn-item" onclick="go('screen-profile')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgba(28,53,48,0.3)" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Profile</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== SCREEN 10: PROFILE ===== -->
-  <div class="screen" id="screen-profile">
-    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
-    <div class="profile-header">
-      <div class="profile-avatar"><span>KA</span></div>
-      <span class="profile-name">Kofi Asante</span>
-      <span class="profile-email">kofi@email.com · +1 917 555 0184</span>
-    </div>
-    <div class="profile-stats">
-      <div class="p-stat"><span class="pv">$1,240</span><span class="pl">Total sent</span></div>
-      <div class="p-stat"><span class="pv">12</span><span class="pl">Transfers</span></div>
-      <div class="p-stat"><span class="pv" style="color:#C4623A;">$30</span><span class="pl">Referral earned</span></div>
-    </div>
-    <div class="settings-list">
-      <div class="settings-group">
-        <div class="settings-row">
-          <div class="sr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22c1.1 0 2-.9 2-2H10c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5S10.5 3.17 10.5 4v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="#8A7E72"/></svg></div>
-          <div class="sr-text"><strong>Notifications</strong><span>Transfer alerts, promotions</span></div>
-          <span class="sr-arrow">›</span>
-        </div>
-        <div class="settings-row">
-          <div class="sr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#8A7E72" stroke-width="1.8"/><path d="M8 11V7a4 4 0 018 0v4" stroke="#8A7E72" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="sr-text"><strong>Security</strong><span>Biometrics, PIN, 2FA</span></div>
-          <span class="sr-arrow">›</span>
-        </div>
-        <div class="settings-row">
-          <div class="sr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="#8A7E72" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="#8A7E72" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="sr-text"><strong>Linked accounts</strong><span>Bank accounts, debit cards</span></div>
-          <span class="sr-arrow">›</span>
-        </div>
-      </div>
-      <div class="settings-group">
-        <div class="settings-row" onclick="go('screen-community')">
-          <div class="sr-icon" style="background:rgba(196,98,58,0.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#C4623A" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="sr-text"><strong>Refer &amp; earn</strong><span>$30 earned · Code AKOMA-KA3</span></div>
-          <span class="sr-arrow" style="color:#C4623A;">›</span>
-        </div>
-        <div class="settings-row">
-          <div class="sr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#8A7E72" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="#8A7E72" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="sr-text"><strong>Transaction limits</strong><span>$10,000/day · $50,000/mo</span></div>
-          <span class="sr-arrow">›</span>
-        </div>
-      </div>
-      <div class="settings-group">
-        <div class="settings-row">
-          <div class="sr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#8A7E72" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="#8A7E72" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="sr-text"><strong>Help &amp; support</strong><span>Chat, FAQs, contact</span></div>
-          <span class="sr-arrow">›</span>
-        </div>
-        <div class="settings-row">
-          <div class="sr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="#8A7E72" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-          <div class="sr-text"><strong style="color:#C4623A;">Log out</strong><span>Kofi Asante</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="bottom-nav">
-      <div class="bn-item" onclick="go('screen-home')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Home</span>
-      </div>
-      <div class="bn-item" onclick="go('screen-amount')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>Send</span>
-      </div>
-      <div class="bn-item" onclick="go('screen-history')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(28,53,48,0.3)" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="rgba(28,53,48,0.3)" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span>History</span>
-      </div>
-      <div class="bn-item active">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#C4623A" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <span style="color:#C4623A;">Profile</span>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<button class="restart" onclick="go('screen-home')">↺ Restart</button>
+<!-- ══════════════════════════════════════════
+     SCREEN 2 · AMOUNT
+══════════════════════════════════════════ -->
+<div class="screen" id="s-amount">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="amt-header">
+    <button class="back-btn" onclick="go('s-home')">←</button>
+    <div id="recip-pill" class="recip-pill">
+      <div id="amt-pill-init" class="recip-pill-init av-kwame">KM</div>
+      <span id="amt-pill-name" class="recip-pill-name">Kwame Mensah</span>
+    </div>
+    <button class="back-btn" onclick="go('s-recipient')" style="background:transparent;font-size:13px;font-weight:600;color:#C4623A;width:auto;padding:0 4px;">Change</button>
+  </div>
+
+  <div class="flow-bar">
+    <div class="fd active" id="fd-1"></div>
+    <div class="fd" id="fd-2"></div>
+    <div class="fd" id="fd-3"></div>
+    <div class="fd" id="fd-4"></div>
+    <div class="fd" id="fd-5"></div>
+  </div>
+
+  <div class="big-amount">
+    <div class="amt-currency">USD</div>
+    <div id="amt-num" class="amt-num">200</div>
+  </div>
+
+  <div class="gets-row">
+    <span id="gets-lbl" class="gets-lbl">Kwame gets</span>
+    <span id="gets-val" class="gets-val">GHS 3,200.00</span>
+  </div>
+  <div id="rate-note" class="rate-note">1 USD = 16.00 GHS · No transfer fee today</div>
+
+  <div class="keypad">
+    <button class="key" onclick="kp('1')">1</button>
+    <button class="key" onclick="kp('2')">2</button>
+    <button class="key" onclick="kp('3')">3</button>
+    <button class="key" onclick="kp('4')">4</button>
+    <button class="key" onclick="kp('5')">5</button>
+    <button class="key" onclick="kp('6')">6</button>
+    <button class="key" onclick="kp('7')">7</button>
+    <button class="key" onclick="kp('8')">8</button>
+    <button class="key" onclick="kp('9')">9</button>
+    <button class="key" onclick="kp('.')">.</button>
+    <button class="key" onclick="kp('0')">0</button>
+    <button class="key key-del" onclick="kp('del')">⌫</button>
+  </div>
+
+  <div class="amt-footer">
+    <button class="btn-primary" onclick="go('s-review')">Continue →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 3 · RECIPIENT
+══════════════════════════════════════════ -->
+<div class="screen" id="s-recipient">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-header">
+    <button class="back-btn" onclick="go('s-amount')">←</button>
+    <span class="nav-title">Select Recipient</span>
+    <div class="nav-spacer"></div>
+  </div>
+
+  <div class="flow-bar">
+    <div class="fd active" id="fd2-1"></div>
+    <div class="fd active" id="fd2-2"></div>
+    <div class="fd" id="fd2-3"></div>
+    <div class="fd" id="fd2-4"></div>
+    <div class="fd" id="fd2-5"></div>
+  </div>
+
+  <div style="padding: 12px 24px 0; flex-shrink:0;">
+    <input class="form-input" placeholder="Search recipients..." style="margin-bottom:4px;">
+  </div>
+
+  <div class="rec-list" style="flex:1; overflow-y:auto;">
+    <div class="rec-row selected" id="rr-kwame" onclick="pickRec('kwame'); go('s-amount')">
+      <div class="avatar av-kwame">KM</div>
+      <div class="rec-info">
+        <div class="rec-name">Kwame Mensah</div>
+        <div class="rec-phone">+233 24 123 4567</div>
+        <span class="net-badge mtn-badge">MTN MoMo</span>
+      </div>
+      <span class="rec-check">✓</span>
+    </div>
+    <div class="rec-row" id="rr-amara" onclick="pickRec('amara'); go('s-amount')">
+      <div class="avatar av-amara">AC</div>
+      <div class="rec-info">
+        <div class="rec-name">Amara Conteh</div>
+        <div class="rec-phone">+254 712 345 678</div>
+        <span class="net-badge mpesa-badge">M-Pesa</span>
+      </div>
+      <span class="rec-check">✓</span>
+    </div>
+    <div class="rec-row" id="rr-fatou" onclick="pickRec('fatou'); go('s-amount')">
+      <div class="avatar av-fatou">FD</div>
+      <div class="rec-info">
+        <div class="rec-name">Fatou Diallo</div>
+        <div class="rec-phone">+221 77 123 4567</div>
+        <span class="net-badge orange-badge">Orange Money</span>
+      </div>
+      <span class="rec-check">✓</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 4 · REVIEW  (USD-primary, CFPB §1073)
+══════════════════════════════════════════ -->
+<div class="screen" id="s-review">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-header">
+    <button class="back-btn" onclick="go('s-amount')">←</button>
+    <span class="nav-title">Review Transfer</span>
+    <div class="nav-spacer"></div>
+  </div>
+
+  <div class="flow-bar">
+    <div class="fd active"></div>
+    <div class="fd active"></div>
+    <div class="fd active"></div>
+    <div class="fd" id="fd3-4"></div>
+    <div class="fd" id="fd3-5"></div>
+  </div>
+
+  <div class="review-body scroll-body">
+
+    <!-- USD Hero -->
+    <div class="rv-hero">
+      <div class="rv-hero-label">You are sending</div>
+      <div id="rv-send" class="rv-hero-usd">$200.00</div>
+      <div id="rv-hero-sub" class="rv-hero-sub">USD · United States Dollar</div>
+    </div>
+
+    <!-- Transfer breakdown — all USD on left, local equiv on right -->
+    <div class="rv-card">
+      <div class="rv-row">
+        <span class="rv-row-label">Transfer amount</span>
+        <span id="rv-send-row" class="rv-row-value">$200.00 USD</span>
+      </div>
+      <div class="rv-row">
+        <span class="rv-row-label">Transfer fee</span>
+        <span class="rv-row-value accent">$0.00 USD <span style="font-size:11px;background:#D4EDDA;color:#1A6B2F;padding:2px 6px;border-radius:4px;margin-left:4px;">FREE</span></span>
+      </div>
+      <div class="rv-row">
+        <span class="rv-row-label">Exchange rate</span>
+        <span id="rv-rate" class="rv-row-value">1 USD = 16.00 GHS</span>
+      </div>
+      <div class="rv-row">
+        <span class="rv-row-label" style="font-weight:700;color:#1C3530;">Total charged (USD)</span>
+        <span id="rv-total" class="rv-row-value large" style="color:#1C3530;">$200.00 USD</span>
+      </div>
+    </div>
+
+    <!-- Recipient receives -->
+    <div class="rv-card">
+      <div class="rv-row">
+        <span class="rv-row-label">Recipient receives</span>
+        <span id="rv-recv" class="rv-row-value large" style="color:#C4623A;">GHS 3,200.00</span>
+      </div>
+      <div class="rv-row">
+        <span class="rv-row-label">Delivery time</span>
+        <span class="rv-row-value">Instant · &lt; 5 min</span>
+      </div>
+    </div>
+
+    <!-- Recipient -->
+    <div class="rv-recip-card">
+      <div id="rv-initials" class="avatar av-kwame">KM</div>
+      <div class="rv-recip-info">
+        <div id="rv-name" class="rv-recip-name">Kwame Mensah</div>
+        <div class="rv-recip-net">
+          <span id="rv-badge"><span class="net-badge mtn-badge">MTN MoMo</span></span>
+          <span id="rv-network" style="color:#8B8680;">· +233 24 123 4567</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rate-lock timer -->
+    <div class="rv-timer">
+      <span class="rv-timer-icon">⏱</span>
+      <span class="rv-timer-text">Rate locked for</span>
+      <span id="timer" class="rv-timer-num">28:43</span>
+    </div>
+
+    <!-- CFPB §1073 Disclosure -->
+    <div class="rv-cfpb">
+      <p id="rv-cfpb">
+        <strong>Important Disclosure (Reg. E / 12 CFR §1073):</strong> You are sending <strong>$200.00 USD</strong> to Kwame Mensah. The total amount charged to your account is <strong>$200.00 USD</strong> (including a $0.00 fee). The exchange rate is <strong>1 USD = 16.00 GHS</strong>. The recipient will receive approximately <strong>GHS 3,200.00</strong>. Exchange rates may vary. You have the right to cancel this transfer within <strong>30 minutes</strong> at no cost. To cancel, contact support@akoma.app or call 1-800-AKOMA-US. For error resolution, contact us within 180 days of the transfer date.
+      </p>
+    </div>
+
+    <button class="btn-primary" onclick="go('s-sending')" style="margin-bottom:12px;">Confirm &amp; Send $<span id="rv-btn-amt">200.00</span> USD</button>
+    <button class="btn-ghost" onclick="go('s-amount')">Go Back</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 5 · SENDING
+══════════════════════════════════════════ -->
+<div class="screen" id="s-sending">
+  <div style="position:absolute;top:14px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-size:15px;font-weight:600;color:rgba(246,241,235,0.5);">9:41</span>
+  </div>
+  <div class="snd-icon">🌍</div>
+  <h2 id="snd-h2" class="snd-h2">Sending $200.00 to Kwame…</h2>
+  <p id="snd-p" class="snd-p">Routing your transfer via MTN MoMo. This usually takes less than a minute.</p>
+  <div class="prog-bar">
+    <div id="prog-fill" class="prog-fill"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 6 · SUCCESS
+══════════════════════════════════════════ -->
+<div class="screen" id="s-success">
+  <div style="position:absolute;top:14px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-size:15px;font-weight:600;color:rgba(246,241,235,0.5);">9:41</span>
+  </div>
+  <div class="suc-icon">✅</div>
+  <div id="suc-amt" class="suc-amt">$200.00 Sent</div>
+  <p id="suc-p" class="suc-p">Kwame Mensah will receive GHS 3,200.00 via MTN MoMo within minutes.</p>
+  <div class="suc-details">
+    <div class="suc-row">
+      <span>Amount sent</span>
+      <span id="suc-sent">$200.00 USD</span>
+    </div>
+    <div class="suc-row">
+      <span>Recipient receives</span>
+      <span id="suc-recv">GHS 3,200.00</span>
+    </div>
+    <div class="suc-row">
+      <span>Transfer fee</span>
+      <span>$0.00 USD</span>
+    </div>
+    <div class="suc-row">
+      <span>Reference #</span>
+      <span>AKM-2025-0089</span>
+    </div>
+  </div>
+  <div class="suc-btn-wrap">
+    <button class="btn-primary" style="background:rgba(246,241,235,0.15);color:#F6F1EB;margin-bottom:10px;" onclick="hardReset(); go('s-home')">Back to Home</button>
+    <button class="btn-ghost" style="border-color:rgba(246,241,235,0.2);color:rgba(246,241,235,0.7);" onclick="go('s-history')">View History</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 7 · COMMUNITY
+══════════════════════════════════════════ -->
+<div class="screen" id="s-community">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="comm-hero">
+    <div class="comm-logo">🤝</div>
+    <div class="comm-hero-text">
+      <div class="comm-hero-title">Akoma Community</div>
+      <div class="comm-hero-sub">Refer friends, earn rewards</div>
+    </div>
+  </div>
+
+  <div class="scroll-body" style="padding-top:16px;">
+
+    <div class="comm-stat-row">
+      <div class="comm-stat">
+        <div class="comm-stat-num">7</div>
+        <div class="comm-stat-lbl">Referred</div>
+      </div>
+      <div class="comm-stat">
+        <div class="comm-stat-num">$35</div>
+        <div class="comm-stat-lbl">Earned</div>
+      </div>
+      <div class="comm-stat">
+        <div class="comm-stat-num">3</div>
+        <div class="comm-stat-lbl">Pending</div>
+      </div>
+    </div>
+
+    <div class="comm-card">
+      <div class="comm-card-title">Invite Friends &amp; Earn</div>
+      <div class="comm-card-body">Share your code. When a friend sends their first transfer, you both get $5 in free transfers.</div>
+      <div class="comm-invite-row">
+        <span class="comm-invite-code">KOFI25</span>
+        <button class="comm-copy-btn" onclick="this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+      </div>
+    </div>
+
+    <div class="comm-card">
+      <div class="comm-card-title">Recent Activity</div>
+      <div class="activity-row">
+        <div class="act-avatar">YK</div>
+        <div class="act-text"><strong>Yaa Kyei</strong> joined using your code</div>
+        <div class="act-time">2h ago</div>
+      </div>
+      <div class="activity-row">
+        <div class="act-avatar">JA</div>
+        <div class="act-text"><strong>Joe Asante</strong> completed first transfer · You earned $5</div>
+        <div class="act-time">1d ago</div>
+      </div>
+      <div class="activity-row">
+        <div class="act-avatar">EO</div>
+        <div class="act-text"><strong>Esi Owusu</strong> joined using your code</div>
+        <div class="act-time">3d ago</div>
+      </div>
+    </div>
+
+    <div class="comm-card">
+      <div class="comm-card-title">How it works</div>
+      <div class="comm-card-body">
+        1. Share your code with friends &amp; family<br>
+        2. They sign up and send their first transfer<br>
+        3. You both receive $5 credit instantly<br><br>
+        No limit on referrals. Rewards never expire.
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="bnav-item" onclick="go('s-home')">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-label">Home</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-history')">
+      <span class="bnav-icon">🕐</span>
+      <span class="bnav-label">History</span>
+    </button>
+    <button class="bnav-item active" onclick="go('s-community')">
+      <span class="bnav-icon">🤝</span>
+      <span class="bnav-label">Community</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-profile')">
+      <span class="bnav-icon">👤</span>
+      <span class="bnav-label">Profile</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 8 · SCHEDULED TRANSFERS
+══════════════════════════════════════════ -->
+<div class="screen" id="s-scheduled">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+    </div>
+  </div>
+  <div class="nav-header">
+    <button class="back-btn" onclick="goSchedBack()">←</button>
+    <span class="nav-title">Scheduled Transfers</span>
+    <div class="nav-spacer"></div>
+  </div>
+
+  <div class="scroll-body" style="padding:0 0 24px;">
+    <div style="padding: 8px 24px 16px; font-size:13px; color:#8B8680;">Active schedules</div>
+
+    <div class="sched-card">
+      <div class="sched-card-header">
+        <div class="avatar av-kwame">KM</div>
+        <div class="sched-card-info">
+          <div class="sched-card-name">Kwame Mensah</div>
+          <div class="sched-card-next">Next: Mon, Jan 13 · MTN MoMo</div>
+        </div>
+        <div class="sched-card-amt">$200 USD</div>
+      </div>
+      <div class="sched-card-footer">
+        <span class="sched-freq-pill">Weekly</span>
+        <button class="sched-pause-btn">Pause</button>
+      </div>
+    </div>
+
+    <div class="sched-card">
+      <div class="sched-card-header">
+        <div class="avatar av-fatou">FD</div>
+        <div class="sched-card-info">
+          <div class="sched-card-name">Fatou Diallo</div>
+          <div class="sched-card-next">Next: Feb 1 · Orange Money</div>
+        </div>
+        <div class="sched-card-amt">$150 USD</div>
+      </div>
+      <div class="sched-card-footer">
+        <span class="sched-freq-pill">Monthly</span>
+        <button class="sched-pause-btn">Pause</button>
+      </div>
+    </div>
+
+    <div style="padding: 16px 24px 8px; font-size:13px; color:#8B8680;">New schedule</div>
+    <div class="sched-form-section">
+      <div class="sched-field">
+        <div class="form-label">Frequency</div>
+        <div class="sched-toggle">
+          <button class="stog-opt active" id="tog-once" onclick="setFreq('once')">One-time</button>
+          <button class="stog-opt" id="tog-weekly" onclick="setFreq('weekly')">Weekly</button>
+          <button class="stog-opt" id="tog-monthly" onclick="setFreq('monthly')">Monthly</button>
+        </div>
+      </div>
+
+      <div class="sched-field" id="send-on-sec" style="display:none;">
+        <div class="form-label">Send on</div>
+        <div class="sched-days">
+          <button class="sched-day" onclick="toggleDay(this)">M</button>
+          <button class="sched-day active" onclick="toggleDay(this)">T</button>
+          <button class="sched-day" onclick="toggleDay(this)">W</button>
+          <button class="sched-day" onclick="toggleDay(this)">T</button>
+          <button class="sched-day" onclick="toggleDay(this)">F</button>
+          <button class="sched-day" onclick="toggleDay(this)">S</button>
+          <button class="sched-day" onclick="toggleDay(this)">S</button>
+        </div>
+      </div>
+
+      <div class="sched-field">
+        <div class="form-label">Start date</div>
+        <input class="form-input" type="text" value="Jan 13, 2025">
+      </div>
+
+      <div class="sched-field">
+        <div class="form-label">Amount (USD)</div>
+        <input class="form-input" type="text" placeholder="$0.00">
+      </div>
+
+      <button class="btn-primary">Create Schedule</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 9 · TRANSACTION HISTORY
+══════════════════════════════════════════ -->
+<div class="screen" id="s-history">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+    </div>
+  </div>
+  <div class="nav-header">
+    <button class="back-btn" onclick="go('s-home')">←</button>
+    <span class="nav-title">History</span>
+    <div class="nav-spacer"></div>
+  </div>
+
+  <div class="tx-filter">
+    <button class="tx-chip active">All</button>
+    <button class="tx-chip">Sent</button>
+    <button class="tx-chip">Received</button>
+    <button class="tx-chip">Scheduled</button>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;">
+    <div class="tx-month">January 2025</div>
+
+    <div class="tx-row">
+      <div class="tx-icon sent">↑</div>
+      <div class="tx-info">
+        <div class="tx-name">Kwame Mensah</div>
+        <div class="tx-date">Jan 10, 2025 · MTN MoMo</div>
+        <div class="tx-recurring" onclick="openScheduled('s-history')">↻ Recurring</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amt">-$200.00</div>
+        <div class="tx-recv">GHS 3,200.00</div>
+      </div>
+    </div>
+
+    <div class="tx-row">
+      <div class="tx-icon sent">↑</div>
+      <div class="tx-info">
+        <div class="tx-name">Fatou Diallo</div>
+        <div class="tx-date">Jan 8, 2025 · Orange Money</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amt">-$150.00</div>
+        <div class="tx-recv">XOF 93,000</div>
+      </div>
+    </div>
+
+    <div class="tx-row">
+      <div class="tx-icon recv">↓</div>
+      <div class="tx-info">
+        <div class="tx-name">Referral Bonus</div>
+        <div class="tx-date">Jan 5, 2025 · Akoma Credit</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amt" style="color:#1A6B2F;">+$5.00</div>
+      </div>
+    </div>
+
+    <div class="tx-month">December 2024</div>
+
+    <div class="tx-row">
+      <div class="tx-icon sent">↑</div>
+      <div class="tx-info">
+        <div class="tx-name">Kwame Mensah</div>
+        <div class="tx-date">Dec 30, 2024 · MTN MoMo</div>
+        <div class="tx-recurring" onclick="openScheduled('s-history')">↻ Recurring</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amt">-$200.00</div>
+        <div class="tx-recv">GHS 3,200.00</div>
+      </div>
+    </div>
+
+    <div class="tx-row">
+      <div class="tx-icon sent">↑</div>
+      <div class="tx-info">
+        <div class="tx-name">Amara Conteh</div>
+        <div class="tx-date">Dec 22, 2024 · M-Pesa</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amt">-$75.00</div>
+        <div class="tx-recv">KES 9,750.00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="bnav-item" onclick="go('s-home')">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-label">Home</span>
+    </button>
+    <button class="bnav-item active" onclick="go('s-history')">
+      <span class="bnav-icon">🕐</span>
+      <span class="bnav-label">History</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-community')">
+      <span class="bnav-icon">🤝</span>
+      <span class="bnav-label">Community</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-profile')">
+      <span class="bnav-icon">👤</span>
+      <span class="bnav-label">Profile</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 10 · PROFILE
+══════════════════════════════════════════ -->
+<div class="screen" id="s-profile">
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="prof-hero">
+    <div class="prof-avatar-wrap">KA</div>
+    <div class="prof-name">Kofi Acheampong</div>
+    <div class="prof-email">kofi@example.com</div>
+    <div class="prof-verified">✓ Identity Verified</div>
+  </div>
+
+  <div class="prof-scroll">
+    <div class="prof-section-title">Account</div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon green">👤</div>
+      <span class="prof-menu-label">Personal Information</span>
+      <span class="prof-menu-arrow">›</span>
+    </div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon green">🔒</div>
+      <span class="prof-menu-label">Security &amp; Password</span>
+      <span class="prof-menu-arrow">›</span>
+    </div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon green">💳</div>
+      <span class="prof-menu-label">Payment Methods</span>
+      <span class="prof-menu-arrow">›</span>
+    </div>
+
+    <div class="prof-section-title">Transfers</div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon orange">🌍</div>
+      <span class="prof-menu-label">Transfer Limits</span>
+      <div class="prof-menu-badge">$3,000/mo</div>
+    </div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon orange">🗓</div>
+      <span class="prof-menu-label">Scheduled Transfers</span>
+      <span class="prof-menu-arrow">›</span>
+    </div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon orange">📄</div>
+      <span class="prof-menu-label">Statements &amp; Receipts</span>
+      <span class="prof-menu-arrow">›</span>
+    </div>
+
+    <div class="prof-section-title">Support</div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon gray">❓</div>
+      <span class="prof-menu-label">Help Center</span>
+      <span class="prof-menu-arrow">›</span>
+    </div>
+    <div class="prof-menu-item">
+      <div class="prof-menu-icon gray">⚖️</div>
+      <span class="prof-menu-label">Legal &amp; Compliance</span>
+      <span class="prof-menu-arrow">›</span>
+    </div>
+    <div class="prof-menu-item" style="border:none;">
+      <div class="prof-menu-icon gray" style="background:rgba(196,98,58,0.1);">🚪</div>
+      <span class="prof-menu-label" style="color:#C4623A;">Sign Out</span>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="bnav-item" onclick="go('s-home')">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-label">Home</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-history')">
+      <span class="bnav-icon">🕐</span>
+      <span class="bnav-label">History</span>
+    </button>
+    <button class="bnav-item" onclick="go('s-community')">
+      <span class="bnav-icon">🤝</span>
+      <span class="bnav-label">Community</span>
+    </button>
+    <button class="bnav-item active" onclick="go('s-profile')">
+      <span class="bnav-icon">👤</span>
+      <span class="bnav-label">Profile</span>
+    </button>
+  </div>
+</div>
+
+</div><!-- /device -->
 
 <script>
-  let currentAmount = '200';
-  let sendingTimer = null;
-  let schedBack = 'screen-home'; // tracks where Scheduled was opened from
-  const flowScreens = ['screen-amount','screen-recipient','screen-review','screen-sending','screen-success'];
-
-  // Recipient data for dynamic label on Amount screen
-  const recipients = {
-    kwame: { name: 'Kwame', currency: 'GHS', rate: 16 },
-    amara: { name: 'Amara', currency: 'KES', rate: 130 },
-    fatou: { name: 'Fatou', currency: 'XOF', rate: 620 }
-  };
-  let selectedRecipient = 'kwame';
-
-  function updateAmountDisplay() {
-    const r = recipients[selectedRecipient];
-    document.getElementById('amount-display').textContent = parseInt(currentAmount).toLocaleString();
-    const converted = Math.round(parseInt(currentAmount) * r.rate);
-    document.getElementById('recipient-gets').textContent = r.currency + ' ' + converted.toLocaleString();
-    document.getElementById('recipient-label').textContent = r.name + ' gets';
+// ── RECIPIENT DATA ──────────────────────────────────────────────
+const RCPS = {
+  kwame: {
+    name: 'Kwame Mensah', short: 'Kwame', init: 'KM', avClass: 'av-kwame',
+    cur: 'GHS', rate: 16, rateStr: '16.00',
+    net: 'MTN MoMo', phone: '+233 24 123 4567',
+    badgeHTML: '<span class="net-badge mtn-badge">MTN MoMo</span>'
+  },
+  amara: {
+    name: 'Amara Conteh', short: 'Amara', init: 'AC', avClass: 'av-amara',
+    cur: 'KES', rate: 130, rateStr: '130.00',
+    net: 'M-Pesa', phone: '+254 712 345 678',
+    badgeHTML: '<span class="net-badge mpesa-badge">M-Pesa</span>'
+  },
+  fatou: {
+    name: 'Fatou Diallo', short: 'Fatou', init: 'FD', avClass: 'av-fatou',
+    cur: 'XOF', rate: 620, rateStr: '620',
+    net: 'Orange Money', phone: '+221 77 123 4567',
+    badgeHTML: '<span class="net-badge orange-badge">Orange Money</span>'
   }
+};
 
-  function updateFlowBar(screenId) {
-    const map = {'screen-amount':1,'screen-recipient':2,'screen-review':3,'screen-sending':4,'screen-success':5};
-    const current = map[screenId] || 0;
-    const inFlow = flowScreens.includes(screenId);
-    document.getElementById('flow-bar').style.display = inFlow ? 'flex' : 'none';
-    for (let i = 1; i <= 5; i++) {
-      const dot = document.getElementById('fd-' + i);
-      dot.className = 'fb-dot' + (i === current ? ' active' : i < current ? ' done' : '');
-    }
-  }
+let amt = '200';
+let rec = 'kwame';
+let schedBack = 's-home';
+let timerInterval = null;
 
-  function go(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
-    updateFlowBar(screenId);
-    if (screenId === 'screen-sending') {
-      clearTimeout(sendingTimer);
-      const fill = document.getElementById('progress-fill');
-      if (fill) { fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = 'progress 2.5s ease-out forwards'; }
-      sendingTimer = setTimeout(() => go('screen-success'), 3000);
-    }
-    if (screenId === 'screen-review') startTimer();
+// ── KEYPAD ──────────────────────────────────────────────────────
+function kp(k) {
+  if (k === 'del') {
+    amt = amt.length > 1 ? amt.slice(0, -1) : '0';
+  } else if (k === '.') {
+    if (!amt.includes('.')) amt += '.';
+  } else {
+    if (amt === '0') amt = k;
+    else if (amt.split('.')[1] && amt.split('.')[1].length >= 2) return;
+    else amt += k;
   }
+  syncAmtScreen();
+}
 
-  // Fix 3: open Scheduled with back-destination tracking
-  function openScheduled(from) {
-    schedBack = from || 'screen-home';
-    go('screen-scheduled');
-  }
-  function goSchedBack() { go(schedBack); }
+// ── RECIPIENT PICK ───────────────────────────────────────────────
+function pickRec(key) {
+  rec = key;
+  document.querySelectorAll('.rec-row').forEach(r => r.classList.remove('selected'));
+  const row = document.getElementById('rr-' + key);
+  if (row) row.classList.add('selected');
+  syncAmtScreen();
+}
 
-  function numPress(key) {
-    if (key === 'del') {
-      currentAmount = currentAmount.length > 1 ? currentAmount.slice(0, -1) : '0';
-    } else if (currentAmount === '0') {
-      currentAmount = key;
-    } else if (currentAmount.length < 6) {
-      currentAmount += key;
-    }
-    updateAmountDisplay();
-  }
+// ── SYNC: AMOUNT SCREEN ─────────────────────────────────────────
+function syncAmtScreen() {
+  const r = RCPS[rec];
+  const n = parseFloat(amt) || 0;
+  const local = (n * r.rate).toFixed(r.cur === 'XOF' ? 0 : 2);
+  const localFmt = parseFloat(local).toLocaleString('en-US', { minimumFractionDigits: r.cur === 'XOF' ? 0 : 2, maximumFractionDigits: r.cur === 'XOF' ? 0 : 2 });
 
-  function selectRecipient(id) {
-    ['kwame','amara','fatou'].forEach(r => {
-      document.getElementById('rc-' + r).classList.remove('selected');
-      const check = document.getElementById('check-' + r);
-      check.classList.remove('checked');
-      check.innerHTML = '';
-    });
-    selectedRecipient = id;
-    document.getElementById('rc-' + id).classList.add('selected');
-    const check = document.getElementById('check-' + id);
-    check.classList.add('checked');
-    check.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F6F1EB" stroke-width="2" stroke-linecap="round"/></svg>';
-    updateAmountDisplay();
-  }
+  document.getElementById('amt-num').textContent = amt;
+  document.getElementById('gets-lbl').textContent = r.short + ' gets';
+  document.getElementById('gets-val').textContent = r.cur + ' ' + localFmt;
+  document.getElementById('rate-note').textContent = '1 USD = ' + r.rateStr + ' ' + r.cur + ' · No transfer fee today';
 
-  // Fix 4: reset timer each visit
-  let timerInterval = null;
-  function startTimer() {
-    clearInterval(timerInterval);
-    let timerSeconds = 28 * 60 + 43;
-    timerInterval = setInterval(() => {
-      if (timerSeconds > 0) timerSeconds--;
-      const m = Math.floor(timerSeconds / 60).toString().padStart(2,'0');
-      const s = (timerSeconds % 60).toString().padStart(2,'0');
-      const el = document.getElementById('timer');
-      if (el) el.textContent = m + ':' + s;
-    }, 1000);
-  }
+  // Pill
+  const pi = document.getElementById('amt-pill-init');
+  pi.className = 'recip-pill-init ' + r.avClass;
+  pi.textContent = r.init;
+  document.getElementById('amt-pill-name').textContent = r.name;
+}
 
-  // Scheduled screen interactions
-  let activeFreq = 'weekly';
-  let activeDate = '1';
-  function setFreq(freq) {
-    activeFreq = freq;
-    ['weekly','monthly','custom'].forEach(f => {
-      document.getElementById('freq-' + f).classList.toggle('active', f === freq);
-    });
-    document.getElementById('send-on-section').style.display = freq === 'weekly' ? 'none' : 'block';
-  }
-  function setDate(d) {
-    activeDate = d;
-    ['1','7','14','21','28','last'].forEach(v => {
-      document.getElementById('dt-' + v).classList.toggle('active', v === d);
-    });
-    const helpers = {'1':'1st of every month','7':'7th of every month','14':'14th of every month','21':'21st of every month','28':'28th of every month','last':'last day of every month'};
-    document.getElementById('date-helper').innerHTML = 'Sends on the <strong>' + helpers[d] + '</strong> — next send Mar ' + (d === 'last' ? '31' : d);
-  }
-  function setUntil(opt) {
-    ['forever','enddate'].forEach(o => {
-      document.getElementById('until-' + o).classList.toggle('active', o === opt);
-    });
-  }
+// ── SYNC: REVIEW SCREEN ─────────────────────────────────────────
+function syncReview() {
+  const r = RCPS[rec];
+  const n = parseFloat(amt) || 0;
+  const usdFmt = '$' + n.toFixed(2);
+  const local = (n * r.rate);
+  const localFmt = r.cur + ' ' + local.toLocaleString('en-US', { minimumFractionDigits: r.cur === 'XOF' ? 0 : 2, maximumFractionDigits: r.cur === 'XOF' ? 0 : 2 });
 
-  // Filter tabs (history)
-  document.querySelectorAll('.filter-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-    });
+  // Hero
+  document.getElementById('rv-send').textContent = usdFmt;
+  document.getElementById('rv-hero-sub').textContent = 'USD · United States Dollar';
+
+  // Breakdown rows
+  document.getElementById('rv-send-row').textContent = usdFmt + ' USD';
+  document.getElementById('rv-rate').textContent = '1 USD = ' + r.rateStr + ' ' + r.cur;
+  document.getElementById('rv-total').textContent = usdFmt + ' USD';
+
+  // Recipient receives (local currency)
+  document.getElementById('rv-recv').textContent = localFmt;
+
+  // Recipient card
+  const ri = document.getElementById('rv-initials');
+  ri.className = 'avatar ' + r.avClass;
+  ri.textContent = r.init;
+  document.getElementById('rv-name').textContent = r.name;
+  document.getElementById('rv-badge').innerHTML = r.badgeHTML;
+  document.getElementById('rv-network').textContent = '· ' + r.phone;
+
+  // Confirm button amount
+  document.getElementById('rv-btn-amt').textContent = n.toFixed(2);
+
+  // CFPB §1073 disclosure (all amounts in USD, local as secondary)
+  document.getElementById('rv-cfpb').innerHTML =
+    '<strong>Important Disclosure (Reg. E / 12 CFR §1073):</strong> You are sending <strong>' + usdFmt + ' USD</strong> to ' + r.name + '. ' +
+    'The total amount charged to your account is <strong>' + usdFmt + ' USD</strong> (including a $0.00 fee). ' +
+    'The exchange rate is <strong>1 USD = ' + r.rateStr + ' ' + r.cur + '</strong>. ' +
+    'The recipient will receive approximately <strong>' + localFmt + '</strong>. ' +
+    'Exchange rates may vary. You have the right to cancel this transfer within <strong>30 minutes</strong> at no cost. ' +
+    'To cancel, contact support@akoma.app or call 1-800-AKOMA-US. ' +
+    'For error resolution, contact us within 180 days of the transfer date.';
+}
+
+// ── SYNC: SENDING SCREEN ────────────────────────────────────────
+function syncSending() {
+  const r = RCPS[rec];
+  const n = parseFloat(amt) || 0;
+  document.getElementById('snd-h2').textContent = 'Sending $' + n.toFixed(2) + ' to ' + r.short + '…';
+  document.getElementById('snd-p').textContent = 'Routing your transfer via ' + r.net + '. This usually takes less than a minute.';
+  // Restart progress bar animation
+  const pf = document.getElementById('prog-fill');
+  pf.style.animation = 'none';
+  pf.offsetWidth; // reflow
+  pf.style.animation = 'prog 2.8s ease-in-out forwards';
+}
+
+// ── SYNC: SUCCESS SCREEN ────────────────────────────────────────
+function syncSuccess() {
+  const r = RCPS[rec];
+  const n = parseFloat(amt) || 0;
+  const usdFmt = '$' + n.toFixed(2);
+  const local = (n * r.rate);
+  const localFmt = r.cur + ' ' + local.toLocaleString('en-US', { minimumFractionDigits: r.cur === 'XOF' ? 0 : 2, maximumFractionDigits: r.cur === 'XOF' ? 0 : 2 });
+
+  document.getElementById('suc-amt').textContent = usdFmt + ' Sent';
+  document.getElementById('suc-p').textContent = r.name + ' will receive ' + localFmt + ' via ' + r.net + ' within minutes.';
+  document.getElementById('suc-sent').textContent = usdFmt + ' USD';
+  document.getElementById('suc-recv').textContent = localFmt;
+}
+
+// ── TIMER ────────────────────────────────────────────────────────
+function startTimer() {
+  clearInterval(timerInterval);
+  let secs = 28 * 60 + 43; // local var → resets every visit
+  function tick() {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    const el = document.getElementById('timer');
+    if (el) el.textContent = m + ':' + String(s).padStart(2, '0');
+    if (secs <= 0) { clearInterval(timerInterval); return; }
+    secs--;
+  }
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+
+// ── SCHEDULED HELPERS ────────────────────────────────────────────
+function openScheduled(from) {
+  schedBack = from;
+  go('s-scheduled');
+}
+function goSchedBack() {
+  go(schedBack);
+}
+function setFreq(f) {
+  ['once','weekly','monthly'].forEach(k => {
+    document.getElementById('tog-' + k).classList.toggle('active', k === f);
   });
+  document.getElementById('send-on-sec').style.display = f === 'weekly' ? 'block' : 'none';
+}
+function toggleDay(btn) {
+  btn.classList.toggle('active');
+}
 
-  function copyCode(btn) {
-    navigator.clipboard.writeText('AKOMA-KA3').catch(() => {});
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy', 2000);
-  }
-  function shareCode() {
-    if (navigator.share) {
-      navigator.share({ title: 'Join Akoma', text: 'Use my code AKOMA-KA3 and we both get $10 to send home free. Download Akoma: akoma.app' }).catch(() => {});
-    } else {
-      copyCode(document.querySelector('.copy-btn'));
-    }
-  }
+// ── NAVIGATION ───────────────────────────────────────────────────
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 
-  updateFlowBar('screen-home');
-  updateAmountDisplay();
+  if (id === 's-amount') syncAmtScreen();
+  if (id === 's-review') { syncReview(); startTimer(); }
+  if (id === 's-sending') {
+    syncSending();
+    setTimeout(() => go('s-success'), 3200);
+  }
+  if (id === 's-success') syncSuccess();
+}
+
+// ── HARD RESET ───────────────────────────────────────────────────
+function hardReset() {
+  amt = '200';
+  pickRec('kwame');
+  schedBack = 's-home';
+  clearInterval(timerInterval);
+}
+
+// ── TX CHIP FILTER (visual only) ─────────────────────────────────
+document.querySelectorAll('.tx-chip').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.tx-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+  });
+});
+
+// Init
+syncAmtScreen();
 </script>
 </body>
 </html>
