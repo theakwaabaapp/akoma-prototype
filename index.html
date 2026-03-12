@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>Akoma · Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: #E8E2DA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .device {
+    width: 390px;
+    height: 844px;
+    background: #F6F1EB;
+    border-radius: 48px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.25), 0 0 0 10px #1C1C1C, inset 0 0 0 1px rgba(255,255,255,0.15);
+  }
+  .screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .screen.active { display: flex; }
+  /* Transitions */
+  .screen { transition: opacity 0.2s ease; }
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px 0;
+    height: 44px;
+    flex-shrink: 0;
+  }
+  .status-bar span { font-size: 15px; font-weight: 600; color: #1C3530; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  /* Common */
+  .nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px 4px;
+    flex-shrink: 0;
+  }
+  .back-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #E8E2DA;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-title { font-size: 17px; font-weight: 600; color: #1C3530; letter-spacing: -0.3px; }
+  .spacer { width: 40px; }
+  .section { flex: 1; overflow-y: auto; padding: 0 24px; }
+  .cta-area { padding: 16px 24px 32px; flex-shrink: 0; }
+  .btn-primary {
+    width: 100%; background: #C4623A; border: none;
+    border-radius: 16px; padding: 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 700; color: #fff;
+    cursor: pointer; letter-spacing: -0.2px;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:active { opacity: 0.85; }
+  .btn-secondary {
+    width: 100%; background: transparent; border: 1.5px solid #D0C8BF;
+    border-radius: 16px; padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500; color: #1C3530;
+    cursor: pointer; margin-top: 12px;
+    transition: background 0.15s;
+  }
+  .btn-secondary:active { background: #E8E2DA; }
+  /* Progress indicator */
+  .progress-dots {
+    display: flex; gap: 6px; justify-content: center;
+    padding: 8px 0 4px;
+    flex-shrink: 0;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #D0C8BF; }
+  .dot.active { background: #1C3530; width: 20px; border-radius: 3px; }
+
+  /* ====== SCREEN 1: HOME ====== */
+  #screen-home { background: #1C3530; }
+  .home-status .status-bar span { color: #F6F1EB; }
+  .home-header {
+    padding: 8px 24px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .home-greeting { display: flex; flex-direction: column; gap: 2px; }
+  .home-greeting .hello { font-size: 13px; color: rgba(246,241,235,0.5); }
+  .home-greeting .name { font-size: 20px; font-weight: 700; color: #F6F1EB; letter-spacing: -0.3px; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: #C4623A; display: flex; align-items: center; justify-content: center; }
+  .avatar span { font-size: 14px; font-weight: 700; color: #fff; }
+  .balance-card {
+    margin: 0 24px 20px;
+    background: rgba(246,241,235,0.08);
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid rgba(246,241,235,0.1);
+    flex-shrink: 0;
+  }
+  .balance-label { font-size: 12px; color: rgba(246,241,235,0.45); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+  .balance-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 48px; font-weight: 700; color: #F6F1EB; letter-spacing: -1.5px; line-height: 1; }
+  .balance-sub { font-size: 13px; color: rgba(246,241,235,0.4); margin-top: 4px; }
+  .quick-actions {
+    display: flex; gap: 12px;
+    padding: 0 24px 20px;
+    flex-shrink: 0;
+  }
+  .quick-action {
+    flex: 1; background: #C4623A; border: none; border-radius: 16px;
+    padding: 16px 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    transition: opacity 0.15s;
+  }
+  .quick-action:active { opacity: 0.85; }
+  .quick-action span { font-size: 13px; font-weight: 600; color: #fff; }
+  .quick-action.ghost { background: rgba(246,241,235,0.08); border: 1px solid rgba(246,241,235,0.12); }
+  .quick-action.ghost span { color: rgba(246,241,235,0.7); }
+  .recent-header { padding: 0 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .recent-header span { font-size: 14px; font-weight: 600; color: rgba(246,241,235,0.5); letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px; }
+  .recent-header a { font-size: 13px; color: #C4623A; text-decoration: none; }
+  .recent-items { padding: 0 24px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+  .recent-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(246,241,235,0.08);
+    cursor: pointer;
+  }
+  .ri-avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(246,241,235,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ri-avatar span { font-size: 13px; font-weight: 700; color: #F6F1EB; }
+  .ri-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .ri-name { font-size: 14px; font-weight: 600; color: #F6F1EB; }
+  .ri-detail { font-size: 12px; color: rgba(246,241,235,0.4); }
+  .ri-amount { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .ri-amt { font-size: 15px; font-weight: 700; color: #F6F1EB; }
+  .ri-status { font-size: 11px; font-weight: 600; color: #4CAF50; background: rgba(76,175,80,0.15); padding: 2px 7px; border-radius: 20px; }
+  .home-nav {
+    display: flex;
+    background: rgba(28,53,48,0.95);
+    border-top: 1px solid rgba(246,241,235,0.08);
+    padding: 12px 0 20px;
+    flex-shrink: 0;
+  }
+  .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+  .nav-item span { font-size: 10px; color: rgba(246,241,235,0.4); }
+  .nav-item.active span { color: #C4623A; }
+
+  /* ====== SCREEN 2: AMOUNT ====== */
+  #screen-amount { background: #F6F1EB; }
+  .amount-display {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    gap: 8px;
+  }
+  .amount-label { font-size: 14px; color: #8A7E72; font-weight: 500; }
+  .amount-input {
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .amount-currency { font-family: 'DM Sans', sans-serif; font-size: 32px; font-weight: 600; color: #1C3530; }
+  .amount-number { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 88px; font-weight: 700; color: #1C3530; letter-spacing: -3px; line-height: 1; }
+  .amount-gets {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .amount-gets span:first-child { font-size: 14px; color: #8A7E72; }
+  .amount-gets span:last-child { font-size: 16px; font-weight: 700; color: #1C3530; }
+  .fee-line {
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; padding: 8px 4px;
+  }
+  .fee-line span:first-child { font-size: 13px; color: #8A7E72; }
+  .fee-line .free { font-size: 13px; font-weight: 700; color: #1C3530; }
+  .numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 16px 24px 8px;
+    flex-shrink: 0;
+  }
+  .key {
+    background: #fff;
+    border: none;
+    border-radius: 14px;
+    height: 64px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #1C3530;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .key:active { background: #E8E2DA; }
+  .key.del { font-size: 18px; }
+  .key.empty { background: transparent; pointer-events: none; }
+  .exchange-rate {
+    text-align: center;
+    font-size: 12px;
+    color: #8A7E72;
+    padding: 4px 24px 8px;
+    flex-shrink: 0;
+  }
+  .exchange-rate strong { color: #1C3530; }
+
+  /* ====== SCREEN 3: RECIPIENT ====== */
+  #screen-recipient { background: #F6F1EB; }
+  .recipient-list { padding: 16px 24px; display: flex; flex-direction: column; gap: 10px; }
+  .recipient-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .recipient-card:active { background: #F6F1EB; }
+  .recipient-card.selected { border-color: #1C3530; background: #F6F1EB; }
+  .rc-avatar { width: 44px; height: 44px; border-radius: 50%; background: #1C3530; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rc-avatar span { font-size: 16px; font-weight: 700; color: #F6F1EB; }
+  .rc-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .rc-name { font-size: 15px; font-weight: 600; color: #1C3530; }
+  .rc-detail { font-size: 12px; color: #8A7E72; display: flex; align-items: center; gap: 6px; }
+  .mtn-badge { font-size: 10px; font-weight: 700; color: #E6A817; background: #FFF8E7; padding: 2px 6px; border-radius: 10px; }
+  .mpesa-badge { font-size: 10px; font-weight: 700; color: #fff; background: #00A651; padding: 2px 6px; border-radius: 10px; }
+  .rc-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #D0C8BF; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .rc-check.checked { background: #1C3530; border-color: #1C3530; }
+  .add-new {
+    margin: 4px 24px 0;
+    background: transparent;
+    border: 1.5px dashed #D0C8BF;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .add-new span { font-size: 14px; font-weight: 500; color: #8A7E72; }
+  .add-icon { width: 36px; height: 36px; border-radius: 50%; background: #F0EAE0; display: flex; align-items: center; justify-content: center; }
+
+  /* ====== SCREEN 4: REVIEW ====== */
+  #screen-review { background: #F6F1EB; }
+  .rate-lock-banner {
+    margin: 16px 24px 0;
+    background: #1C3530;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .lock-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(196,98,58,0.2); border: 2px solid #C4623A; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .lock-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .lock-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .lock-sub { font-size: 12px; color: rgba(246,241,235,0.55); }
+  .lock-timer { font-size: 24px; font-weight: 800; color: #C4623A; font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
+  .summary-card {
+    margin: 14px 24px 0;
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    flex-shrink: 0;
+  }
+  .summary-top { display: flex; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid #F0EAE0; }
+  .summary-side { display: flex; flex-direction: column; gap: 4px; }
+  .summary-side .s-label { font-size: 12px; color: #8A7E72; }
+  .summary-side .s-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 700; color: #1C3530; letter-spacing: -0.8px; }
+  .summary-rows { padding-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .summary-row { display: flex; justify-content: space-between; align-items: center; }
+  .summary-row .sr-label { font-size: 14px; color: #8A7E72; }
+  .summary-row .sr-value { font-size: 14px; font-weight: 600; color: #1C3530; display: flex; align-items: center; gap: 6px; }
+  .locked-badge { font-size: 10px; font-weight: 700; color: #2E7D32; background: #E8F5E9; padding: 2px 7px; border-radius: 20px; }
+  .summary-total { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #F0EAE0; margin-top: 4px; }
+  .summary-total span:first-child { font-size: 15px; font-weight: 700; color: #1C3530; }
+  .summary-total span:last-child { font-size: 15px; font-weight: 800; color: #1C3530; }
+  .recipient-row {
+    margin: 14px 24px 0;
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .rr-avatar { width: 38px; height: 38px; border-radius: 50%; background: #1C3530; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rr-avatar span { font-size: 12px; font-weight: 700; color: #F6F1EB; }
+  .rr-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .rr-name { font-size: 14px; font-weight: 600; color: #1C3530; }
+  .rr-detail { font-size: 12px; color: #8A7E72; }
+  .cfpb-notice {
+    margin: 12px 24px 0;
+    padding: 12px 16px;
+    background: rgba(28,53,48,0.04);
+    border-radius: 12px;
+    border-left: 3px solid #1C3530;
+    flex-shrink: 0;
+  }
+  .cfpb-notice p { font-size: 11px; color: #8A7E72; line-height: 1.5; }
+  .cfpb-notice strong { color: #1C3530; }
+
+  /* ====== SCREEN 5: SENDING ====== */
+  #screen-sending { background: #1C3530; }
+  .sending-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 0 40px;
+  }
+  .sending-icon {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: rgba(196,98,58,0.15);
+    border: 3px solid #C4623A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+  }
+  .sending-text { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sending-text h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 40px; font-weight: 700; color: #F6F1EB; letter-spacing: -1px; text-align: center; }
+  .sending-text p { font-size: 15px; color: rgba(246,241,235,0.5); text-align: center; line-height: 1.5; }
+  .sending-detail { background: rgba(246,241,235,0.07); border-radius: 16px; padding: 20px 24px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
+  .sd-row { display: flex; justify-content: space-between; align-items: center; }
+  .sd-row span:first-child { font-size: 13px; color: rgba(246,241,235,0.45); }
+  .sd-row span:last-child { font-size: 14px; font-weight: 600; color: #F6F1EB; }
+  .progress-bar { height: 3px; background: rgba(246,241,235,0.1); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #C4623A; border-radius: 2px; animation: progress 2.5s ease-out forwards; }
+  @keyframes progress { from { width: 0%; } to { width: 90%; } }
+
+  /* ====== SCREEN 6: SUCCESS ====== */
+  #screen-success { background: #1C3530; }
+  .success-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 0 32px;
+  }
+  .success-icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(196,98,58,0.15);
+    border: 2px solid #C4623A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .success-text { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .success-text .s-amount { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 64px; font-weight: 700; color: #F6F1EB; letter-spacing: -2px; line-height: 1; }
+  .success-text h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 700; color: #C4623A; }
+  .success-text p { font-size: 14px; color: rgba(246,241,235,0.5); text-align: center; line-height: 1.5; }
+  .success-detail { background: rgba(246,241,235,0.07); border-radius: 16px; padding: 20px 24px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
+  .success-cta { padding: 0 24px 32px; display: flex; flex-direction: column; gap: 10px; }
+  .btn-outline { width: 100%; background: transparent; border: 1.5px solid rgba(246,241,235,0.25); border-radius: 16px; padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: rgba(246,241,235,0.7); cursor: pointer; transition: background 0.15s; }
+  .btn-outline:active { background: rgba(246,241,235,0.07); }
+
+  /* Restart button */
+  .restart { position: fixed; bottom: 20px; right: 20px; background: #1C3530; border: none; color: #F6F1EB; font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 8px 14px; border-radius: 20px; cursor: pointer; opacity: 0.6; z-index: 100; }
+  .restart:hover { opacity: 1; }
+
+  /* Flow indicator */
+  .flow-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(28,53,48,0.9); border-radius: 20px; padding: 6px 16px; display: flex; gap: 6px; align-items: center; z-index: 100; }
+  .fb-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(246,241,235,0.2); }
+  .fb-dot.active { background: #C4623A; width: 16px; border-radius: 3px; }
+  .fb-dot.done { background: rgba(246,241,235,0.5); }
+</style>
+</head>
+<body>
+
+<!-- Flow indicator -->
+<div class="flow-bar" id="flow-bar">
+  <div class="fb-dot active" id="fd-1"></div>
+  <div class="fb-dot" id="fd-2"></div>
+  <div class="fb-dot" id="fd-3"></div>
+  <div class="fb-dot" id="fd-4"></div>
+  <div class="fb-dot" id="fd-5"></div>
+  <div class="fb-dot" id="fd-6"></div>
+</div>
+
+<div class="device">
+
+  <!-- ===== SCREEN 1: HOME ===== -->
+  <div class="screen active" id="screen-home">
+    <div class="status-bar home-status">
+      <span>9:41</span>
+      <div class="status-icons">
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#F6F1EB"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#F6F1EB"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#F6F1EB"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#F6F1EB" opacity="0.3"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#F6F1EB" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#F6F1EB"/></svg>
+      </div>
+    </div>
+    <div class="home-header">
+      <div class="home-greeting">
+        <span class="hello">Good morning,</span>
+        <span class="name">Kofi 👋</span>
+      </div>
+      <div class="avatar"><span>KA</span></div>
+    </div>
+    <div class="balance-card">
+      <div class="balance-label">Wallet Balance</div>
+      <div class="balance-amount">$1,240</div>
+      <div class="balance-sub">Available to send</div>
+    </div>
+    <div class="quick-actions">
+      <button class="quick-action" onclick="go('screen-amount')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Send</span>
+      </button>
+      <button class="quick-action ghost">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7 7-7-7" stroke="rgba(246,241,235,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Request</span>
+      </button>
+      <button class="quick-action ghost">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="rgba(246,241,235,0.7)" stroke-width="2"/><path d="M12 7v10M9 9.5h4.5a1.5 1.5 0 010 3H10a1.5 1.5 0 000 3H15" stroke="rgba(246,241,235,0.7)" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>History</span>
+      </button>
+      <button class="quick-action ghost">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgba(246,241,235,0.7)" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(246,241,235,0.7)" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </button>
+    </div>
+    <div class="recent-header">
+      <span>Recent Transfers</span>
+      <a href="#">See all</a>
+    </div>
+    <div class="recent-items">
+      <div class="recent-item">
+        <div class="ri-avatar"><span>KM</span></div>
+        <div class="ri-info">
+          <span class="ri-name">Kwame Mensah</span>
+          <span class="ri-detail">MTN MoMo · Ghana · 2 days ago</span>
+        </div>
+        <div class="ri-amount">
+          <span class="ri-amt">$200</span>
+          <span class="ri-status">Delivered</span>
+        </div>
+      </div>
+      <div class="recent-item">
+        <div class="ri-avatar"><span>AC</span></div>
+        <div class="ri-info">
+          <span class="ri-name">Amara Conteh</span>
+          <span class="ri-detail">M-Pesa · Kenya · 1 week ago</span>
+        </div>
+        <div class="ri-amount">
+          <span class="ri-amt">$150</span>
+          <span class="ri-status">Delivered</span>
+        </div>
+      </div>
+      <div class="recent-item">
+        <div class="ri-avatar"><span>FD</span></div>
+        <div class="ri-info">
+          <span class="ri-name">Fatou Diallo</span>
+          <span class="ri-detail">Orange Money · Senegal · 2 wks ago</span>
+        </div>
+        <div class="ri-amount">
+          <span class="ri-amt">$100</span>
+          <span class="ri-status">Delivered</span>
+        </div>
+      </div>
+    </div>
+    <div class="home-nav">
+      <div class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="color:#C4623A">Home</span>
+      </div>
+      <div class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Send</span>
+      </div>
+      <div class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/><path d="M3 9h18" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/></svg>
+        <span>History</span>
+      </div>
+      <div class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: AMOUNT ===== -->
+  <div class="screen" id="screen-amount">
+    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+    <div class="nav-header">
+      <button class="back-btn" onclick="go('screen-home')">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="nav-title">Send Money</span>
+      <div class="spacer"></div>
+    </div>
+    <div class="amount-display">
+      <span class="amount-label">You send</span>
+      <div class="amount-input">
+        <span class="amount-currency">$</span>
+        <span class="amount-number" id="amount-display">200</span>
+      </div>
+      <div class="fee-line">
+        <span>Transfer fee</span>
+        <span class="free">$0.00 · Free</span>
+      </div>
+      <div class="amount-gets">
+        <span>Kwame gets</span>
+        <span id="recipient-gets">GHS 3,200</span>
+      </div>
+    </div>
+    <div class="exchange-rate">1 USD = 16.00 GHS · <strong>Rate locked for 30 min</strong></div>
+    <div class="numpad">
+      <button class="key" onclick="numPress('1')">1</button>
+      <button class="key" onclick="numPress('2')">2</button>
+      <button class="key" onclick="numPress('3')">3</button>
+      <button class="key" onclick="numPress('4')">4</button>
+      <button class="key" onclick="numPress('5')">5</button>
+      <button class="key" onclick="numPress('6')">6</button>
+      <button class="key" onclick="numPress('7')">7</button>
+      <button class="key" onclick="numPress('8')">8</button>
+      <button class="key" onclick="numPress('9')">9</button>
+      <button class="key empty"></button>
+      <button class="key" onclick="numPress('0')">0</button>
+      <button class="key del" onclick="numPress('del')">⌫</button>
+    </div>
+    <div class="cta-area">
+      <button class="btn-primary" onclick="go('screen-recipient')">Continue</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 3: RECIPIENT ===== -->
+  <div class="screen" id="screen-recipient">
+    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+    <div class="nav-header">
+      <button class="back-btn" onclick="go('screen-amount')">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="nav-title">Select Recipient</span>
+      <div class="spacer"></div>
+    </div>
+    <div class="recipient-list">
+      <div class="recipient-card selected" id="rc-kwame" onclick="selectRecipient('kwame')">
+        <div class="rc-avatar"><span>KM</span></div>
+        <div class="rc-info">
+          <span class="rc-name">Kwame Mensah</span>
+          <div class="rc-detail">
+            <span class="mtn-badge">MTN</span>
+            MoMo · +233 24 123 4567 · Ghana
+          </div>
+        </div>
+        <div class="rc-check checked" id="check-kwame">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F6F1EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="recipient-card" id="rc-amara" onclick="selectRecipient('amara')">
+        <div class="rc-avatar"><span>AC</span></div>
+        <div class="rc-info">
+          <span class="rc-name">Amara Conteh</span>
+          <div class="rc-detail">
+            <span class="mpesa-badge">M-Pesa</span>
+            +254 712 345 678 · Kenya
+          </div>
+        </div>
+        <div class="rc-check" id="check-amara"></div>
+      </div>
+      <div class="recipient-card" id="rc-fatou" onclick="selectRecipient('fatou')">
+        <div class="rc-avatar"><span>FD</span></div>
+        <div class="rc-info">
+          <span class="rc-name">Fatou Diallo</span>
+          <div class="rc-detail">
+            <span style="font-size:10px;font-weight:700;color:#fff;background:#FF6600;padding:2px 6px;border-radius:10px;">Orange</span>
+            Orange Money · Senegal
+          </div>
+        </div>
+        <div class="rc-check" id="check-fatou"></div>
+      </div>
+    </div>
+    <div class="add-new">
+      <div class="add-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="#8A7E72" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <span>Add new recipient</span>
+    </div>
+    <div style="flex:1;"></div>
+    <div class="cta-area">
+      <button class="btn-primary" onclick="go('screen-review')">Continue to review</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 4: REVIEW ===== -->
+  <div class="screen" id="screen-review">
+    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+    <div class="nav-header">
+      <button class="back-btn" onclick="go('screen-recipient')">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="#1C3530" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="nav-title">Review Transfer</span>
+      <div class="spacer"></div>
+    </div>
+    <div class="rate-lock-banner">
+      <div class="lock-icon">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="4" y="10" width="14" height="10" rx="2.5" stroke="#C4623A" stroke-width="1.8"/><path d="M7 10V7a4 4 0 018 0v3" stroke="#C4623A" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="lock-info">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span class="lock-title">Rate locked</span>
+          <span class="lock-timer" id="timer">28:43</span>
+        </div>
+        <span class="lock-sub">Confirm now to guarantee this rate</span>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-top">
+        <div class="summary-side">
+          <span class="s-label">You send</span>
+          <span class="s-amount">$200.00</span>
+        </div>
+        <div class="summary-side" style="align-items:flex-end;">
+          <span class="s-label">They receive</span>
+          <span class="s-amount">GHS 3,200</span>
+        </div>
+      </div>
+      <div class="summary-rows">
+        <div class="summary-row">
+          <span class="sr-label">Exchange rate</span>
+          <span class="sr-value"><span class="locked-badge">LOCKED</span> 1 USD = 16.00 GHS</span>
+        </div>
+        <div class="summary-row">
+          <span class="sr-label">Transfer fee</span>
+          <span class="sr-value">$0.00</span>
+        </div>
+        <div class="summary-row">
+          <span class="sr-label">Delivery</span>
+          <span class="sr-value">Within minutes</span>
+        </div>
+      </div>
+      <div class="summary-total">
+        <span>Total you pay</span>
+        <span>$200.00</span>
+      </div>
+    </div>
+    <div class="recipient-row">
+      <div class="rr-avatar"><span>KM</span></div>
+      <div class="rr-info">
+        <span class="rr-name">Kwame Mensah</span>
+        <span class="rr-detail">MTN MoMo · +233 24 123 4567</span>
+      </div>
+      <span class="mtn-badge">MTN</span>
+    </div>
+    <div class="cfpb-notice">
+      <p><strong>CFPB §1073 Disclosure:</strong> $200.00 USD · GHS 3,200 · $0.00 fee · Rate locked 30 min. You may cancel within 30 minutes of payment. Error resolution: 180 days.</p>
+    </div>
+    <div style="flex:1;min-height:8px;"></div>
+    <div class="cta-area">
+      <button class="btn-primary" onclick="go('screen-sending')">Confirm transfer</button>
+      <button class="btn-secondary" onclick="go('screen-recipient')">Change recipient</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 5: SENDING ===== -->
+  <div class="screen" id="screen-sending">
+    <div class="status-bar home-status"><span>9:41</span></div>
+    <div class="sending-body">
+      <div class="sending-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#C4623A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="sending-text">
+        <h2>Sending $200<br/>to Kwame…</h2>
+        <p>Processing your transfer via<br/>MTN Mobile Money</p>
+      </div>
+      <div class="sending-detail">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="sd-row"><span>Status</span><span>Processing payment…</span></div>
+        <div class="sd-row"><span>Estimated time</span><span>Under 2 minutes</span></div>
+        <div class="sd-row"><span>Reference</span><span>AK-2025-7821</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 6: SUCCESS ===== -->
+  <div class="screen" id="screen-success">
+    <div class="status-bar home-status"><span>9:41</span></div>
+    <div class="success-body">
+      <div class="success-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-9" stroke="#C4623A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="success-text">
+        <span class="s-amount">$200</span>
+        <h2>Delivered.</h2>
+        <p>Kwame Mensah received<br/>GHS 3,200 via MTN MoMo</p>
+      </div>
+      <div class="success-detail">
+        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Amount sent</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">$200.00</span></div>
+        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Amount received</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">GHS 3,200</span></div>
+        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Transfer fee</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">$0.00</span></div>
+        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Delivered in</span><span style="font-size:14px;font-weight:600;color:#C4623A;">1 min 42 sec</span></div>
+        <div class="sd-row"><span style="font-size:13px;color:rgba(246,241,235,0.45);">Reference</span><span style="font-size:14px;font-weight:600;color:#F6F1EB;">AK-2025-7821</span></div>
+      </div>
+    </div>
+    <div class="success-cta">
+      <button class="btn-primary" style="background:#C4623A;" onclick="go('screen-amount')">Send again</button>
+      <button class="btn-outline" onclick="go('screen-home')">Back to home</button>
+    </div>
+  </div>
+
+</div>
+
+<button class="restart" onclick="go('screen-home')">↺ Restart</button>
+
+<script>
+  let currentAmount = '200';
+  let sendingTimer = null;
+
+  function updateFlowBar(screenId) {
+    const map = { 'screen-home':1, 'screen-amount':2, 'screen-recipient':3, 'screen-review':4, 'screen-sending':5, 'screen-success':6 };
+    const current = map[screenId] || 1;
+    for (let i = 1; i <= 6; i++) {
+      const dot = document.getElementById('fd-' + i);
+      dot.className = 'fb-dot' + (i === current ? ' active' : i < current ? ' done' : '');
+    }
+    document.getElementById('flow-bar').style.display = screenId === 'screen-home' ? 'none' : 'flex';
+  }
+
+  function go(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+    updateFlowBar(screenId);
+    if (screenId === 'screen-sending') {
+      clearTimeout(sendingTimer);
+      // Reset progress bar
+      const fill = document.getElementById('progress-fill');
+      if (fill) { fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = 'progress 2.5s ease-out forwards'; }
+      sendingTimer = setTimeout(() => go('screen-success'), 3000);
+    }
+    if (screenId === 'screen-review') startTimer();
+  }
+
+  // Numpad logic
+  function numPress(key) {
+    if (key === 'del') {
+      currentAmount = currentAmount.length > 1 ? currentAmount.slice(0, -1) : '0';
+    } else if (currentAmount === '0') {
+      currentAmount = key;
+    } else if (currentAmount.length < 6) {
+      currentAmount += key;
+    }
+    document.getElementById('amount-display').textContent = parseInt(currentAmount).toLocaleString();
+    const ghs = Math.round(parseInt(currentAmount) * 16);
+    document.getElementById('recipient-gets').textContent = 'GHS ' + ghs.toLocaleString();
+  }
+
+  // Recipient selection
+  let selectedRecipient = 'kwame';
+  function selectRecipient(id) {
+    ['kwame','amara','fatou'].forEach(r => {
+      document.getElementById('rc-' + r).classList.remove('selected');
+      const check = document.getElementById('check-' + r);
+      check.classList.remove('checked');
+      check.innerHTML = '';
+    });
+    selectedRecipient = id;
+    document.getElementById('rc-' + id).classList.add('selected');
+    const check = document.getElementById('check-' + id);
+    check.classList.add('checked');
+    check.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F6F1EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+
+  // Countdown timer
+  let timerInterval = null;
+  let timerSeconds = 28 * 60 + 43;
+  function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) timerSeconds--;
+      const m = Math.floor(timerSeconds / 60).toString().padStart(2,'0');
+      const s = (timerSeconds % 60).toString().padStart(2,'0');
+      const el = document.getElementById('timer');
+      if (el) el.textContent = m + ':' + s;
+    }, 1000);
+  }
+
+  // Init
+  updateFlowBar('screen-home');
+</script>
+</body>
+</html>
