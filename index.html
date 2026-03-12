@@ -395,6 +395,64 @@
   .btn-outline { width: 100%; background: transparent; border: 1.5px solid rgba(246,241,235,0.25); border-radius: 16px; padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: rgba(246,241,235,0.7); cursor: pointer; transition: background 0.15s; }
   .btn-outline:active { background: rgba(246,241,235,0.07); }
 
+  /* ====== SCREEN 7: COMMUNITY ====== */
+  #screen-community { background: #F6F1EB; }
+  .community-hero {
+    padding: 28px 24px 8px;
+    display: flex; flex-direction: column; gap: 4px;
+    flex-shrink: 0;
+  }
+  .community-hero h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 48px; font-weight: 700; color: #1C3530;
+    letter-spacing: -1.5px; line-height: 1.05;
+  }
+  .community-hero h1 span { color: #C4623A; }
+  .community-hero p { font-size: 14px; color: #8A7E72; margin-top: 8px; line-height: 1.5; }
+  .referral-card {
+    margin: 20px 24px 0;
+    background: #1C3530;
+    border-radius: 20px;
+    padding: 24px;
+    flex-shrink: 0;
+  }
+  .referral-label { font-size: 11px; color: rgba(246,241,235,0.45); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .referral-code-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .referral-code { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; font-weight: 700; color: #F6F1EB; letter-spacing: 2px; }
+  .copy-btn {
+    background: #C4623A; border: none; border-radius: 10px;
+    padding: 8px 16px; font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 700; color: #fff; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .copy-btn:active { opacity: 0.8; }
+  .referral-stats { display: flex; gap: 10px; }
+  .ref-stat {
+    flex: 1; background: rgba(246,241,235,0.08);
+    border-radius: 12px; padding: 14px 12px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .ref-stat .rs-val { font-size: 22px; font-weight: 700; color: #F6F1EB; }
+  .ref-stat .rs-val.accent { color: #C4623A; }
+  .ref-stat .rs-lbl { font-size: 11px; color: rgba(246,241,235,0.45); }
+  .referral-how {
+    margin: 20px 24px 0;
+    display: flex; flex-direction: column; gap: 10px;
+    flex-shrink: 0;
+  }
+  .how-step {
+    display: flex; align-items: center; gap: 14px;
+    background: #fff; border-radius: 16px; padding: 14px 16px;
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #F0EAE0; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #1C3530; flex-shrink: 0;
+  }
+  .step-text { display: flex; flex-direction: column; gap: 2px; }
+  .step-text strong { font-size: 14px; font-weight: 600; color: #1C3530; }
+  .step-text span { font-size: 12px; color: #8A7E72; }
+
   /* Restart button */
   .restart { position: fixed; bottom: 20px; right: 20px; background: #1C3530; border: none; color: #F6F1EB; font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 8px 14px; border-radius: 20px; cursor: pointer; opacity: 0.6; z-index: 100; }
   .restart:hover { opacity: 1; }
@@ -507,9 +565,9 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span>Send</span>
       </div>
-      <div class="nav-item">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/><path d="M3 9h18" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/></svg>
-        <span>History</span>
+      <div class="nav-item" onclick="go('screen-community')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Refer</span>
       </div>
       <div class="nav-item">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgba(246,241,235,0.35)" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="rgba(246,241,235,0.35)" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -734,7 +792,48 @@
     </div>
     <div class="success-cta">
       <button class="btn-primary" style="background:#C4623A;" onclick="go('screen-amount')">Send again</button>
+      <button class="btn-outline" onclick="go('screen-community')" style="border-color:rgba(196,98,58,0.4);color:#C4623A;">Refer a friend · earn $10</button>
       <button class="btn-outline" onclick="go('screen-home')">Back to home</button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 7: COMMUNITY ===== -->
+  <div class="screen" id="screen-community">
+    <div class="status-bar"><span>9:41</span><div class="status-icons"><svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#1C3530"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="#1C3530"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#1C3530"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+    <div class="community-hero">
+      <h1>Send together.<br/><span>Earn together.</span></h1>
+      <p>Refer a friend — you both get $10 to send home.</p>
+    </div>
+    <div class="referral-card">
+      <div class="referral-label">Your referral code</div>
+      <div class="referral-code-row">
+        <span class="referral-code">AKOMA-KA3</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <div class="referral-stats">
+        <div class="ref-stat"><span class="rs-val">3</span><span class="rs-lbl">Friends invited</span></div>
+        <div class="ref-stat"><span class="rs-val accent">$30</span><span class="rs-lbl">Earned</span></div>
+        <div class="ref-stat"><span class="rs-val">2</span><span class="rs-lbl">Pending</span></div>
+      </div>
+    </div>
+    <div class="referral-how">
+      <div class="how-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Share your code</strong><span>Send it to friends & family</span></div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>They sign up & send</strong><span>Friend completes their first transfer</span></div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>You both get $10</strong><span>Added to your wallet instantly</span></div>
+      </div>
+    </div>
+    <div style="flex:1;"></div>
+    <div class="cta-area">
+      <button class="btn-primary" onclick="shareCode()">Share your code</button>
+      <button class="btn-secondary" onclick="go('screen-home')">Back to home</button>
     </div>
   </div>
 
@@ -747,13 +846,13 @@
   let sendingTimer = null;
 
   function updateFlowBar(screenId) {
-    const map = { 'screen-home':1, 'screen-amount':2, 'screen-recipient':3, 'screen-review':4, 'screen-sending':5, 'screen-success':6 };
+    const map = { 'screen-home':1, 'screen-amount':2, 'screen-recipient':3, 'screen-review':4, 'screen-sending':5, 'screen-success':6, 'screen-community':0 };
     const current = map[screenId] || 1;
     for (let i = 1; i <= 6; i++) {
       const dot = document.getElementById('fd-' + i);
       dot.className = 'fb-dot' + (i === current ? ' active' : i < current ? ' done' : '');
     }
-    document.getElementById('flow-bar').style.display = screenId === 'screen-home' ? 'none' : 'flex';
+    document.getElementById('flow-bar').style.display = (screenId === 'screen-home' || screenId === 'screen-community') ? 'none' : 'flex';
   }
 
   function go(screenId) {
@@ -812,6 +911,20 @@
       const el = document.getElementById('timer');
       if (el) el.textContent = m + ':' + s;
     }, 1000);
+  }
+
+  function copyCode(btn) {
+    navigator.clipboard.writeText('AKOMA-KA3').catch(() => {});
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  }
+
+  function shareCode() {
+    if (navigator.share) {
+      navigator.share({ title: 'Join Akoma', text: 'Use my code AKOMA-KA3 and we both get $10 to send home free. Download Akoma: akoma.app' }).catch(() => {});
+    } else {
+      copyCode(document.querySelector('.copy-btn'));
+    }
   }
 
   // Init
