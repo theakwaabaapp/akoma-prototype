@@ -219,6 +219,9 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
 
 @keyframes prog { from{width:0} to{width:100%} }
 @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+.gb-cause { display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:14px 16px;margin:0 16px 8px;border:2px solid transparent;cursor:pointer; }
+.gb-cause.on { border-color:#C4623A; }
 </style>
 </head>
 <body>
@@ -325,26 +328,85 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     <div class="nav-spacer"></div>
   </div>
   <div class="dm-hdr"><div id="dm-title" class="dm-title">How should Kwame<br>receive it?</div><div class="dm-sub">Choose a delivery method</div></div>
-  <div class="dm-card selected" onclick="go('s-review')">
+  <div class="dm-card selected" onclick="go('s-giveback')">
     <div class="dm-icon dm-icon-mtn">💛</div>
     <div class="dm-body"><div class="dm-name">MTN Mobile Money</div><div class="dm-desc">Sent straight to MoMo wallet</div><div class="dm-meta"><div class="dm-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Instant</div><div class="dm-meta-item"><span class="dm-free">No fee</span></div></div></div>
     <span class="dm-badge">FASTEST</span>
     <div class="dm-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F6F1EB" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
   </div>
-  <div class="dm-card" onclick="go('s-review')">
+  <div class="dm-card" onclick="go('s-giveback')">
     <div class="dm-icon dm-icon-bank">🏦</div>
     <div class="dm-body"><div class="dm-name">Bank Transfer</div><div class="dm-desc">GCB, Ecobank, Stanbic &amp; more</div><div class="dm-meta"><div class="dm-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>~2 minutes</div><div class="dm-meta-item"><span class="dm-free">No fee</span></div></div></div>
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D0C9C1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg>
   </div>
-  <div class="dm-card" onclick="go('s-review')">
+  <div class="dm-card" onclick="go('s-giveback')">
     <div class="dm-icon dm-icon-cash">💳</div>
     <div class="dm-body"><div class="dm-name">Cash Pickup</div><div class="dm-desc">140+ agent locations in Accra</div><div class="dm-meta"><div class="dm-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Within 1 hour</div><div class="dm-meta-item"><span class="dm-free">No fee</span></div></div></div>
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D0C9C1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg>
   </div>
-  <div class="cta-bar" style="margin-top:auto;"><button class="btn" onclick="go('s-review')">Continue with MoMo</button></div>
+  <div class="cta-bar" style="margin-top:auto;"><button class="btn" onclick="go('s-giveback')">Continue with MoMo</button></div>
 </div>
 
-<!-- S5: REVIEW -->
+
+<!-- S5: GIVE BACK -->
+<div class="screen" id="s-giveback">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-delivery')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span class="nav-center-word">akoma</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="padding:16px 20px 8px;">
+      <div style="font-size:26px;font-weight:800;color:#1C3530;letter-spacing:-0.5px;">Give Back</div>
+      <div style="font-size:14px;color:#9B9390;margin-top:4px;">Round up and support a cause in Ghana</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:14px;padding:14px 16px;margin:4px 16px 14px;">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#1C3530;" id="gb-roundup-label">Round up $0.43 &#x2192; $201.00</div>
+        <div style="font-size:12px;color:#9B9390;margin-top:2px;">Adds a small amount for a cause</div>
+      </div>
+      <div id="gb-toggle" onclick="gbToggle()" style="width:44px;height:26px;background:#C4623A;border-radius:13px;position:relative;flex-shrink:0;cursor:pointer;">
+        <div id="gb-knob" style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div>
+      </div>
+    </div>
+    <div id="gb-c1" class="gb-cause on" onclick="gbPick(1)">
+      <div class="pav" style="background:#1C3530;width:44px;height:44px;flex-shrink:0;font-size:13px;">GE</div>
+      <div style="flex:1;">
+        <div style="font-size:15px;font-weight:700;color:#1C3530;">Girls Education Fund</div>
+        <div style="font-size:11px;color:#9B9390;margin-top:1px;">Ghana Education Trust &middot; Est. 2009</div>
+        <div style="font-size:12px;color:#5A8A7A;margin-top:3px;">Keeps 847 girls in school annually</div>
+      </div>
+      <div id="gb-chk1" style="width:24px;height:24px;border-radius:50%;background:#C4623A;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    </div>
+    <div id="gb-c2" class="gb-cause" onclick="gbPick(2)">
+      <div class="pav" style="background:#1565C0;width:44px;height:44px;flex-shrink:0;font-size:13px;">CW</div>
+      <div style="flex:1;">
+        <div style="font-size:15px;font-weight:700;color:#1C3530;">Clean Water Initiative</div>
+        <div style="font-size:11px;color:#9B9390;margin-top:1px;">WaterAid Ghana &middot; Est. 2003</div>
+        <div style="font-size:12px;color:#5A8A7A;margin-top:3px;">12 villages served in Northern Ghana</div>
+      </div>
+      <div id="gb-chk2" style="width:24px;height:24px;border-radius:50%;border:2px solid #D0C9C1;flex-shrink:0;"></div>
+    </div>
+    <div id="gb-c3" class="gb-cause" onclick="gbPick(3)">
+      <div class="pav" style="background:#880E4F;width:44px;height:44px;flex-shrink:0;font-size:13px;">MH</div>
+      <div style="flex:1;">
+        <div style="font-size:15px;font-weight:700;color:#1C3530;">Maternal Health Ghana</div>
+        <div style="font-size:11px;color:#9B9390;margin-top:1px;">CHAG Network &middot; Est. 1967</div>
+        <div style="font-size:12px;color:#5A8A7A;margin-top:3px;">Safe deliveries in remote communities</div>
+      </div>
+      <div id="gb-chk3" style="width:24px;height:24px;border-radius:50%;border:2px solid #D0C9C1;flex-shrink:0;"></div>
+    </div>
+    <div style="text-align:center;padding:14px 20px;">
+      <span onclick="skipGiveback()" style="font-size:13px;color:#9B9390;text-decoration:underline;cursor:pointer;">Skip &mdash; don&rsquo;t add donation</span>
+    </div>
+    <div style="padding:0 16px 32px;">
+      <button class="btn" id="gb-cta" onclick="go('s-review')">Continue &middot; $<span id="gb-total">201.00</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- S6: REVIEW -->
 <div class="screen" id="s-review">
   <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
   <div class="nav-back">
@@ -372,7 +434,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
   </div>
 </div>
 
-<!-- S6: SENDING -->
+<!-- S7: SENDING -->
 <div class="screen" id="s-sending" style="background:#1C3530;align-items:center;justify-content:center;">
   <div style="font-size:52px;margin-bottom:24px;animation:spin 2s linear infinite;">🌍</div>
   <div id="snd-h2" style="font-size:26px;font-weight:800;color:#F6F1EB;text-align:center;padding:0 32px;margin-bottom:10px;letter-spacing:-0.5px;">Sending $200.00…</div>
@@ -380,7 +442,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
   <div style="width:200px;height:3px;background:rgba(246,241,235,0.15);border-radius:2px;overflow:hidden;"><div id="prog-fill" style="height:100%;border-radius:2px;background:#C4623A;animation:prog 2.8s ease-in-out forwards;"></div></div>
 </div>
 
-<!-- S7: SUCCESS -->
+<!-- S8: SUCCESS -->
 <div class="screen" id="s-success">
   <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.45);">9:41</span></div>
   <div style="flex:1;background:#1C3530;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 0 24px;">
@@ -400,7 +462,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
   </div>
 </div>
 
-<!-- S8: TRANSFERS -->
+<!-- S9: TRANSFERS -->
 <div class="screen" id="s-transfers">
   <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
   <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 20px 0;"><div class="tx-page-title" style="padding:0;">Transfers</div><button class="nav-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button></div>
@@ -502,7 +564,14 @@ function syncReview(){const r=RCPS[rec],n=parseFloat(amt)||0,usd=`$${n.toFixed(2
 function syncSending(){const r=RCPS[rec],n=parseFloat(amt)||0;document.getElementById('snd-h2').textContent=`Sending $${n.toFixed(2)}…`;document.getElementById('snd-p').textContent=`Routing via ${r.net}. Usually takes less than a minute.`;const pf=document.getElementById('prog-fill');pf.style.animation='none';pf.offsetWidth;pf.style.animation='prog 2.8s ease-in-out forwards';}
 function syncSuccess(){const r=RCPS[rec],n=parseFloat(amt)||0,usd=`$${n.toFixed(2)}`,localFmt=`${r.cur} ${fmt(n*r.rate,r.cur)}`;document.getElementById('suc-heading').textContent=`${usd} Sent!`;document.getElementById('suc-sub').textContent=`${r.name} gets ${localFmt} · est. 2 min`;document.getElementById('suc-sent').textContent=`${usd} USD`;document.getElementById('suc-recv').textContent=localFmt;}
 function startTimer(){clearInterval(timerInterval);let secs=28*60+43;function tick(){const el=document.getElementById('timer');if(el)el.textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0');if(secs-- >0){}else clearInterval(timerInterval);}tick();timerInterval=setInterval(tick,1000);}
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='s-send')syncSend();if(id==='s-review'){syncReview();startTimer();}if(id==='s-sending'){syncSending();setTimeout(()=>go('s-success'),3000);}if(id==='s-success')syncSuccess();}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='s-send')syncSend();if(id==='s-giveback')syncGiveback();if(id==='s-review'){syncReview();startTimer();}if(id==='s-sending'){syncSending();setTimeout(()=>go('s-success'),3000);}if(id==='s-success')syncSuccess();}
+
+let gbOn=true, gbSelected=1;
+function gbToggle(){gbOn=!gbOn;document.getElementById('gb-toggle').style.background=gbOn?'#C4623A':'#D0C9C1';document.getElementById('gb-knob').style.right=gbOn?'2px':'18px';document.querySelectorAll('.gb-cause').forEach(c=>c.style.opacity=gbOn?'1':'0.4');syncGiveback();}
+function gbPick(n){gbSelected=n;[1,2,3].forEach(i=>{const card=document.getElementById('gb-c'+i),chk=document.getElementById('gb-chk'+i);if(i===n){card.classList.add('on');chk.style.background='#C4623A';chk.style.border='none';chk.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';}else{card.classList.remove('on');chk.style.background='transparent';chk.style.border='2px solid #D0C9C1';chk.innerHTML='';}});}
+function skipGiveback(){gbOn=false;go('s-review');}
+function syncGiveback(){const n=parseFloat(amt)||0;const cents=Math.ceil(n)-n;const roundup=cents<0.01?1:cents;const total=(n+roundup).toFixed(2);document.getElementById('gb-roundup-label').textContent=`Round up $${roundup.toFixed(2)} → $${total}`;document.getElementById('gb-total').textContent=total;}
+
 function hardReset(){amt='200';rec='kwame';clearInterval(timerInterval);}
 document.querySelectorAll('.tx-chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.tx-chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');}));
 syncSend();
