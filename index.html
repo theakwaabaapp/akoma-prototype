@@ -313,6 +313,26 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
 .track-btn-outline { width:100%; padding:15px; border-radius:14px; background:none; border:1.5px solid #C4623A; color:#C4623A; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; cursor:pointer; }
 .track-cancel-link { text-align:center; font-size:13px; color:#C62828; cursor:pointer; font-family:'DM Sans',sans-serif; margin-top:12px; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+
+/* __ NOTIFICATION INBOX __ */
+.notif-card { background:#fff; border-radius:16px; margin:0 16px; overflow:hidden; }
+.notif-row { display:flex; align-items:flex-start; gap:12px; padding:14px 16px; border-bottom:1px solid #F2EDE8; }
+.notif-row:last-child { border-bottom:none; }
+.notif-row.unread { border-left:3px solid #C4623A; padding-left:13px; }
+.notif-icon-circle { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.notif-text { flex:1; }
+.notif-title { font-size:14px; font-weight:700; color:#1C3530; margin-bottom:2px; }
+.notif-sub { font-size:13px; color:#9B9390; line-height:1.4; }
+.notif-time { font-size:11px; color:#C0B9B0; white-space:nowrap; margin-top:2px; }
+.notif-sec-lbl { font-size:11px; font-weight:700; color:#9B9390; letter-spacing:1px; text-transform:uppercase; padding:0 20px 8px; }
+/* __ PIN CREATION __ */
+.pin-create-dots { display:flex; gap:16px; justify-content:center; margin-bottom:40px; }
+.pin-create-dot { width:22px; height:22px; border-radius:50%; border:2px solid rgba(246,241,235,0.2); }
+.pin-create-dot.filled { background:#C4623A; border-color:#C4623A; }
+.pin-numpad { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:0 20px; flex-shrink:0; }
+.pin-numkey { width:72px; height:72px; border-radius:50%; background:rgba(246,241,235,0.1); border:none; cursor:pointer; font-size:22px; font-weight:700; color:#F6F1EB; font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; margin:0 auto; }
+.pin-numkey:active { background:rgba(246,241,235,0.18); }
+.pin-numkey.empty { background:none; cursor:default; }
 </style>
 </head>
 <body>
@@ -1086,7 +1106,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     </div>
   </div>
   <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:12px;">
-    <button class="btn" style="background:#C4623A;" onclick="go('s-home')">Start sending</button>
+    <button class="btn" style="background:#C4623A;" onclick="go('s-pin-create')">Start sending</button>
     <div style="text-align:center;"><span style="font-size:13px;color:rgba(246,241,235,0.4);font-family:'DM Sans',sans-serif;">Need higher limits? </span><span style="font-size:13px;color:#C4623A;font-weight:600;font-family:'DM Sans',sans-serif;">Contact support</span></div>
   </div>
 </div>
@@ -1195,6 +1215,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
   </div>
   <div class="scroll">
     <div style="font-size:26px;font-weight:800;color:#1C3530;padding:8px 20px 16px;letter-spacing:-0.5px;font-family:'DM Sans',sans-serif;">Stay informed</div>
+    <div style="padding:0 20px 12px;"><span onclick="go('s-notif-inbox')" style="font-size:13px;font-weight:600;color:#C4623A;cursor:pointer;">View all notifications →</span></div>
     <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 8px;font-family:'DM Sans',sans-serif;">Transfers</div>
     <div style="background:#fff;border-radius:16px;margin:0 16px 16px;overflow:hidden;">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
@@ -1413,7 +1434,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     <div style="font-size:28px;font-weight:800;color:#F6F1EB;text-align:center;letter-spacing:-0.5px;margin-bottom:12px;">Enable Face ID</div>
     <div style="font-size:15px;color:rgba(246,241,235,0.55);text-align:center;line-height:1.6;margin-bottom:40px;">Sign in instantly with your face. Your biometric data never leaves your device.</div>
     <div style="width:100%;display:flex;flex-direction:column;gap:14px;">
-      <button class="btn" style="background:#C4623A;" onclick="go('s-home')">Enable Face ID</button>
+      <button class="btn" style="background:#C4623A;" onclick="go('s-pin-create')">Enable Face ID</button>
       <div style="text-align:center;">
         <span onclick="go('s-home')" style="font-size:14px;color:rgba(246,241,235,0.45);cursor:pointer;">Maybe later</span>
       </div>
@@ -2048,6 +2069,199 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     <div style="height:24px;"></div>
   </div>
 </div>
+
+
+<!-- NOTIFICATION INBOX -->
+<div class="screen" id="s-notif-inbox">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-profile')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Notifications</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="font-size:34px;font-weight:800;color:#1C3530;letter-spacing:-1px;padding:8px 20px 16px;">Notifications</div>
+    <div class="notif-sec-lbl">Today</div>
+    <div class="notif-card" style="margin-bottom:0;">
+      <div class="notif-row unread">
+        <div class="notif-icon-circle" style="background:#FEF0EB;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="notif-text">
+          <div class="notif-title">Transfer delivered</div>
+          <div class="notif-sub">Kwame received GHS 3,200.00</div>
+        </div>
+        <div class="notif-time">2 min ago</div>
+      </div>
+      <div class="notif-row unread">
+        <div class="notif-icon-circle" style="background:#FFF8DC;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E6A000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="notif-text">
+          <div class="notif-title">$10 reward unlocked!</div>
+          <div class="notif-sub">Kwame completed his first transfer</div>
+        </div>
+        <div class="notif-time">1 hour ago</div>
+      </div>
+      <div class="notif-row">
+        <div class="notif-icon-circle" style="background:#F2EDE8;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <div class="notif-text">
+          <div class="notif-title">Rate alert triggered</div>
+          <div class="notif-sub">GHS 16.50 per $1 reached your target</div>
+        </div>
+        <div class="notif-time">3 hours ago</div>
+      </div>
+      <div class="notif-row">
+        <div class="notif-icon-circle" style="background:#F2EDE8;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="notif-text">
+          <div class="notif-title">Identity verified</div>
+          <div class="notif-sub">Your account is fully verified</div>
+        </div>
+        <div class="notif-time">Yesterday</div>
+      </div>
+    </div>
+    <div class="notif-sec-lbl" style="margin-top:20px;">Earlier</div>
+    <div class="notif-card">
+      <div class="notif-row">
+        <div class="notif-icon-circle" style="background:#F2EDE8;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+        </div>
+        <div class="notif-text">
+          <div class="notif-title">Transfer initiated</div>
+          <div class="notif-sub">You sent $75.00 to Amara Conteh</div>
+        </div>
+        <div class="notif-time">Mar 8</div>
+      </div>
+      <div class="notif-row">
+        <div class="notif-icon-circle" style="background:#FEF0EB;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+        </div>
+        <div class="notif-text">
+          <div class="notif-title">Welcome to Akoma!</div>
+          <div class="notif-sub">Your account is ready. Send your first transfer.</div>
+        </div>
+        <div class="notif-time">Mar 7</div>
+      </div>
+    </div>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<!-- PIN CREATE: Step 1 -->
+<div class="screen" id="s-pin-create" style="background:#1C3530;">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.45);">9:41</span></div>
+  <div class="nav-back" style="padding-top:0;">
+    <button class="back-btn" style="background:rgba(246,241,235,0.1);" onclick="go('s-biometric')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(246,241,235,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="nav-center"><span class="nav-center-word" style="color:rgba(246,241,235,0.6);">Security</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:16px;">
+    <div style="font-size:28px;font-weight:700;color:#fff;text-align:center;margin-bottom:8px;">Create your PIN</div>
+    <div style="font-size:14px;color:rgba(246,241,235,0.6);text-align:center;margin-bottom:40px;">You'll use this to unlock the app</div>
+    <div class="pin-create-dots">
+      <div class="pin-create-dot filled"></div>
+      <div class="pin-create-dot filled"></div>
+      <div class="pin-create-dot"></div>
+      <div class="pin-create-dot"></div>
+    </div>
+  </div>
+  <div class="pin-numpad" style="margin-bottom:12px;">
+    <button class="pin-numkey">1</button>
+    <button class="pin-numkey">2</button>
+    <button class="pin-numkey">3</button>
+    <button class="pin-numkey">4</button>
+    <button class="pin-numkey">5</button>
+    <button class="pin-numkey">6</button>
+    <button class="pin-numkey">7</button>
+    <button class="pin-numkey">8</button>
+    <button class="pin-numkey">9</button>
+    <button class="pin-numkey empty"></button>
+    <button class="pin-numkey" onclick="go('s-pin-confirm')">0</button>
+    <button class="pin-numkey">
+      <svg width="22" height="16" viewBox="0 0 24 18" fill="none" stroke="rgba(246,241,235,0.5)" stroke-width="2" stroke-linecap="round"><path d="M9 3H19a2 2 0 012 2v8a2 2 0 01-2 2H9l-6-6z"/><line x1="12" y1="7" x2="17" y2="12"/><line x1="17" y1="7" x2="12" y2="12"/></svg>
+    </button>
+  </div>
+  <div style="height:32px;"></div>
+</div>
+
+<!-- PIN CONFIRM: Step 2 -->
+<div class="screen" id="s-pin-confirm" style="background:#1C3530;">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.45);">9:41</span></div>
+  <div class="nav-back" style="padding-top:0;">
+    <button class="back-btn" style="background:rgba(246,241,235,0.1);" onclick="go('s-pin-create')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(246,241,235,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="nav-center"><span class="nav-center-word" style="color:rgba(246,241,235,0.6);">Security</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:16px;">
+    <div style="font-size:28px;font-weight:700;color:#fff;text-align:center;margin-bottom:8px;">Confirm your PIN</div>
+    <div style="font-size:14px;color:rgba(246,241,235,0.6);text-align:center;margin-bottom:40px;">Enter your PIN again to confirm</div>
+    <div class="pin-create-dots">
+      <div class="pin-create-dot filled"></div>
+      <div class="pin-create-dot filled"></div>
+      <div class="pin-create-dot filled"></div>
+      <div class="pin-create-dot filled"></div>
+    </div>
+  </div>
+  <div class="pin-numpad" style="margin-bottom:12px;">
+    <button class="pin-numkey">1</button>
+    <button class="pin-numkey">2</button>
+    <button class="pin-numkey">3</button>
+    <button class="pin-numkey">4</button>
+    <button class="pin-numkey">5</button>
+    <button class="pin-numkey">6</button>
+    <button class="pin-numkey">7</button>
+    <button class="pin-numkey">8</button>
+    <button class="pin-numkey">9</button>
+    <button class="pin-numkey empty"></button>
+    <button class="pin-numkey">0</button>
+    <button class="pin-numkey">
+      <svg width="22" height="16" viewBox="0 0 24 18" fill="none" stroke="rgba(246,241,235,0.5)" stroke-width="2" stroke-linecap="round"><path d="M9 3H19a2 2 0 012 2v8a2 2 0 01-2 2H9l-6-6z"/><line x1="12" y1="7" x2="17" y2="12"/><line x1="17" y1="7" x2="12" y2="12"/></svg>
+    </button>
+  </div>
+  <div style="padding:0 20px;margin-bottom:32px;">
+    <button class="btn" style="background:#C4623A;padding:17px;border-radius:14px;" onclick="go('s-home')">Continue</button>
+  </div>
+</div>
+
+<!-- TRANSFERS EMPTY STATE -->
+<div class="screen" id="s-empty-transfers">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <div class="nav-spacer"></div>
+    <div class="nav-center"></div>
+    <button class="nav-icon-btn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  </div>
+  <div class="tx-page-title">Transfers</div>
+  <div class="tx-filters">
+    <button class="tx-chip on">All</button>
+    <button class="tx-chip">Completed</button>
+    <button class="tx-chip">Pending</button>
+    <button class="tx-chip">Failed</button>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:32px;">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0B9B0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+    <div style="font-size:20px;font-weight:700;color:#1C3530;margin-top:16px;">No transfers yet</div>
+    <div style="font-size:14px;color:#9B9390;text-align:center;line-height:1.6;padding:0 40px;margin-top:8px;">When you send money, your transfers will appear here.</div>
+    <div style="padding:24px 20px 0;width:100%;">
+      <button class="btn" style="background:#C4623A;padding:17px;border-radius:14px;" onclick="go('s-send')">Send money now</button>
+    </div>
+  </div>
+  <div class="bnav">
+    <button class="bi" onclick="go('s-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+    <button class="bi on" onclick="go('s-transfers')"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span>Transfers</span></button>
+    <button class="bi" onclick="go('s-community')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Community</span></button>
+    <button class="bi" onclick="go('s-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
+  </div>
+</div>
+
 
 <script>
 const RCPS={kwame:{name:'Kwame Mensah',short:'Kwame',init:'KM',avClass:'pav-km',cur:'GHS',rate:16,rateStr:'16.00',net:'MTN MoMo',phone:'+233 24 123 4567',flag:'🇬🇭 GH',badgeHTML:'<span class="nbadge nb-mtn">MTN MoMo</span>'},amara:{name:'Amara Conteh',short:'Amara',init:'AC',avClass:'pav-ac',cur:'KES',rate:130,rateStr:'130.00',net:'M-Pesa',phone:'+254 712 345 678',flag:'🇰🇪 KE',badgeHTML:'<span class="nbadge nb-mpesa">M-Pesa</span>'},fatou:{name:'Fatou Diallo',short:'Fatou',init:'FD',avClass:'pav-fd',cur:'XOF',rate:620,rateStr:'620',net:'Orange Money',phone:'+221 77 123 4567',flag:'🇸🇳 SN',badgeHTML:'<span class="nbadge nb-orange">Orange Money</span>'}};
