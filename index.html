@@ -430,8 +430,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     </div>
     <div class="rv-cfpb"><div class="rv-cfpb-title">Required Disclosure · Reg. E / 12 CFR §1073</div><div id="rv-cfpb" class="rv-cfpb-text">You are sending $200.00 USD to Kwame Mensah. Total charged: $200.00 USD (fee: $0.00). Rate: 1 USD = 16.00 GHS. Recipient receives approx. GHS 3,200.00. Cancel within 30 min at no cost — support@akoma.app or 1-800-AKOMA-US. Error resolution: 180 days.</div></div>
     <div style="padding:0 16px 8px;"><button class="btn" onclick="go('s-sending')">Confirm &amp; Send $<span id="rv-btn-amt">200.00</span></button></div>
-    <div style="height:16px;"></div>
-  </div>
+    <div style="text-align:center;padding:4px 16px 16px;"><span onclick="go('s-cancel')" style="font-size:13px;color:#9B9390;text-decoration:underline;cursor:pointer;font-family:'DM Sans',sans-serif;">Cancel this transfer</span></div></div>
 </div>
 
 <!-- S7: SENDING -->
@@ -539,7 +538,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     <div class="prof-sec-lbl">Payments</div>
     <div class="prof-menu">
       <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span><span class="prof-item-lbl">Payment methods</span><span class="prof-item-val">2 saved</span><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-      <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span class="prof-item-lbl">Transfer limits</span><span class="prof-item-val">$5K / transfer</span><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+      <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span class="prof-item-lbl" onclick="go('s-limits')">Transfer limits</span><span class="prof-item-val">$5K / transfer</span><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
     </div>
     <div class="prof-so"><button class="prof-so-btn"><svg style="color:#C4623A;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span style="font-size:15px;font-weight:600;color:#C4623A;">Sign out</span></button></div>
     <div style="height:8px;"></div>
@@ -788,9 +787,481 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
       <div class="rv-tr" style="border:none;"><div class="rv-td-l" style="color:#9B9390;">Sent from</div><div class="rv-td-r">Visa &bull;&bull;&bull; 4521</div></div>
     </div>
     <div style="display:flex;gap:10px;padding:8px 16px 32px;">
-      <button style="flex:1;padding:15px;border-radius:14px;background:#fff;border:1.5px solid rgba(28,53,48,0.15);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#1C3530;cursor:pointer;">Share receipt</button>
+      <button style="flex:1;padding:15px;border-radius:14px;background:#fff;border:1.5px solid rgba(28,53,48,0.15);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#1C3530;cursor:pointer;" onclick="go('s-receipt')">Share receipt</button>
       <button style="flex:1;padding:15px;border-radius:14px;background:#C4623A;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#fff;cursor:pointer;" onclick="go('s-send')">Repeat transfer</button>
     </div>
+  </div>
+</div>
+
+
+<!-- KYC 1: DOC SELECT -->
+<div class="screen" id="s-kyc1">
+  <div class="sb"><span class="sb-time">9:41</span></div>
+  <div style="display:flex;align-items:center;gap:12px;padding:8px 20px 4px;">
+    <button class="back-btn" onclick="go('s-verify')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div style="flex:1;height:4px;background:#E8E2DA;border-radius:2px;overflow:hidden;"><div style="width:25%;height:100%;background:#1C3530;border-radius:2px;"></div></div>
+    <span style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;white-space:nowrap;">1 of 4</span>
+  </div>
+  <div style="flex:1;padding:24px 20px 0;overflow-y:auto;">
+    <div style="width:56px;height:56px;border-radius:16px;background:#1C3530;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F2EDE8" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    </div>
+    <div style="font-size:28px;font-weight:800;color:#1C3530;letter-spacing:-0.5px;line-height:1.2;margin-bottom:8px;font-family:'DM Sans',sans-serif;">Verify your identity</div>
+    <div style="font-size:14px;color:#9B9390;margin-bottom:28px;font-family:'DM Sans',sans-serif;">Choose a government-issued ID to verify who you are. This keeps your account secure.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+      <div onclick="go('s-kyc2')" style="display:flex;align-items:center;gap:14px;background:#1C3530;border-radius:14px;padding:16px;cursor:pointer;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(246,241,235,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(246,241,235,0.8)" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div style="flex:1;"><div style="font-size:15px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Passport</div><div style="font-size:12px;color:rgba(246,241,235,0.55);margin-top:2px;font-family:'DM Sans',sans-serif;">Any nationality &middot; Most accepted</div></div>
+        <div style="width:22px;height:22px;border-radius:50%;background:#C4623A;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:16px;cursor:pointer;">
+        <div style="width:40px;height:40px;border-radius:10px;background:#F2EDE8;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+        <div style="flex:1;"><div style="font-size:15px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">National ID card</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">Front &amp; back required</div></div>
+        <div style="width:22px;height:22px;border-radius:50%;border:2px solid #D0C9C1;"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:16px;cursor:pointer;">
+        <div style="width:40px;height:40px;border-radius:10px;background:#F2EDE8;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <div style="flex:1;"><div style="font-size:15px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">Driver&rsquo;s licence</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">Front &amp; back required</div></div>
+        <div style="width:22px;height:22px;border-radius:50%;border:2px solid #D0C9C1;"></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;background:#fff;border-radius:12px;padding:13px 14px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">Your data is encrypted and only used for identity verification</span>
+    </div>
+  </div>
+  <div class="cta-bar"><button class="btn" onclick="go('s-kyc2')">Continue with Passport</button></div>
+</div>
+
+<!-- KYC 2: ID SCAN -->
+<div class="screen" id="s-kyc2" style="background:#111;">
+  <div class="sb" style="background:#111;"><span class="sb-time" style="color:rgba(255,255,255,0.6);">9:41</span></div>
+  <div style="display:flex;align-items:center;gap:12px;padding:8px 20px 4px;">
+    <button class="back-btn" style="background:rgba(255,255,255,0.1);" onclick="go('s-kyc1')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div style="flex:1;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;"><div style="width:50%;height:100%;background:#C4623A;border-radius:2px;"></div></div>
+    <span style="font-size:13px;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;white-space:nowrap;">2 of 4</span>
+  </div>
+  <div style="text-align:center;padding:20px 20px 16px;">
+    <div style="font-size:20px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Scan passport photo page</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px;font-family:'DM Sans',sans-serif;">Position the page within the frame</div>
+  </div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 24px;">
+    <div style="width:100%;aspect-ratio:1.4;border:2px solid #C4623A;border-radius:8px;position:relative;background:rgba(255,255,255,0.05);">
+      <div style="position:absolute;top:12px;left:12px;width:20px;height:20px;border-top:3px solid #C4623A;border-left:3px solid #C4623A;border-radius:2px 0 0 0;"></div>
+      <div style="position:absolute;top:12px;right:12px;width:20px;height:20px;border-top:3px solid #C4623A;border-right:3px solid #C4623A;border-radius:0 2px 0 0;"></div>
+      <div style="position:absolute;bottom:12px;left:12px;width:20px;height:20px;border-bottom:3px solid #C4623A;border-left:3px solid #C4623A;border-radius:0 0 0 2px;"></div>
+      <div style="position:absolute;bottom:12px;right:12px;width:20px;height:20px;border-bottom:3px solid #C4623A;border-right:3px solid #C4623A;border-radius:0 0 2px 0;"></div>
+      <div style="position:absolute;inset:30px;display:flex;align-items:center;gap:14px;">
+        <div style="width:50px;height:62px;border-radius:4px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+          <div style="height:8px;background:rgba(255,255,255,0.15);border-radius:3px;width:80%;"></div>
+          <div style="height:8px;background:rgba(255,255,255,0.1);border-radius:3px;width:60%;"></div>
+          <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:3px;width:90%;margin-top:4px;font-size:9px;color:rgba(255,255,255,0.3);font-family:monospace;display:flex;align-items:center;">P&lt;GBRSMITH&lt;&lt;JOHN&lt;&lt;&lt;&lt;&lt;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:16px 20px;display:flex;flex-direction:column;gap:6px;">
+    <div style="display:flex;align-items:center;gap:8px;"><div style="width:6px;height:6px;border-radius:50%;background:#C4623A;flex-shrink:0;"></div><span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:'DM Sans',sans-serif;">Good lighting, no glare or shadows</span></div>
+    <div style="display:flex;align-items:center;gap:8px;"><div style="width:6px;height:6px;border-radius:50%;background:#C4623A;flex-shrink:0;"></div><span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:'DM Sans',sans-serif;">All text must be clearly readable</span></div>
+    <div style="display:flex;align-items:center;gap:8px;"><div style="width:6px;height:6px;border-radius:50%;background:#C4623A;flex-shrink:0;"></div><span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:'DM Sans',sans-serif;">No editing or filters on the image</span></div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;justify-content:center;">
+    <div onclick="go('s-kyc3')" style="width:64px;height:64px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1C3530" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- KYC 3: SELFIE -->
+<div class="screen" id="s-kyc3" style="background:#111;">
+  <div class="sb" style="background:#111;"><span class="sb-time" style="color:rgba(255,255,255,0.6);">9:41</span></div>
+  <div style="display:flex;align-items:center;gap:12px;padding:8px 20px 4px;">
+    <button class="back-btn" style="background:rgba(255,255,255,0.1);" onclick="go('s-kyc2')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div style="flex:1;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;"><div style="width:75%;height:100%;background:#C4623A;border-radius:2px;"></div></div>
+    <span style="font-size:13px;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;white-space:nowrap;">3 of 4</span>
+  </div>
+  <div style="text-align:center;padding:20px 20px 0;">
+    <div style="font-size:20px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Take a selfie</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px;font-family:'DM Sans',sans-serif;">Look directly at the camera and hold still</div>
+  </div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px 40px 0;">
+    <div style="width:260px;height:300px;border-radius:50% 50% 48% 48%;border:3px solid #C4623A;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04);">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:center;gap:8px;padding:14px 0 10px;">
+    <div style="width:8px;height:8px;border-radius:50%;background:#C4623A;"></div>
+    <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);"></div>
+    <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);"></div>
+  </div>
+  <div style="padding:8px 20px;display:flex;flex-direction:column;gap:6px;">
+    <div style="display:flex;align-items:center;gap:8px;"><div style="width:6px;height:6px;border-radius:50%;background:#C4623A;flex-shrink:0;"></div><span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:'DM Sans',sans-serif;">Remove glasses and face coverings</span></div>
+    <div style="display:flex;align-items:center;gap:8px;"><div style="width:6px;height:6px;border-radius:50%;background:#C4623A;flex-shrink:0;"></div><span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:'DM Sans',sans-serif;">Neutral expression, face well-lit</span></div>
+    <div style="display:flex;align-items:center;gap:8px;"><div style="width:6px;height:6px;border-radius:50%;background:#C4623A;flex-shrink:0;"></div><span style="font-size:13px;color:rgba(255,255,255,0.6);font-family:'DM Sans',sans-serif;">Keep your head inside the oval</span></div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;justify-content:center;">
+    <div onclick="go('s-kyc4')" style="width:64px;height:64px;border-radius:50%;background:#C4623A;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- KYC 4: PROOF OF ADDRESS -->
+<div class="screen" id="s-kyc4">
+  <div class="sb"><span class="sb-time">9:41</span></div>
+  <div style="display:flex;align-items:center;gap:12px;padding:8px 20px 4px;">
+    <button class="back-btn" onclick="go('s-kyc3')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div style="flex:1;height:4px;background:#E8E2DA;border-radius:2px;overflow:hidden;"><div style="width:100%;height:100%;background:#1C3530;border-radius:2px;"></div></div>
+    <span style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;white-space:nowrap;">4 of 4</span>
+  </div>
+  <div style="flex:1;padding:24px 20px 0;overflow-y:auto;">
+    <div style="width:56px;height:56px;border-radius:16px;background:#1C3530;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F2EDE8" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    </div>
+    <div style="font-size:28px;font-weight:800;color:#1C3530;letter-spacing:-0.5px;line-height:1.2;margin-bottom:8px;font-family:'DM Sans',sans-serif;">Proof of address</div>
+    <div style="font-size:14px;color:#9B9390;margin-bottom:24px;font-family:'DM Sans',sans-serif;">Upload a document dated within the last 3 months showing your name and address.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:14px;padding:16px;">
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:36px;height:36px;border-radius:10px;background:#F2EDE8;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><span style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Bank statement</span></div>
+        <span style="font-size:11px;font-weight:700;color:#2E7D32;background:#E8F5E9;padding:3px 8px;border-radius:5px;">Preferred</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:16px;"><div style="width:36px;height:36px;border-radius:10px;background:#F2EDE8;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div><span style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Utility bill</span></div>
+      <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:16px;"><div style="width:36px;height:36px;border-radius:10px;background:#F2EDE8;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><span style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Council tax letter</span></div>
+    </div>
+    <div onclick="go('s-kyc5')" style="border:2px dashed #C4623A;border-radius:14px;padding:24px;text-align:center;background:rgba(196,98,58,0.04);cursor:pointer;">
+      <div style="width:44px;height:44px;border-radius:12px;background:#1C3530;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F2EDE8" stroke-width="2" stroke-linecap="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg></div>
+      <div style="font-size:15px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">Upload document</div>
+      <div style="font-size:12px;color:#9B9390;margin-top:4px;font-family:'DM Sans',sans-serif;">JPG, PNG or PDF &middot; Max 10MB</div>
+    </div>
+  </div>
+  <div class="cta-bar"><button class="btn" onclick="go('s-kyc5')">Upload &amp; Continue</button></div>
+</div>
+
+<!-- KYC 5: PENDING -->
+<div class="screen" id="s-kyc5">
+  <div class="sb"><span class="sb-time">9:41</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;">
+    <div style="width:80px;height:80px;border-radius:50%;background:#1C3530;display:flex;align-items:center;justify-content:center;margin-bottom:28px;">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+    <div style="font-size:28px;font-weight:800;color:#1C3530;letter-spacing:-0.5px;text-align:center;margin-bottom:12px;font-family:'DM Sans',sans-serif;">Verifying your identity</div>
+    <div style="font-size:15px;color:#9B9390;text-align:center;line-height:1.5;margin-bottom:32px;font-family:'DM Sans',sans-serif;">We&rsquo;re reviewing your documents. This usually takes just a minute or two.</div>
+    <div style="width:100%;background:#fff;border-radius:16px;overflow:hidden;">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#E8F5E9;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div><div style="font-size:14px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Document uploaded</div><div style="font-size:12px;color:#9B9390;font-family:'DM Sans',sans-serif;">Passport verified</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#FFF3E0;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><div style="font-size:14px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Identity check</div><div style="font-size:12px;color:#C4623A;font-weight:600;font-family:'DM Sans',sans-serif;">In progress...</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#F2EDE8;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C0B9B0" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><div style="font-size:14px;font-weight:600;color:#C0B9B0;font-family:'DM Sans',sans-serif;">Address confirmed</div><div style="font-size:12px;color:#C0B9B0;font-family:'DM Sans',sans-serif;">Waiting...</div></div>
+      </div>
+    </div>
+    <div style="margin-top:24px;text-align:center;"><div style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">We&rsquo;ll notify you as soon as it&rsquo;s done.</div><div style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">You can close the app and come back.</div></div>
+  </div>
+  <div class="cta-bar"><button class="btn" style="background:rgba(28,53,48,0.1);color:#1C3530;" onclick="go('s-kyc6')">Check status</button></div>
+</div>
+
+<!-- KYC 6: APPROVED -->
+<div class="screen" id="s-kyc6" style="background:#1C3530;">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;">
+    <div style="width:80px;height:80px;border-radius:50%;background:rgba(196,98,58,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:28px;">
+      <div style="width:64px;height:64px;border-radius:50%;background:#C4623A;display:flex;align-items:center;justify-content:center;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div style="font-size:30px;font-weight:800;color:#fff;text-align:center;margin-bottom:14px;font-family:'DM Sans',sans-serif;">You&rsquo;re verified!</div>
+    <div style="font-size:15px;color:rgba(246,241,235,0.6);text-align:center;line-height:1.5;margin-bottom:36px;font-family:'DM Sans',sans-serif;">Your identity has been confirmed. You can now send money home and give with every transfer.</div>
+    <div style="width:100%;background:rgba(246,241,235,0.06);border-radius:16px;padding:20px;">
+      <div style="font-size:11px;font-weight:700;color:rgba(246,241,235,0.4);letter-spacing:1px;text-transform:uppercase;text-align:center;margin-bottom:16px;">Your account limits</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(246,241,235,0.08);">
+        <span style="font-size:14px;color:rgba(246,241,235,0.7);font-family:'DM Sans',sans-serif;">Send per transfer</span>
+        <span style="font-size:15px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Up to $5,000</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:14px;color:rgba(246,241,235,0.7);font-family:'DM Sans',sans-serif;">Monthly limit</span>
+        <span style="font-size:15px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">$20,000</span>
+      </div>
+    </div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:12px;">
+    <button class="btn" style="background:#C4623A;" onclick="go('s-home')">Start sending</button>
+    <div style="text-align:center;"><span style="font-size:13px;color:rgba(246,241,235,0.4);font-family:'DM Sans',sans-serif;">Need higher limits? </span><span style="font-size:13px;color:#C4623A;font-weight:600;font-family:'DM Sans',sans-serif;">Contact support</span></div>
+  </div>
+</div>
+
+<!-- LEGAL: FAILED TRANSFER -->
+<div class="screen" id="s-failed" style="background:#1C3530;">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 24 18" fill="rgba(246,241,235,0.5)"><rect width="24" height="3" rx="1.5"/><rect y="7" width="18" height="3" rx="1.5"/><rect y="14" width="12" height="3" rx="1.5"/></svg></div></div>
+  <div style="padding:8px 20px 4px;"><button class="back-btn" style="background:rgba(246,241,235,0.1);" onclick="go('s-transfers')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(246,241,235,0.7)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;">
+    <div style="width:80px;height:80px;border-radius:50%;border:3px solid #C4623A;display:flex;align-items:center;justify-content:center;margin-bottom:28px;">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <div style="font-size:32px;font-weight:800;color:#fff;text-align:center;line-height:1.2;margin-bottom:14px;font-family:'DM Sans',sans-serif;">Transfer<br/>failed</div>
+    <div style="font-size:15px;color:rgba(246,241,235,0.6);text-align:center;line-height:1.5;margin-bottom:28px;font-family:'DM Sans',sans-serif;">Your transfer of <span style="color:#fff;font-weight:700;">$50.00</span> to Kofi Asante could not be completed</div>
+    <div style="width:100%;background:rgba(246,241,235,0.06);border-radius:16px;padding:16px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:rgba(246,241,235,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">What went wrong</div>
+      <div style="font-size:14px;color:rgba(246,241,235,0.8);line-height:1.5;font-family:'DM Sans',sans-serif;">MTN network was temporarily unavailable. No money was deducted from your account.</div>
+    </div>
+    <div style="width:100%;background:rgba(246,241,235,0.04);border-radius:12px;padding:13px 14px;margin-bottom:10px;border:1px solid rgba(196,98,58,0.3);">
+      <div style="font-size:12px;color:rgba(246,241,235,0.5);line-height:1.5;font-family:'DM Sans',sans-serif;">Your rights: You may dispute this error within 180 days. Contact support@akoma.app or 1-800-AKOMA-US.</div>
+    </div>
+    <div style="font-size:12px;color:rgba(246,241,235,0.3);font-family:'DM Sans',sans-serif;">Reference: #AKM-20260310-0018</div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:10px;">
+    <button class="btn" style="background:#C4623A;" onclick="go('s-send')">Try again</button>
+    <button class="btn" style="background:rgba(246,241,235,0.1);color:rgba(246,241,235,0.8);">Contact support</button>
+  </div>
+</div>
+
+<!-- LEGAL: CANCEL TRANSFER -->
+<div class="screen" id="s-cancel">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-txdetail')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Cancel transfer</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:20px 24px 0;">
+    <div style="width:72px;height:72px;border-radius:50%;border:2px solid #C4623A;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div style="font-size:28px;font-weight:800;color:#1C3530;text-align:center;line-height:1.2;margin-bottom:10px;font-family:'DM Sans',sans-serif;">Cancel this<br/>transfer?</div>
+    <div style="font-size:14px;color:#9B9390;text-align:center;margin-bottom:24px;font-family:'DM Sans',sans-serif;">This action cannot be undone once the transfer has been processed.</div>
+    <div style="width:100%;display:flex;align-items:center;justify-content:space-between;background:#1C3530;border-radius:14px;padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;"><div class="pav av-mtn" style="width:36px;height:36px;font-size:10px;">MTN</div><div><div style="font-size:14px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Kwame Mensah</div><div style="font-size:12px;color:rgba(246,241,235,0.55);font-family:'DM Sans',sans-serif;">MTN MoMo &middot; 🇬🇭 Ghana</div></div></div>
+      <div style="text-align:right;"><div style="font-size:18px;font-weight:800;color:#fff;font-family:'DM Sans',sans-serif;">$200</div><div style="font-size:12px;color:#C4623A;font-weight:600;font-family:'DM Sans',sans-serif;">Pending</div></div>
+    </div>
+    <div style="width:100%;background:#E8F5E9;border-radius:12px;padding:13px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px;"><polyline points="20 6 9 17 4 12"/></svg>
+      <div><div style="font-size:13px;font-weight:700;color:#2E7D32;font-family:'DM Sans',sans-serif;">You&rsquo;re within the cancellation window.</div><div style="font-size:12px;color:#2E7D32;margin-top:2px;font-family:'DM Sans',sans-serif;">Under CFPB rules, you have 30 minutes from payment to cancel for a full refund. <span style="font-weight:700;">24 minutes remaining.</span></div></div>
+    </div>
+    <div style="width:100%;background:#fff;border-radius:12px;padding:13px 14px;display:flex;align-items:center;gap:10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span style="font-size:12px;color:#9B9390;font-family:'DM Sans',sans-serif;">Refund of $200.00 returns to Visa &bull;&bull;&bull; 4521 within 3&ndash;5 days</span>
+    </div>
+  </div>
+  <div style="padding:20px 24px 40px;display:flex;flex-direction:column;gap:10px;">
+    <button class="btn" style="background:#C62828;color:#fff;" onclick="go('s-transfers')">Yes, cancel transfer</button>
+    <button class="btn" style="background:#fff;color:#1C3530;border:1.5px solid rgba(28,53,48,0.15);" onclick="go('s-txdetail')">Keep transfer</button>
+  </div>
+</div>
+
+<!-- LEGAL: TRANSFER RECEIPT -->
+<div class="screen" id="s-receipt">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-txdetail')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Transfer receipt</span></div>
+    <button class="nav-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+  </div>
+  <div class="scroll">
+    <div style="background:#C4623A;border-radius:10px;padding:7px 12px;margin:0 16px 12px;display:flex;align-items:center;gap:8px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span style="font-size:12px;font-weight:600;color:#fff;font-family:'DM Sans',sans-serif;">Post-payment receipt &middot; CFPB Remittance Rule &sect;1073(e)</span>
+    </div>
+    <div style="background:#1C3530;border-radius:20px;margin:0 16px 14px;padding:20px;text-align:center;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;"><div class="pav av-mtn" style="width:32px;height:32px;font-size:10px;">MTN</div><span style="font-size:14px;font-weight:600;color:rgba(246,241,235,0.85);font-family:'DM Sans',sans-serif;">Kwame Mensah &middot; MTN MoMo</span></div>
+      <div style="font-size:40px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:6px;font-family:'DM Sans',sans-serif;">$200.00</div>
+      <div style="font-size:16px;font-weight:700;color:#C4623A;margin-bottom:12px;font-family:'DM Sans',sans-serif;">→ GHS 3,200.00 received</div>
+      <span style="font-size:13px;font-weight:600;color:#1C3530;background:#fff;padding:5px 14px;border-radius:20px;">Delivered &middot; Mar 10, 2026 &middot; 14:32</span>
+    </div>
+    <div class="rv-table">
+      <div class="rv-tr"><div class="rv-td-l">Transfer amount</div><div class="rv-td-r">$200.00</div></div>
+      <div class="rv-tr"><div class="rv-td-l">Transfer fee</div><div class="rv-td-r"><div class="free-row"><span style="text-decoration:line-through;color:#C0B9B0;font-weight:400;">$2.00</span><span class="free-pill">Free</span></div></div></div>
+      <div class="rv-tr"><div class="rv-td-l">Exchange rate used</div><div class="rv-td-r" style="font-size:13px;">1 USD = 16.00 GHS</div></div>
+      <div class="rv-tr"><div class="rv-td-l" style="display:flex;align-items:center;gap:5px;">Round-up donation <svg width="13" height="13" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><div class="rv-td-r" style="color:#C4623A;font-weight:600;">$0.43</div></div>
+      <div class="rv-tr" style="background:rgba(28,53,48,0.04);"><div class="rv-td-l" style="font-weight:700;color:#1C3530;">Recipient received</div><div class="rv-td-r" style="color:#C4623A;font-weight:700;font-size:15px;">GHS 3,200.00</div></div>
+    </div>
+    <div style="background:rgba(28,53,48,0.04);border-radius:12px;padding:13px 16px;margin:10px 16px;"><div style="font-size:12px;color:#5A8A7A;line-height:1.5;font-family:'DM Sans',sans-serif;">Error resolution rights: Report errors within 180 days to support@akoma.app or 1-800-AKOMA-US. We will investigate within 90 days.</div></div>
+    <div style="background:rgba(196,98,58,0.06);border-radius:12px;padding:13px 16px;margin:0 16px;"><div style="font-size:12px;color:#C4623A;line-height:1.5;font-family:'DM Sans',sans-serif;">Cancellation window closed. Transfer was delivered. Contact support if you believe an error occurred.</div></div>
+    <div style="font-size:13px;color:#9B9390;text-align:center;padding:14px 16px;font-family:'DM Sans',sans-serif;">Reference #AKM-20260310-0042 &middot; Saved to your transfers</div>
+    <div style="display:flex;gap:10px;padding:0 16px 32px;">
+      <button style="flex:1;padding:15px;border-radius:14px;background:#fff;border:1.5px solid rgba(28,53,48,0.15);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#1C3530;cursor:pointer;">Download PDF</button>
+      <button style="flex:1;padding:15px;border-radius:14px;background:#C4623A;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#fff;cursor:pointer;" onclick="go('s-send')">Send again</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE: NOTIFICATIONS -->
+<div class="screen" id="s-notifications">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-profile')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Notifications</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="font-size:26px;font-weight:800;color:#1C3530;padding:8px 20px 16px;letter-spacing:-0.5px;font-family:'DM Sans',sans-serif;">Stay informed</div>
+    <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 8px;font-family:'DM Sans',sans-serif;">Transfers</div>
+    <div style="background:#fff;border-radius:16px;margin:0 16px 16px;overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
+        <div><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Transfer delivered</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">When recipient receives funds</div></div>
+        <div style="width:44px;height:26px;background:#C4623A;border-radius:13px;position:relative;flex-shrink:0;"><div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
+        <div><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Transfer processing</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">Status updates in real-time</div></div>
+        <div style="width:44px;height:26px;background:#C4623A;border-radius:13px;position:relative;flex-shrink:0;"><div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;">
+        <div><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Transfer failed</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">Errors that need attention</div></div>
+        <div style="width:44px;height:26px;background:#C4623A;border-radius:13px;position:relative;flex-shrink:0;"><div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div></div>
+      </div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 8px;font-family:'DM Sans',sans-serif;">Account</div>
+    <div style="background:#fff;border-radius:16px;margin:0 16px 16px;overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
+        <div><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Security alerts</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">New login, password changes</div></div>
+        <div style="width:44px;height:26px;background:#C4623A;border-radius:13px;position:relative;flex-shrink:0;"><div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;">
+        <div><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Referral rewards</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">When friends complete transfers</div></div>
+        <div style="width:44px;height:26px;background:#C4623A;border-radius:13px;position:relative;flex-shrink:0;"><div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div></div>
+      </div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 8px;font-family:'DM Sans',sans-serif;">Promotions</div>
+    <div style="background:#fff;border-radius:16px;margin:0 16px 32px;overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
+        <div><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Rate improvements</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">Better rates for your corridors</div></div>
+        <div style="width:44px;height:26px;background:#D0C9C1;border-radius:13px;position:relative;flex-shrink:0;"><div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;">
+        <div><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Akoma news</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">Product updates &amp; announcements</div></div>
+        <div style="width:44px;height:26px;background:#D0C9C1;border-radius:13px;position:relative;flex-shrink:0;"><div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE: TRANSFER LIMITS -->
+<div class="screen" id="s-limits">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-profile')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Transfer limits</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="font-size:26px;font-weight:800;color:#1C3530;padding:8px 20px 16px;letter-spacing:-0.5px;line-height:1.2;font-family:'DM Sans',sans-serif;">Your sending<br/>limits</div>
+    <div style="background:#1C3530;border-radius:16px;margin:0 16px 16px;padding:18px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div><div style="font-size:11px;font-weight:700;color:rgba(246,241,235,0.45);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Current tier</div><div style="font-size:18px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Verified &#10003;</div></div>
+        <span style="font-size:12px;font-weight:700;background:#C4623A;color:#fff;padding:4px 12px;border-radius:8px;">Active</span>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:13px;color:rgba(246,241,235,0.6);font-family:'DM Sans',sans-serif;">Per transfer</span><span style="font-size:13px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">$5,000</span></div>
+        <div style="height:5px;background:rgba(246,241,235,0.1);border-radius:3px;overflow:hidden;"><div style="width:40%;height:100%;background:#C4623A;border-radius:3px;"></div></div>
+        <div style="font-size:11px;color:rgba(246,241,235,0.4);margin-top:4px;font-family:'DM Sans',sans-serif;">$2,000 used of $5,000</div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:13px;color:rgba(246,241,235,0.6);font-family:'DM Sans',sans-serif;">Monthly limit</span><span style="font-size:13px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">$20,000</span></div>
+        <div style="height:5px;background:rgba(246,241,235,0.1);border-radius:3px;overflow:hidden;"><div style="width:18%;height:100%;background:#C4623A;border-radius:3px;"></div></div>
+        <div style="font-size:11px;color:rgba(246,241,235,0.4);margin-top:4px;font-family:'DM Sans',sans-serif;">$3,600 used of $20,000</div>
+      </div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 10px;font-family:'DM Sans',sans-serif;">Available tiers</div>
+    <div style="background:#fff;border-radius:16px;margin:0 16px 32px;overflow:hidden;">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F2EDE8;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#F2EDE8;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Basic</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">$1,000 / transfer &middot; $5,000 / month</div></div>
+        <span style="font-size:11px;color:#9B9390;font-family:'DM Sans',sans-serif;">Phone only</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F2EDE8;border-left:3px solid #C4623A;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#C4623A;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:15px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">Verified</span><span style="font-size:10px;font-weight:700;background:#1C3530;color:#fff;padding:2px 7px;border-radius:4px;">CURRENT</span></div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">$5,000 / transfer &middot; $20,000 / month</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#F2EDE8;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div style="flex:1;"><div style="font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Enhanced</div><div style="font-size:12px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">$25,000 / transfer &middot; $100,000 / month</div></div>
+        <button style="padding:8px 14px;border-radius:8px;background:#1C3530;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;border:none;cursor:pointer;">Upgrade</button>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin:0 16px 32px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span style="font-size:12px;color:#9B9390;font-family:'DM Sans',sans-serif;">Enhanced tier requires proof of source of funds. Limits reset on the 1st of each month.</span></div>
+  </div>
+</div>
+
+<!-- SCHEDULED TRANSFER -->
+<div class="screen" id="s-scheduled">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-delivery')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Scheduled Transfer</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="display:flex;align-items:center;justify-content:space-between;background:#1C3530;border-radius:14px;padding:14px 16px;margin:4px 16px 20px;">
+      <div style="display:flex;align-items:center;gap:10px;"><div class="pav pav-km" style="width:38px;height:38px;">KM</div><div><div style="font-size:14px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Kwame Mensah</div><div style="font-size:12px;color:rgba(246,241,235,0.55);font-family:'DM Sans',sans-serif;">MTN MoMo &middot; GH <span style="color:#FFC107;font-weight:700;font-size:11px;">MTN</span></div></div></div>
+      <div style="text-align:right;"><div style="font-size:18px;font-weight:800;color:#fff;font-family:'DM Sans',sans-serif;">$200</div><div style="font-size:12px;color:rgba(246,241,235,0.5);font-family:'DM Sans',sans-serif;">&#x2248; GHS 3,200</div></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 10px;font-family:'DM Sans',sans-serif;">Frequency</div>
+    <div style="display:flex;gap:10px;padding:0 16px 20px;">
+      <div style="flex:1;padding:12px;border-radius:12px;background:#1C3530;text-align:center;cursor:pointer;"><div style="font-size:14px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Weekly</div><div style="font-size:11px;color:rgba(246,241,235,0.5);margin-top:2px;font-family:'DM Sans',sans-serif;">Every 7 days</div></div>
+      <div style="flex:1;padding:12px;border-radius:12px;background:#fff;text-align:center;cursor:pointer;"><div style="font-size:14px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">Monthly</div><div style="font-size:11px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">Once a month</div></div>
+      <div style="flex:1;padding:12px;border-radius:12px;background:#fff;text-align:center;cursor:pointer;"><div style="font-size:14px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">Custom</div><div style="font-size:11px;color:#9B9390;margin-top:2px;font-family:'DM Sans',sans-serif;">You choose</div></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 10px;font-family:'DM Sans',sans-serif;">Send on</div>
+    <div style="display:flex;gap:8px;padding:0 16px 10px;overflow-x:auto;">
+      <div style="width:46px;height:46px;border-radius:50%;background:#1C3530;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">1</div>
+      <div style="width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">7</div>
+      <div style="width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">14</div>
+      <div style="width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">21</div>
+      <div style="width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">28</div>
+      <div style="padding:0 10px;height:46px;border-radius:23px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Last day</div>
+    </div>
+    <div style="font-size:13px;color:#9B9390;padding:4px 20px 20px;font-family:'DM Sans',sans-serif;">Sends on the <span style="color:#1C3530;font-weight:700;">1st of every month</span> &mdash; next send Mar 1</div>
+    <div style="font-size:11px;font-weight:700;color:#9B9390;letter-spacing:1px;text-transform:uppercase;padding:0 20px 10px;font-family:'DM Sans',sans-serif;">Until</div>
+    <div style="display:flex;gap:10px;padding:0 16px 28px;">
+      <div style="flex:1;display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:13px 14px;cursor:pointer;border:2px solid #1C3530;">
+        <div style="width:20px;height:20px;border-radius:50%;background:#1C3530;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><div style="width:8px;height:8px;border-radius:50%;background:#fff;"></div></div>
+        <span style="font-size:14px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Forever</span>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:13px 14px;cursor:pointer;border:2px solid transparent;">
+        <div style="width:20px;height:20px;border-radius:50%;border:2px solid #D0C9C1;flex-shrink:0;"></div>
+        <span style="font-size:14px;font-weight:600;color:#1C3530;font-family:'DM Sans',sans-serif;">Set end date</span>
+      </div>
+    </div>
+    <div style="padding:0 16px 8px;"><button class="btn" style="background:#C4623A;display:flex;align-items:center;justify-content:center;gap:10px;" onclick="go('s-review')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Set up recurring transfer</button></div>
+    <div style="text-align:center;padding:10px 16px 32px;font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">You can pause or cancel any time from History</div>
+  </div>
+</div>
+
+<!-- RATE LOCK -->
+<div class="screen" id="s-ratelock">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-review')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Review Transfer</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="display:flex;align-items:center;gap:12px;background:#1C3530;border-radius:14px;padding:14px 16px;margin:4px 16px 16px;">
+      <div style="width:40px;height:40px;border-radius:50%;background:rgba(196,98,58,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+      <div style="flex:1;"><div style="font-size:14px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Rate locked</div><div style="font-size:12px;color:rgba(246,241,235,0.55);font-family:'DM Sans',sans-serif;">Confirm now to guarantee this rate</div></div>
+      <div style="font-size:22px;font-weight:800;color:#C4623A;font-family:'DM Sans',sans-serif;font-variant-numeric:tabular-nums;" id="rl-timer">28:43</div>
+    </div>
+    <div style="background:#fff;border-radius:16px;margin:0 16px 12px;overflow:hidden;">
+      <div style="display:flex;justify-content:space-between;padding:16px 16px 12px;border-bottom:1px solid #F2EDE8;">
+        <div><div style="font-size:12px;font-weight:600;color:#9B9390;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;font-family:'DM Sans',sans-serif;">You send</div><div style="font-size:28px;font-weight:800;color:#1C3530;letter-spacing:-0.5px;font-family:'DM Sans',sans-serif;">$200.00</div></div>
+        <div style="text-align:right;"><div style="font-size:12px;font-weight:600;color:#9B9390;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;font-family:'DM Sans',sans-serif;">They receive</div><div style="font-size:28px;font-weight:800;color:#1C3530;letter-spacing:-0.5px;font-family:'DM Sans',sans-serif;">GHS 3,200</div></div>
+      </div>
+      <div class="rv-tr"><div class="rv-td-l">Exchange rate</div><div class="rv-td-r" style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;font-weight:700;background:#E8F5E9;color:#2E7D32;padding:2px 7px;border-radius:4px;">LOCKED</span><span>1 USD = 16.00 GHS</span></div></div>
+      <div class="rv-tr"><div class="rv-td-l">Transfer fee</div><div class="rv-td-r"><div class="free-row"><span style="text-decoration:line-through;color:#C0B9B0;font-weight:400;">$2.00</span><span class="free-pill">Free</span></div></div></div>
+      <div class="rv-tr"><div class="rv-td-l">Delivery</div><div class="rv-td-r">Within minutes</div></div>
+      <div class="rv-tr" style="background:rgba(28,53,48,0.02);"><div class="rv-td-l" style="font-weight:700;color:#1C3530;">Total you pay</div><div class="rv-td-r" style="font-size:16px;font-weight:700;">$200.00</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px 16px;margin:0 16px 20px;">
+      <div class="pav pav-km" style="width:40px;height:40px;">KM</div>
+      <div><div style="font-size:15px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">Kwame Mensah</div><div style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">MTN MoMo &middot; +233 24 123 4567</div></div>
+      <span style="margin-left:auto;font-size:12px;font-weight:700;background:#FFF8DC;color:#7A5500;padding:3px 8px;border-radius:5px;font-family:'DM Sans',sans-serif;">MTN</span>
+    </div>
+    <div style="padding:0 16px 8px;"><button class="btn" style="background:#C4623A;" onclick="go('s-sending')">Confirm transfer</button></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px 32px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">Rate guaranteed until timer expires</span></div>
   </div>
 </div>
 
