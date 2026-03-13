@@ -228,7 +228,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
 <div class="device">
 
 <!-- S1: HOME -->
-<div class="screen active" id="s-home">
+<div class="screen" id="s-home">
   <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
   <div class="nav-logo">
     <div class="nav-logo-left">
@@ -260,8 +260,8 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
       <div class="contact-item" onclick="pickRec('fatou');go('s-send')"><div class="contact-av pav-fd">FD</div><span class="contact-name">Fatou</span></div>
       <div class="contact-item"><div class="contact-av" style="background:#E8E2DA;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><span class="contact-name" style="color:#9B9390;">New</span></div>
     </div>
-    <div class="sec-hdr"><span class="sec-title">Activity</span><span class="sec-link" onclick="go('s-transfers')">See all</span></div>
-    <div class="act-row" onclick="go('s-transfers')"><div class="net-av av-mtn">MTN</div><div class="act-info"><div class="act-name">Kwame Mensah</div><div class="act-sub">Today · MTN MoMo · 🇬🇭 Ghana</div></div><div class="act-right"><div class="act-amt">−$200.00</div><span class="pill pill-green">Delivered</span></div></div>
+    <div class="sec-hdr"><span class="sec-title">Activity</span><span class="sec-link" onclick="go('s-txdetail')">See all</span></div>
+    <div class="act-row" onclick="go('s-txdetail')"><div class="net-av av-mtn">MTN</div><div class="act-info"><div class="act-name">Kwame Mensah</div><div class="act-sub">Today · MTN MoMo · 🇬🇭 Ghana</div></div><div class="act-right"><div class="act-amt">−$200.00</div><span class="pill pill-green">Delivered</span></div></div>
     <div class="act-row" onclick="go('s-transfers')"><div class="net-av av-mpesa">M-PESA</div><div class="act-info"><div class="act-name">Amara Conteh</div><div class="act-sub">Mar 8 · M-Pesa · 🇰🇪 Kenya</div></div><div class="act-right"><div class="act-amt">−$75.00</div><span class="pill pill-green">Delivered</span></div></div>
     <div class="act-row" onclick="go('s-transfers')"><div class="net-av av-orange">ORANGE</div><div class="act-info"><div class="act-name">Fatou Diallo</div><div class="act-sub">Mar 5 · Orange Money · 🇸🇳 Senegal</div></div><div class="act-right"><div class="act-amt">−$150.00</div><span class="pill pill-orange">Pending</span></div></div>
     <div style="height:16px;"></div>
@@ -553,6 +553,247 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
 </div>
 
 </div>
+
+<!-- ONBOARDING -->
+<div class="screen active" id="s-onboarding" class="screen active" style="background:#1C3530;">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="rgba(246,241,235,0.4)"/><rect x="2" y="2" width="16" height="8" rx="2" fill="rgba(246,241,235,0.8)"/></svg></div></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px 20px;">
+    <div style="width:72px;height:72px;border-radius:20px;background:#C4623A;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/><line x1="12" y1="8" x2="12" y2="14"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div style="font-size:42px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:6px;font-family:'DM Sans',sans-serif;">akoma</div>
+    <div style="font-size:12px;font-weight:600;color:rgba(246,241,235,0.45);letter-spacing:3px;text-transform:uppercase;margin-bottom:48px;">Send with heart</div>
+    <div style="width:100%;display:flex;flex-direction:column;gap:20px;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(246,241,235,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(246,241,235,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        <div><div style="font-size:15px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Send to Ghana, instantly</div><div style="font-size:13px;color:rgba(246,241,235,0.5);margin-top:2px;font-family:'DM Sans',sans-serif;">Bank, MTN MoMo, or cash pickup</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(196,98,58,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <div><div style="font-size:15px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Round up &amp; give</div><div style="font-size:13px;color:rgba(246,241,235,0.5);margin-top:2px;font-family:'DM Sans',sans-serif;">Support verified Ghanaian charities</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(246,241,235,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(246,241,235,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div><div style="font-size:15px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">Zero fees, always</div><div style="font-size:13px;color:rgba(246,241,235,0.5);margin-top:2px;font-family:'DM Sans',sans-serif;">Best rates. No hidden charges.</div></div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:14px;">
+    <button class="btn" style="background:#C4623A;font-size:17px;" onclick="go('s-signup')">Get started &mdash; it&rsquo;s free</button>
+    <div style="text-align:center;"><span style="color:rgba(246,241,235,0.45);font-size:14px;font-family:'DM Sans',sans-serif;">Already have an account? </span><span onclick="go('s-signin')" style="color:#C4623A;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;">Sign in</span></div>
+  </div>
+</div>
+
+<!-- SIGN UP -->
+<div class="screen" id="s-signup" style="background:#1C3530;">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span></div>
+  <div style="flex:1;padding:0 28px;overflow-y:auto;">
+    <div style="display:flex;align-items:center;gap:8px;padding-top:12px;margin-bottom:44px;">
+      <div style="width:30px;height:30px;border-radius:50%;background:#C4623A;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+      <span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.3px;">akoma</span>
+    </div>
+    <div style="color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Get started</div>
+    <div style="color:#fff;font-family:'DM Sans',sans-serif;font-size:32px;font-weight:700;line-height:1.15;margin-bottom:8px;">Create your<br/>account</div>
+    <div style="color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;font-size:15px;margin-bottom:36px;">Send with heart. Give automatically.</div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div>
+        <div style="color:rgba(255,255,255,0.55);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">Full name</div>
+        <div style="background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:15px 16px;"><span style="color:rgba(255,255,255,0.35);font-family:'DM Sans',sans-serif;font-size:16px;">Your full name</span></div>
+      </div>
+      <div>
+        <div style="color:rgba(255,255,255,0.55);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">Email address</div>
+        <div style="background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:15px 16px;"><span style="color:rgba(255,255,255,0.35);font-family:'DM Sans',sans-serif;font-size:16px;">you@email.com</span></div>
+      </div>
+      <div>
+        <div style="color:rgba(255,255,255,0.55);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">Phone number</div>
+        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.08);border:1.5px solid #C4623A;border-radius:12px;padding:15px 16px;">
+          <span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;">+1</span>
+          <div style="width:1px;height:18px;background:rgba(255,255,255,0.2);flex-shrink:0;"></div>
+          <span style="color:rgba(255,255,255,0.35);font-family:'DM Sans',sans-serif;font-size:16px;">Your phone number</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:32px;">
+      <button class="btn" style="background:#C4623A;" onclick="go('s-verify')">Continue</button>
+      <div style="text-align:center;margin-top:18px;"><span style="color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;font-size:13px;">Already have an account? </span><span onclick="go('s-signin')" style="color:#C4623A;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Sign in</span></div>
+      <div style="text-align:center;margin-top:10px;"><span style="color:rgba(255,255,255,0.25);font-family:'DM Sans',sans-serif;font-size:11px;">By continuing you agree to our </span><span style="color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;font-size:11px;">Terms &amp; Privacy Policy</span></div>
+    </div>
+    <div style="height:32px;"></div>
+  </div>
+</div>
+
+<!-- SIGN IN -->
+<div class="screen" id="s-signin" style="background:#1C3530;">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span></div>
+  <div style="flex:1;padding:0 28px;overflow-y:auto;">
+    <div style="display:flex;align-items:center;gap:8px;padding-top:12px;margin-bottom:44px;">
+      <div style="width:30px;height:30px;border-radius:50%;background:#C4623A;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+      <span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.3px;">akoma</span>
+    </div>
+    <div style="color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Welcome back</div>
+    <div style="color:#fff;font-family:'DM Sans',sans-serif;font-size:32px;font-weight:700;line-height:1.15;margin-bottom:36px;">Sign in to<br/>your account</div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div>
+        <div style="color:rgba(255,255,255,0.55);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">Email address</div>
+        <div style="background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;padding:15px 16px;"><span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:16px;">kofi@gmail.com</span></div>
+      </div>
+      <div>
+        <div style="color:rgba(255,255,255,0.55);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:8px;">Password</div>
+        <div style="display:flex;align-items:center;background:rgba(255,255,255,0.08);border:1.5px solid #C4623A;border-radius:12px;padding:15px 16px;">
+          <span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:20px;letter-spacing:4px;flex:1;">&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div style="text-align:right;margin-top:8px;"><span style="color:rgba(255,255,255,0.45);font-family:'DM Sans',sans-serif;font-size:13px;">Forgot password?</span></div>
+      </div>
+    </div>
+    <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px;">
+      <button class="btn" style="background:#C4623A;" onclick="go('s-home')">Sign in</button>
+      <div style="display:flex;align-items:center;gap:12px;"><div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div><span style="color:rgba(255,255,255,0.3);font-family:'DM Sans',sans-serif;font-size:12px;">or continue with</span><div style="flex:1;height:1px;background:rgba(255,255,255,0.12);"></div></div>
+      <div style="display:flex;gap:12px;">
+        <button style="flex:1;padding:13px;border-radius:12px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#fff;">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Google
+        </button>
+        <button style="flex:1;padding:13px;border-radius:12px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#fff;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Apple
+        </button>
+      </div>
+      <div style="text-align:center;"><span style="color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;font-size:13px;">New to Akoma? </span><span onclick="go('s-signup')" style="color:#C4623A;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Create account</span></div>
+    </div>
+    <div style="height:40px;"></div>
+  </div>
+</div>
+
+<!-- VERIFY PHONE -->
+<div class="screen" id="s-verify">
+  <div class="sb"><span class="sb-time">9:41</span></div>
+  <div style="padding:8px 20px 4px;">
+    <button class="back-btn" onclick="go('s-signup')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+  </div>
+  <div style="flex:1;padding:24px 28px 0;">
+    <div style="width:56px;height:56px;border-radius:16px;background:#1C3530;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F2EDE8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </div>
+    <div style="font-size:30px;font-weight:800;color:#1C3530;letter-spacing:-0.5px;line-height:1.2;margin-bottom:10px;font-family:'DM Sans',sans-serif;">Check your<br/>phone</div>
+    <div style="font-size:15px;color:#9B9390;margin-bottom:36px;font-family:'DM Sans',sans-serif;">We sent a 6-digit code to <span style="color:#1C3530;font-weight:700;">+1 (555) 000-1234</span></div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+      <div style="width:48px;height:58px;border-radius:12px;border:1.5px solid rgba(28,53,48,0.2);background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">3</div>
+      <div style="width:48px;height:58px;border-radius:12px;border:1.5px solid rgba(28,53,48,0.2);background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">7</div>
+      <div style="width:48px;height:58px;border-radius:12px;border:1.5px solid rgba(28,53,48,0.2);background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">4</div>
+      <div style="width:48px;height:58px;border-radius:12px;border:1.5px solid #C4623A;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#C4623A;font-family:'DM Sans',sans-serif;">_</div>
+      <div style="width:48px;height:58px;border-radius:12px;border:1.5px solid rgba(28,53,48,0.12);background:#fff;"></div>
+      <div style="width:48px;height:58px;border-radius:12px;border:1.5px solid rgba(28,53,48,0.12);background:#fff;"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:48px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">Code expires in <span style="color:#C4623A;font-weight:700;">4:32</span></span>
+    </div>
+    <button class="btn" onclick="go('s-home')">Verify</button>
+    <div style="text-align:center;margin-top:20px;"><span style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">Didn&rsquo;t receive it? </span><span style="font-size:13px;color:#C4623A;font-weight:600;font-family:'DM Sans',sans-serif;">Resend code</span></div>
+    <div style="text-align:center;margin-top:10px;"><span style="font-size:13px;color:#9B9390;font-family:'DM Sans',sans-serif;">Wrong number? </span><span onclick="go('s-signup')" style="font-size:13px;color:#1C3530;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;">Change it</span></div>
+  </div>
+</div>
+
+<!-- IMPACT HUB -->
+<div class="screen" id="s-impact">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span class="nav-center-word">akoma</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="background:#1C3530;border-radius:20px;margin:4px 16px 16px;padding:20px;">
+      <div style="font-size:11px;font-weight:700;color:rgba(246,241,235,0.5);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Community Impact &middot; March 2026</div>
+      <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:18px;font-family:'DM Sans',sans-serif;">Together we&rsquo;ve fed<br/>18,240 children</div>
+      <div style="display:flex;gap:20px;margin-bottom:16px;">
+        <div><div style="font-size:22px;font-weight:800;color:#C4623A;font-family:'DM Sans',sans-serif;">GHS 84,200</div><div style="font-size:11px;font-weight:600;color:rgba(246,241,235,0.45);letter-spacing:0.5px;text-transform:uppercase;margin-top:2px;">Total donated</div></div>
+        <div style="width:1px;background:rgba(246,241,235,0.1);"></div>
+        <div><div style="font-size:22px;font-weight:800;color:#fff;font-family:'DM Sans',sans-serif;">3,140</div><div style="font-size:11px;font-weight:600;color:rgba(246,241,235,0.45);letter-spacing:0.5px;text-transform:uppercase;margin-top:2px;">Senders giving</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;">
+          <div style="width:26px;height:26px;border-radius:50%;background:#C4623A;border:2px solid #1C3530;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;margin-right:-8px;">KO</div>
+          <div style="width:26px;height:26px;border-radius:50%;background:#4CAF50;border:2px solid #1C3530;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;margin-right:-8px;">AA</div>
+          <div style="width:26px;height:26px;border-radius:50%;background:#FF6D00;border:2px solid #1C3530;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;margin-right:-8px;">EO</div>
+          <div style="width:26px;height:26px;border-radius:50%;background:#1565C0;border:2px solid #1C3530;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;">KB</div>
+        </div>
+        <span style="font-size:12px;color:rgba(246,241,235,0.55);font-family:'DM Sans',sans-serif;">+3,136 senders giving this month</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 16px 12px;">
+      <span style="font-size:17px;font-weight:700;color:#1C3530;font-family:'DM Sans',sans-serif;">Active projects</span>
+      <span style="font-size:14px;color:#C4623A;font-weight:600;font-family:'DM Sans',sans-serif;">See all</span>
+    </div>
+    <div style="background:#fff;border-radius:16px;padding:16px;margin:0 16px 10px;border:2px solid #1C3530;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:10px;font-weight:700;color:#C4623A;letter-spacing:0.8px;text-transform:uppercase;">Osu Children&rsquo;s Home</span>
+        <span style="font-size:10px;font-weight:700;color:#fff;background:#1C3530;padding:3px 8px;border-radius:5px;">YOUR CHARITY</span>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:#1C3530;margin-bottom:10px;font-family:'DM Sans',sans-serif;">Daily School Meals<br/>Programme</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:12px;color:#9B9390;font-family:'DM Sans',sans-serif;">GHS 18,400 of GHS 24,000</span>
+        <span style="font-size:13px;font-weight:700;color:#C4623A;font-family:'DM Sans',sans-serif;">77%</span>
+      </div>
+      <div style="height:6px;background:#F2EDE8;border-radius:3px;overflow:hidden;margin-bottom:10px;"><div style="width:77%;height:100%;background:#C4623A;border-radius:3px;"></div></div>
+      <div style="font-size:12px;color:#9B9390;font-family:'DM Sans',sans-serif;">240 children &middot; 5 days/week &middot; Accra</div>
+    </div>
+    <div style="background:#fff;border-radius:16px;padding:16px;margin:0 16px 10px;">
+      <div style="font-size:10px;font-weight:700;color:#9B9390;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px;">Emmanuel Eye Centre</div>
+      <div style="font-size:16px;font-weight:700;color:#1C3530;margin-bottom:10px;font-family:'DM Sans',sans-serif;">Free Cataract Surgeries 2026</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:12px;color:#9B9390;font-family:'DM Sans',sans-serif;">GHS 31,200 of GHS 50,000</span>
+        <span style="font-size:13px;font-weight:700;color:#C4623A;font-family:'DM Sans',sans-serif;">62%</span>
+      </div>
+      <div style="height:6px;background:#F2EDE8;border-radius:3px;overflow:hidden;margin-bottom:10px;"><div style="width:62%;height:100%;background:#C4623A;border-radius:3px;"></div></div>
+      <div style="font-size:12px;color:#9B9390;font-family:'DM Sans',sans-serif;">500 patients &middot; Accra</div>
+    </div>
+    <div style="padding:8px 16px 32px;"><button class="btn" style="background:#C4623A;">Change my charity</button></div>
+  </div>
+</div>
+
+<!-- TRANSFER DETAIL -->
+<div class="screen" id="s-txdetail">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-transfers')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Transfer details</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div style="background:#1C3530;border-radius:20px;margin:4px 16px 14px;padding:20px;text-align:center;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;">
+        <div class="pav av-mtn" style="width:32px;height:32px;font-size:10px;">MTN</div>
+        <span style="font-size:14px;font-weight:600;color:rgba(246,241,235,0.85);font-family:'DM Sans',sans-serif;">Kwame Mensah &middot; MTN MoMo</span>
+        <span style="font-size:14px;">🇬🇭</span>
+      </div>
+      <div style="font-size:44px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1;margin-bottom:6px;font-family:'DM Sans',sans-serif;">$200.00</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <span style="font-size:18px;font-weight:700;color:#C4623A;font-family:'DM Sans',sans-serif;">GHS 3,200.00</span>
+      </div>
+      <span style="font-size:13px;font-weight:600;color:#1C3530;background:#4CAF50;padding:5px 14px;border-radius:20px;">Delivered &middot; Mar 10, 2026</span>
+    </div>
+    <div class="rv-table">
+      <div class="rv-tr"><div class="rv-td-l">You sent</div><div class="rv-td-r">$200.00</div></div>
+      <div class="rv-tr"><div class="rv-td-l">Transfer fee</div><div class="rv-td-r"><div class="free-row"><span style="text-decoration:line-through;color:#C0B9B0;font-weight:400;">$2.00</span><span class="free-pill">Free</span></div></div></div>
+      <div class="rv-tr"><div class="rv-td-l">Exchange rate</div><div class="rv-td-r">1 USD = 16.00 GHS</div></div>
+      <div class="rv-tr"><div class="rv-td-l" style="display:flex;align-items:center;gap:6px;">Round-up donation <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><div class="rv-td-r" style="color:#C4623A;font-weight:600;">$0.43</div></div>
+      <div class="rv-tr" style="background:rgba(28,53,48,0.04);"><div class="rv-td-l" style="font-weight:700;color:#1C3530;">Recipient gets</div><div class="rv-td-r" style="font-size:16px;color:#C4623A;font-weight:700;">GHS 3,200.00</div></div>
+    </div>
+    <div style="background:#fff;border-radius:16px;margin:10px 16px;padding:4px 0;">
+      <div class="rv-tr"><div class="rv-td-l" style="color:#9B9390;">Reference</div><div class="rv-td-r" style="font-size:12px;color:#1C3530;">#AKM-20260310-0042</div></div>
+      <div class="rv-tr"><div class="rv-td-l" style="color:#9B9390;">Delivery</div><div class="rv-td-r">Instant (MTN MoMo)</div></div>
+      <div class="rv-tr" style="border:none;"><div class="rv-td-l" style="color:#9B9390;">Sent from</div><div class="rv-td-r">Visa &bull;&bull;&bull; 4521</div></div>
+    </div>
+    <div style="display:flex;gap:10px;padding:8px 16px 32px;">
+      <button style="flex:1;padding:15px;border-radius:14px;background:#fff;border:1.5px solid rgba(28,53,48,0.15);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#1C3530;cursor:pointer;">Share receipt</button>
+      <button style="flex:1;padding:15px;border-radius:14px;background:#C4623A;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#fff;cursor:pointer;" onclick="go('s-send')">Repeat transfer</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const RCPS={kwame:{name:'Kwame Mensah',short:'Kwame',init:'KM',avClass:'pav-km',cur:'GHS',rate:16,rateStr:'16.00',net:'MTN MoMo',phone:'+233 24 123 4567',flag:'🇬🇭 GH',badgeHTML:'<span class="nbadge nb-mtn">MTN MoMo</span>'},amara:{name:'Amara Conteh',short:'Amara',init:'AC',avClass:'pav-ac',cur:'KES',rate:130,rateStr:'130.00',net:'M-Pesa',phone:'+254 712 345 678',flag:'🇰🇪 KE',badgeHTML:'<span class="nbadge nb-mpesa">M-Pesa</span>'},fatou:{name:'Fatou Diallo',short:'Fatou',init:'FD',avClass:'pav-fd',cur:'XOF',rate:620,rateStr:'620',net:'Orange Money',phone:'+221 77 123 4567',flag:'🇸🇳 SN',badgeHTML:'<span class="nbadge nb-orange">Orange Money</span>'}};
 let amt='200',rec='kwame',timerInterval=null;
