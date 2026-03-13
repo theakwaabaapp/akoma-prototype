@@ -4,1519 +4,508 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=390, initial-scale=1.0">
 <title>Akoma · Prototype</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body {
-  background: #E8E2DA;
-  display: flex; align-items: center; justify-content: center;
-  min-height: 100vh;
-  font-family: 'DM Sans', sans-serif;
-}
-.device {
-  width: 390px; height: 844px;
-  background: #F6F1EB;
-  border-radius: 48px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.25), 0 0 0 10px #1C1C1C, inset 0 0 0 1px rgba(255,255,255,0.15);
-}
-.screen {
-  width: 100%; height: 100%;
-  position: absolute; top: 0; left: 0;
-  display: none; flex-direction: column;
-  overflow: hidden;
-}
-.screen.active { display: flex; }
+body { background: #E2DDD7; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: 'DM Sans', sans-serif; }
+.device { width: 390px; height: 844px; background: #F2EDE8; border-radius: 50px; overflow: hidden; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.28), 0 0 0 10px #1A1A1A, inset 0 0 0 1px rgba(255,255,255,0.12); }
+.screen { width:100%; height:100%; position:absolute; top:0; left:0; display:none; flex-direction:column; overflow:hidden; background:#F2EDE8; }
+.screen.active { display:flex; }
+.sb { display:flex; justify-content:space-between; align-items:center; padding:14px 24px 0; height:44px; flex-shrink:0; }
+.sb-time { font-size:15px; font-weight:700; color:#1C3530; }
+.sb-icons { display:flex; gap:5px; align-items:center; }
+.nav-logo { display:flex; align-items:center; justify-content:space-between; padding:8px 20px 4px; flex-shrink:0; }
+.nav-logo-left { display:flex; align-items:center; gap:6px; }
+.nav-wordmark { font-size:20px; font-weight:700; color:#1C3530; letter-spacing:-0.5px; }
+.nav-logo-right { display:flex; align-items:center; gap:10px; }
+.nav-avatar { width:34px; height:34px; border-radius:50%; background:#C4623A; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; }
+.nav-back { display:flex; align-items:center; justify-content:space-between; padding:8px 20px 4px; flex-shrink:0; }
+.back-btn { width:36px; height:36px; border-radius:50%; background:rgba(28,53,48,0.08); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#1C3530; }
+.nav-center { display:flex; align-items:center; gap:6px; }
+.nav-center-word { font-size:17px; font-weight:600; color:#1C3530; }
+.nav-icon-btn { width:36px; height:36px; border-radius:50%; background:rgba(28,53,48,0.08); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#1C3530; }
+.nav-spacer { width:36px; }
+.scroll { flex:1; overflow-y:auto; }
+.scroll::-webkit-scrollbar { display:none; }
+.bnav { display:flex; justify-content:space-around; align-items:flex-end; padding:10px 0 28px; background:#F2EDE8; border-top:1px solid rgba(28,53,48,0.08); flex-shrink:0; }
+.bi { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:0 12px; background:none; border:none; color:#A09080; }
+.bi svg { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.bi span { font-size:10px; font-weight:500; color:currentColor; }
+.bi.on { color:#C4623A; }
+.btn { width:100%; padding:17px; border-radius:14px; background:#1C1C1E; color:#fff; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; border:none; cursor:pointer; }
+.btn:active { opacity:0.88; }
+.btn-terra { background:#C4623A; color:#fff; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; border:none; cursor:pointer; border-radius:10px; padding:11px 20px; }
+.net-av { width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; letter-spacing:0.3px; flex-shrink:0; }
+.av-mtn { background:#FFC107; color:#4A3000; }
+.av-mpesa { background:#4CAF50; color:#fff; }
+.av-orange { background:#FF6D00; color:#fff; font-size:9px !important; }
+.av-airtel { background:#E53935; color:#fff; font-size:8px !important; text-align:center; line-height:1.2; }
+.av-credit { background:#C4623A; color:#fff; }
+.pav { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#fff; flex-shrink:0; }
+.pav-km { background:#1C3530; }
+.pav-ac { background:#C4623A; }
+.pav-fd { background:#7A6B5A; }
+.pill { font-size:11px; font-weight:700; padding:3px 9px; border-radius:6px; letter-spacing:0.2px; white-space:nowrap; }
+.pill-green { background:#E8F5E9; color:#2E7D32; }
+.pill-orange { background:#FFF3E0; color:#E65100; }
+.pill-red { background:#FFEBEE; color:#C62828; }
+.nbadge { font-size:10px; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:0.3px; }
+.nb-mtn { background:#FFF8DC; color:#7A5500; }
+.nb-mpesa { background:#E8F5E9; color:#1A6B2F; }
+.nb-orange { background:#FFF0E0; color:#B84A00; }
 
-/* ── STATUS BAR ── */
-.status-bar {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 14px 24px 0; height: 44px; flex-shrink: 0;
-}
-.status-bar span { font-size: 15px; font-weight: 600; color: #1C3530; }
-.status-icons { display: flex; gap: 6px; align-items: center; }
+/* HOME */
+.hero-card { background:#1C3530; border-radius:20px; margin:4px 16px 0; padding:20px; }
+.hero-greeting { font-size:11px; font-weight:600; color:rgba(246,241,235,0.55); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.hero-heading { font-size:26px; font-weight:800; color:#F6F1EB; letter-spacing:-0.5px; margin-bottom:16px; line-height:1.1; }
+.hero-cta { display:flex; align-items:center; justify-content:space-between; background:#C4623A; border-radius:12px; padding:14px 18px; cursor:pointer; border:none; width:100%; margin-bottom:14px; }
+.hero-cta-text { font-size:16px; font-weight:700; color:#fff; }
+.hero-rate { display:flex; align-items:center; gap:6px; }
+.hero-rate-dot { width:6px; height:6px; border-radius:50%; background:#C4623A; }
+.hero-rate-text { font-size:12px; color:rgba(246,241,235,0.55); }
+.sec-hdr { display:flex; justify-content:space-between; align-items:center; padding:16px 20px 10px; flex-shrink:0; }
+.sec-title { font-size:16px; font-weight:700; color:#1C3530; }
+.sec-link { font-size:13px; font-weight:600; color:#C4623A; cursor:pointer; }
+.contacts-row { display:flex; gap:16px; padding:0 20px 4px; overflow-x:auto; flex-shrink:0; }
+.contacts-row::-webkit-scrollbar { display:none; }
+.contact-item { display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; }
+.contact-av { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#fff; }
+.contact-name { font-size:11px; font-weight:500; color:#1C3530; white-space:nowrap; }
+.act-row { display:flex; align-items:center; gap:12px; background:#fff; border-radius:14px; padding:13px 14px; margin:0 16px 8px; cursor:pointer; }
+.act-info { flex:1; }
+.act-name { font-size:15px; font-weight:600; color:#1C3530; margin-bottom:2px; }
+.act-sub { font-size:12px; color:#9B9390; }
+.act-right { text-align:right; }
+.act-amt { font-size:15px; font-weight:700; color:#1C3530; margin-bottom:4px; }
 
-/* ── NAV HEADER ── */
-.nav-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 24px 4px; flex-shrink: 0;
-}
-.back-btn {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: #E8E2DA; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.nav-title { font-size: 17px; font-weight: 600; color: #1C3530; letter-spacing: -0.3px; }
-.nav-spacer { width: 40px; }
+/* SEND */
+.recip-card { background:#fff; border-radius:16px; padding:13px 16px; margin:8px 16px; display:flex; align-items:center; gap:12px; }
+.recip-info { flex:1; }
+.recip-name { font-size:15px; font-weight:700; color:#1C3530; margin-bottom:2px; }
+.recip-sub { font-size:13px; color:#9B9390; }
+.flag-badge { display:flex; align-items:center; gap:5px; background:#F2EDE8; border-radius:8px; padding:5px 9px; font-size:12px; font-weight:600; color:#1C3530; }
+.you-send-lbl { font-size:11px; font-weight:700; color:#9B9390; letter-spacing:1px; text-transform:uppercase; text-align:center; padding:20px 0 4px; }
+.amount-display { display:flex; align-items:flex-start; justify-content:center; gap:4px; padding-bottom:4px; }
+.amt-sym { font-size:28px; font-weight:700; color:#1C3530; padding-top:10px; }
+.amt-big { font-size:72px; font-weight:800; color:#1C3530; letter-spacing:-3px; line-height:1; }
+.rate-line { display:flex; align-items:center; justify-content:center; gap:8px; padding-bottom:16px; }
+.rate-dash { height:1px; width:40px; background:rgba(28,53,48,0.15); }
+.rate-txt { font-size:13px; color:#9B9390; font-weight:500; }
+.keypad { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid rgba(28,53,48,0.07); flex-shrink:0; }
+.key { padding:19px 0; text-align:center; cursor:pointer; font-size:26px; font-weight:500; color:#1C3530; background:none; border:none; font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; }
+.key:active { background:rgba(28,53,48,0.05); }
+.cta-bar { padding:12px 16px 20px; flex-shrink:0; }
+.cta-sub { text-align:center; font-size:12px; color:#9B9390; margin-top:8px; }
 
-/* ── SCROLL BODY ── */
-.scroll-body {
-  flex: 1; overflow-y: auto; padding: 0 24px 24px;
-}
-.scroll-body::-webkit-scrollbar { display: none; }
+/* RECIPIENT */
+.search-bar { display:flex; align-items:center; gap:10px; background:#fff; border-radius:12px; padding:12px 14px; margin:8px 16px; }
+.search-bar input { flex:1; border:none; outline:none; background:none; font-family:'DM Sans',sans-serif; font-size:15px; color:#1C3530; }
+.rec-row { display:flex; align-items:center; gap:14px; padding:14px 16px; cursor:pointer; background:#fff; margin:0 16px 8px; border-radius:14px; }
+.ri { flex:1; }
+.ri-name { font-size:15px; font-weight:700; color:#1C3530; margin-bottom:3px; }
+.ri-phone { font-size:13px; color:#9B9390; margin-bottom:4px; }
 
-/* ── BOTTOM NAV ── */
-.bottom-nav {
-  display: flex; justify-content: space-around; align-items: flex-end;
-  padding: 10px 0 28px;
-  background: #F6F1EB;
-  border-top: 1px solid rgba(28,53,48,0.08);
-  flex-shrink: 0;
-}
-.bnav-item {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  cursor: pointer; padding: 0 12px; background: none; border: none;
-}
-.bnav-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; color: #8B8680; }
-.bnav-icon svg { width: 22px; height: 22px; stroke: currentColor; }
-.bnav-label { font-size: 10px; font-weight: 500; color: #8B8680; letter-spacing: 0.3px; }
-.bnav-item.active .bnav-label { color: #C4623A; font-weight: 600; }
-.bnav-item.active .bnav-icon { color: #C4623A; }
+/* DELIVERY */
+.dm-hdr { padding:16px 20px 20px; flex-shrink:0; }
+.dm-title { font-size:26px; font-weight:800; color:#1C3530; letter-spacing:-0.5px; line-height:1.15; }
+.dm-sub { font-size:14px; color:#9B9390; margin-top:4px; }
+.dm-card { background:#fff; border-radius:16px; padding:16px; margin:0 16px 10px; display:flex; align-items:flex-start; gap:14px; border:2px solid transparent; cursor:pointer; }
+.dm-card.selected { border-color:#1C3530; }
+.dm-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.dm-icon-mtn { background:#FFF8DC; }
+.dm-icon-bank { background:#E8F0FE; }
+.dm-icon-cash { background:#FCE4EC; }
+.dm-body { flex:1; }
+.dm-name { font-size:15px; font-weight:700; color:#1C3530; margin-bottom:2px; }
+.dm-desc { font-size:13px; color:#9B9390; margin-bottom:6px; }
+.dm-meta { display:flex; gap:12px; }
+.dm-meta-item { display:flex; align-items:center; gap:4px; font-size:12px; color:#9B9390; font-weight:500; }
+.dm-free { color:#2E7D32; font-weight:700; }
+.dm-badge { font-size:10px; font-weight:700; padding:3px 8px; border-radius:5px; background:#E8F5E9; color:#2E7D32; letter-spacing:0.3px; align-self:flex-start; flex-shrink:0; }
+.dm-check { width:22px; height:22px; border-radius:50%; background:#1C3530; display:flex; align-items:center; justify-content:center; flex-shrink:0; align-self:center; }
 
-/* ── FLOW DOTS ── */
-.flow-bar {
-  display: flex; justify-content: center; gap: 6px;
-  padding: 8px 0 4px; flex-shrink: 0;
-}
-.fd {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #D0C9C1; transition: background 0.2s, width 0.2s;
-}
-.fd.active { background: #C4623A; width: 18px; border-radius: 3px; }
+/* REVIEW */
+.rv-big { text-align:center; padding:20px 20px 4px; }
+.rv-big-num { font-size:52px; font-weight:800; color:#1C3530; letter-spacing:-2px; line-height:1; }
+.rv-big-sub { font-size:13px; color:#9B9390; margin-top:4px; }
+.rv-table { background:#fff; border-radius:16px; margin:12px 16px; overflow:hidden; }
+.rv-tr { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(28,53,48,0.06); }
+.rv-tr:last-child { border-bottom:none; }
+.rv-td-l { font-size:14px; color:#9B9390; }
+.rv-td-r { font-size:14px; font-weight:600; color:#1C3530; text-align:right; }
+.free-row { display:flex; align-items:center; gap:6px; }
+.free-pill { font-size:11px; font-weight:700; background:#E8F5E9; color:#2E7D32; padding:2px 7px; border-radius:5px; }
+.rv-recv-card { background:#1C3530; border-radius:16px; padding:16px 18px; margin:0 16px 12px; }
+.rv-recv-lbl { font-size:10px; font-weight:700; color:rgba(246,241,235,0.5); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.rv-recv-num { font-size:28px; font-weight:800; color:#F6F1EB; letter-spacing:-0.5px; }
+.rv-recip-row { display:flex; align-items:center; gap:12px; background:#fff; border-radius:16px; padding:14px 16px; margin:0 16px 12px; }
+.rv-cfpb { background:rgba(28,53,48,0.05); border-radius:12px; padding:12px 14px; margin:0 16px 12px; }
+.rv-cfpb-title { font-size:10px; font-weight:700; color:#1C3530; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:4px; }
+.rv-cfpb-text { font-size:11px; line-height:1.6; color:#7A6B5A; }
 
-/* ── BUTTONS ── */
-.btn-primary {
-  width: 100%; padding: 17px; border-radius: 16px;
-  background: #1C3530; color: #F6F1EB;
-  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
-  border: none; cursor: pointer; letter-spacing: -0.2px;
-  transition: opacity 0.15s;
-}
-.btn-primary:active { opacity: 0.85; }
-.btn-ghost {
-  width: 100%; padding: 15px; border-radius: 16px;
-  background: transparent; color: #1C3530;
-  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
-  border: 2px solid rgba(28,53,48,0.2); cursor: pointer;
-}
+/* SUCCESS */
+#s-success { background:#1C3530; }
+.suc-icon-wrap { width:80px; height:80px; border-radius:50%; background:#C4623A; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
+.suc-heading { font-size:32px; font-weight:800; color:#F6F1EB; letter-spacing:-0.5px; text-align:center; margin-bottom:6px; }
+.suc-sub { font-size:14px; color:rgba(246,241,235,0.6); text-align:center; padding:0 32px; margin-bottom:28px; }
+.suc-receipt { width:calc(100% - 32px); background:rgba(246,241,235,0.08); border-radius:16px; overflow:hidden; margin:0 16px 28px; }
+.suc-row { display:flex; justify-content:space-between; padding:13px 16px; border-bottom:1px solid rgba(246,241,235,0.08); }
+.suc-row:last-child { border-bottom:none; }
+.suc-row-l { font-size:13px; color:rgba(246,241,235,0.5); }
+.suc-row-r { font-size:13px; font-weight:600; color:#F6F1EB; }
 
-/* ── CARDS ── */
-.card {
-  background: #fff; border-radius: 20px;
-  padding: 20px; margin-bottom: 12px;
-  border: 1px solid rgba(28,53,48,0.06);
-}
+/* TRANSFERS */
+.tx-page-title { font-size:34px; font-weight:800; color:#1C3530; letter-spacing:-1px; padding:8px 20px 12px; }
+.tx-filters { display:flex; gap:8px; padding:0 20px 12px; overflow-x:auto; flex-shrink:0; }
+.tx-filters::-webkit-scrollbar { display:none; }
+.tx-chip { padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600; white-space:nowrap; cursor:pointer; border:none; background:#fff; color:#9B9390; }
+.tx-chip.on { background:#1C3530; color:#F6F1EB; }
+.tx-month-lbl { font-size:11px; font-weight:700; color:#9B9390; letter-spacing:0.8px; text-transform:uppercase; padding:8px 20px 6px; }
+.tx-card { display:flex; align-items:center; gap:12px; background:#fff; border-radius:14px; padding:13px 14px; margin:0 16px 8px; cursor:pointer; }
+.tx-info { flex:1; }
+.tx-name { font-size:15px; font-weight:700; color:#1C3530; margin-bottom:3px; }
+.tx-meta { font-size:12px; color:#9B9390; }
+.tx-right { text-align:right; }
+.tx-amt { font-size:15px; font-weight:700; color:#1C3530; margin-bottom:4px; }
 
-/* ── FORM INPUTS ── */
-.form-label { font-size: 12px; font-weight: 600; color: #8B8680; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
-.form-input {
-  width: 100%; padding: 14px 16px; border-radius: 12px;
-  background: #fff; border: 1.5px solid rgba(28,53,48,0.12);
-  font-family: 'DM Sans', sans-serif; font-size: 16px; color: #1C3530;
-  outline: none;
-}
-.form-input:focus { border-color: #C4623A; }
+/* COMMUNITY */
+#s-community { background:#1C3530; }
+.comm-nav { display:flex; align-items:center; justify-content:space-between; padding:8px 20px; flex-shrink:0; }
+.comm-nav-title { font-size:17px; font-weight:600; color:rgba(246,241,235,0.6); }
+.comm-hero-icon { width:72px; height:72px; border-radius:20px; background:#C4623A; display:flex; align-items:center; justify-content:center; margin:16px auto 20px; }
+.comm-heading { font-size:32px; font-weight:800; color:#F6F1EB; text-align:center; letter-spacing:-0.5px; line-height:1.2; margin-bottom:10px; }
+.comm-sub { font-size:14px; color:rgba(246,241,235,0.6); text-align:center; padding:0 32px; margin-bottom:24px; line-height:1.5; }
+.comm-stats { display:flex; gap:10px; margin:0 16px 20px; }
+.comm-stat { flex:1; background:rgba(246,241,235,0.1); border-radius:14px; padding:14px 10px; text-align:center; }
+.comm-stat-num { font-size:24px; font-weight:800; color:#C4623A; margin-bottom:2px; }
+.comm-stat-lbl { font-size:11px; color:rgba(246,241,235,0.55); font-weight:500; }
+.comm-code-box { background:rgba(246,241,235,0.08); border-radius:14px; padding:16px 20px; margin:0 16px 20px; }
+.comm-code-lbl { font-size:11px; font-weight:600; color:rgba(246,241,235,0.5); letter-spacing:0.8px; text-transform:uppercase; margin-bottom:8px; }
+.comm-code-row { display:flex; align-items:center; justify-content:space-between; }
+.comm-code-val { font-size:22px; font-weight:800; color:#F6F1EB; letter-spacing:3px; }
+.comm-section-title { font-size:11px; font-weight:700; color:rgba(246,241,235,0.5); letter-spacing:0.8px; text-transform:uppercase; padding:0 20px 10px; }
+.comm-steps { margin:0 16px 24px; }
+.comm-step { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+.comm-step-num { width:26px; height:26px; border-radius:50%; background:rgba(246,241,235,0.12); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(246,241,235,0.7); flex-shrink:0; margin-top:1px; }
+.comm-step-lbl { font-size:14px; color:rgba(246,241,235,0.8); line-height:1.4; }
+.comm-bnav { display:flex; justify-content:space-around; align-items:flex-end; padding:10px 0 28px; background:rgba(246,241,235,0.05); border-top:1px solid rgba(246,241,235,0.1); flex-shrink:0; }
+.cbi { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:0 12px; background:none; border:none; color:rgba(246,241,235,0.3); }
+.cbi svg { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.cbi span { font-size:10px; font-weight:500; color:currentColor; }
+.cbi.on { color:#C4623A; }
 
-/* ── AVATARS ── */
-.avatar {
-  width: 48px; height: 48px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; font-weight: 700; color: #F6F1EB; flex-shrink: 0;
-}
-.av-kwame { background: #1C3530; }
-.av-amara { background: #C4623A; }
-.av-fatou  { background: #7A6B5A; }
+/* PROFILE */
+.prof-title { font-size:34px; font-weight:800; color:#1C3530; letter-spacing:-1px; padding:8px 20px 14px; }
+.prof-user-card { background:#1C3530; border-radius:18px; padding:18px; margin:0 16px 20px; display:flex; align-items:center; gap:14px; }
+.prof-av { width:56px; height:56px; border-radius:50%; background:#C4623A; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700; color:#fff; flex-shrink:0; }
+.prof-user-info { flex:1; }
+.prof-user-name { font-size:18px; font-weight:700; color:#F6F1EB; margin-bottom:3px; }
+.prof-user-email { font-size:13px; color:rgba(246,241,235,0.55); margin-bottom:8px; }
+.prof-badges { display:flex; gap:6px; }
+.pb { font-size:11px; font-weight:600; padding:3px 9px; border-radius:6px; }
+.pb-green { background:rgba(196,98,58,0.3); color:#F6C095; }
+.pb-gray { background:rgba(246,241,235,0.12); color:rgba(246,241,235,0.65); }
+.prof-sec-lbl { font-size:11px; font-weight:700; color:#9B9390; letter-spacing:0.8px; text-transform:uppercase; padding:0 20px 8px; }
+.prof-menu { background:#fff; border-radius:16px; margin:0 16px 16px; overflow:hidden; }
+.prof-item { display:flex; align-items:center; gap:13px; padding:15px 16px; border-bottom:1px solid rgba(28,53,48,0.06); cursor:pointer; }
+.prof-item:last-child { border-bottom:none; }
+.prof-item-icon { width:22px; text-align:center; color:#9B9390; flex-shrink:0; }
+.prof-item-lbl { flex:1; font-size:15px; color:#1C3530; font-weight:500; }
+.prof-item-val { font-size:13px; color:#9B9390; }
+.prof-item-badge { font-size:12px; font-weight:600; color:#2E7D32; background:#E8F5E9; padding:2px 8px; border-radius:5px; }
+.chev { color:#C0B9B0; }
+.prof-so { background:#fff; border-radius:16px; margin:0 16px 16px; }
+.prof-so-btn { display:flex; align-items:center; gap:12px; padding:15px 16px; cursor:pointer; border:none; background:none; width:100%; }
 
-/* ── NETWORK BADGES ── */
-.net-badge {
-  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
-  letter-spacing: 0.4px;
-}
-.mtn-badge   { background: #FFF0C0; color: #A07000; }
-.mpesa-badge { background: #D4EDDA; color: #1A6B2F; }
-.orange-badge { background: #FFE5CC; color: #B84A00; }
-
-/* ══════════════════════════════════════════
-   SCREEN 1 · HOME
-══════════════════════════════════════════ */
-#s-home .home-hero {
-  background: #1C3530; margin: 0 0 0; padding: 28px 24px 32px;
-  flex-shrink: 0;
-}
-#s-home .home-greeting {
-  font-family: 'Cormorant Garamond', serif; font-size: 14px;
-  color: rgba(246,241,235,0.6); letter-spacing: 1px; text-transform: uppercase;
-  margin-bottom: 4px;
-}
-#s-home .home-balance-label {
-  font-size: 12px; color: rgba(246,241,235,0.5); letter-spacing: 0.8px;
-  text-transform: uppercase; margin-bottom: 8px; margin-top: 20px;
-}
-#s-home .home-balance {
-  font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600;
-  color: #F6F1EB; letter-spacing: -1px; line-height: 1;
-}
-#s-home .home-balance sup { font-size: 24px; vertical-align: super; margin-right: 2px; }
-#s-home .quick-actions {
-  display: flex; gap: 10px; padding: 20px 24px 0;
-  flex-shrink: 0;
-}
-#s-home .qa-btn {
-  flex: 1; padding: 14px 8px; border-radius: 14px;
-  background: #fff; border: 1px solid rgba(28,53,48,0.08);
-  cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;
-}
-#s-home .qa-icon { font-size: 22px; }
-#s-home .qa-label { font-size: 12px; font-weight: 600; color: #1C3530; }
-#s-home .section-heading {
-  font-size: 13px; font-weight: 700; color: #8B8680;
-  letter-spacing: 0.8px; text-transform: uppercase;
-  padding: 20px 24px 12px; flex-shrink: 0;
-}
-#s-home .recip-list { padding: 0 24px; flex: 1; overflow-y: auto; }
-#s-home .recip-list::-webkit-scrollbar { display: none; }
-#s-home .recip-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 0; border-bottom: 1px solid rgba(28,53,48,0.06);
-  cursor: pointer;
-}
-#s-home .recip-info { flex: 1; }
-#s-home .recip-name { font-size: 15px; font-weight: 600; color: #1C3530; margin-bottom: 2px; }
-#s-home .recip-sub { font-size: 13px; color: #8B8680; }
-#s-home .recip-arrow { color: #C4623A; font-size: 18px; }
-
-/* ══════════════════════════════════════════
-   SCREEN 2 · AMOUNT
-══════════════════════════════════════════ */
-#s-amount .amt-header {
-  padding: 24px 24px 0; flex-shrink: 0;
-  display: flex; align-items: center; gap: 12px;
-}
-#s-amount .recip-pill {
-  display: flex; align-items: center; gap: 8px;
-  background: #fff; border-radius: 24px; padding: 6px 14px 6px 8px;
-  border: 1px solid rgba(28,53,48,0.1);
-}
-#s-amount .recip-pill-init {
-  width: 28px; height: 28px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: #F6F1EB;
-}
-#s-amount .recip-pill-name { font-size: 13px; font-weight: 600; color: #1C3530; }
-#s-amount .big-amount {
-  text-align: center; padding: 36px 24px 8px; flex-shrink: 0;
-}
-#s-amount .amt-currency { font-size: 20px; color: #8B8680; font-weight: 500; margin-bottom: 4px; }
-#s-amount .amt-num {
-  font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 700;
-  color: #1C3530; letter-spacing: -2px; line-height: 1;
-}
-#s-amount .gets-row {
-  display: flex; justify-content: center; align-items: center; gap: 6px;
-  padding: 0 24px 24px; flex-shrink: 0;
-}
-#s-amount .gets-lbl { font-size: 15px; color: #8B8680; font-weight: 500; }
-#s-amount .gets-val { font-size: 17px; font-weight: 700; color: #1C3530; }
-#s-amount .rate-note { font-size: 12px; color: #A09890; text-align: center; padding-bottom: 8px; flex-shrink: 0; }
-.keypad {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; flex-shrink: 0;
-  border-top: 1px solid rgba(28,53,48,0.06);
-}
-.key {
-  padding: 20px 0; text-align: center; cursor: pointer;
-  font-size: 24px; font-weight: 500; color: #1C3530;
-  background: #F6F1EB; border: none;
-  transition: background 0.1s;
-}
-.key:active { background: #E8E2DA; }
-.key.key-del { font-size: 20px; color: #8B8680; }
-.amt-footer { padding: 16px 24px 28px; flex-shrink: 0; }
-
-/* ══════════════════════════════════════════
-   SCREEN 3 · RECIPIENT
-══════════════════════════════════════════ */
-#s-recipient .rec-list { padding: 8px 0 0; }
-#s-recipient .rec-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 24px; cursor: pointer;
-  border-bottom: 1px solid rgba(28,53,48,0.06);
-  transition: background 0.1s;
-}
-#s-recipient .rec-row:active { background: #EDE8E2; }
-#s-recipient .rec-info { flex: 1; }
-#s-recipient .rec-name { font-size: 16px; font-weight: 600; color: #1C3530; margin-bottom: 3px; }
-#s-recipient .rec-phone { font-size: 13px; color: #8B8680; margin-bottom: 4px; }
-#s-recipient .rec-row.selected { background: rgba(196,98,58,0.05); }
-#s-recipient .rec-check { color: #C4623A; font-size: 20px; opacity: 0; }
-#s-recipient .rec-row.selected .rec-check { opacity: 1; }
-
-/* ══════════════════════════════════════════
-   SCREEN 4 · REVIEW  (USD-primary, CFPB §1073)
-══════════════════════════════════════════ */
-#s-review .review-body { padding: 0 24px 28px; }
-
-.rv-hero {
-  background: #1C3530; border-radius: 24px;
-  padding: 28px 24px 24px; margin-bottom: 16px; text-align: center;
-}
-.rv-hero-label {
-  font-size: 11px; font-weight: 700; color: rgba(246,241,235,0.5);
-  letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 6px;
-}
-.rv-hero-usd {
-  font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700;
-  color: #F6F1EB; letter-spacing: -1px; line-height: 1;
-}
-.rv-hero-sub {
-  font-size: 14px; color: rgba(246,241,235,0.55); margin-top: 6px;
-}
-
-.rv-card {
-  background: #fff; border-radius: 20px;
-  border: 1px solid rgba(28,53,48,0.07);
-  overflow: hidden; margin-bottom: 12px;
-}
-.rv-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(28,53,48,0.06);
-}
-.rv-row:last-child { border-bottom: none; }
-.rv-row-label { font-size: 13px; color: #8B8680; font-weight: 500; }
-.rv-row-value { font-size: 14px; font-weight: 600; color: #1C3530; text-align: right; }
-.rv-row-value.accent { color: #C4623A; }
-.rv-row-value.large { font-size: 16px; }
-
-.rv-recip-card {
-  background: #fff; border-radius: 20px;
-  border: 1px solid rgba(28,53,48,0.07);
-  padding: 16px 18px; margin-bottom: 12px;
-  display: flex; align-items: center; gap: 14px;
-}
-.rv-recip-info { flex: 1; }
-.rv-recip-name { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 4px; }
-.rv-recip-net { font-size: 13px; color: #8B8680; display: flex; align-items: center; gap: 6px; }
-
-.rv-timer {
-  display: flex; align-items: center; gap: 8px;
-  background: #FFF7ED; border-radius: 12px; padding: 12px 16px;
-  border: 1px solid rgba(196,98,58,0.2); margin-bottom: 12px;
-}
-.rv-timer-icon { font-size: 18px; }
-.rv-timer-text { font-size: 13px; color: #8B8680; flex: 1; }
-.rv-timer-num { font-size: 15px; font-weight: 700; color: #C4623A; font-variant-numeric: tabular-nums; }
-
-.rv-cfpb {
-  background: rgba(28,53,48,0.04); border-radius: 14px;
-  padding: 14px 16px; margin-bottom: 16px;
-}
-.rv-cfpb p {
-  font-size: 11px; line-height: 1.6; color: #7A6B5A;
-}
-.rv-cfpb strong { color: #1C3530; }
-
-/* ══════════════════════════════════════════
-   SCREEN 5 · SENDING
-══════════════════════════════════════════ */
-#s-sending {
-  background: #1C3530; align-items: center; justify-content: center;
-}
-#s-sending .snd-icon { font-size: 56px; margin-bottom: 24px; animation: pulse 1.5s ease-in-out infinite; }
-#s-sending .snd-h2 {
-  font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
-  color: #F6F1EB; text-align: center; margin-bottom: 10px; padding: 0 32px;
-}
-#s-sending .snd-p {
-  font-size: 14px; color: rgba(246,241,235,0.6); text-align: center;
-  padding: 0 40px; line-height: 1.6; margin-bottom: 32px;
-}
-.prog-bar {
-  width: 240px; height: 4px; background: rgba(246,241,235,0.15);
-  border-radius: 2px; overflow: hidden;
-}
-.prog-fill {
-  height: 100%; border-radius: 2px; background: #C4623A;
-  animation: prog 2.8s ease-in-out forwards;
-}
-@keyframes prog { from { width: 0; } to { width: 100%; } }
-@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-
-/* ══════════════════════════════════════════
-   SCREEN 6 · SUCCESS
-══════════════════════════════════════════ */
-#s-success {
-  background: #1C3530; align-items: center; justify-content: center;
-}
-#s-success .suc-icon { font-size: 64px; margin-bottom: 20px; }
-#s-success .suc-amt {
-  font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 700;
-  color: #F6F1EB; letter-spacing: -1px; margin-bottom: 6px;
-}
-#s-success .suc-p { font-size: 15px; color: rgba(246,241,235,0.65); text-align: center; padding: 0 32px; line-height: 1.6; margin-bottom: 40px; }
-#s-success .suc-details { width: 100%; padding: 0 24px; margin-bottom: 32px; }
-#s-success .suc-row {
-  display: flex; justify-content: space-between;
-  padding: 10px 0; border-bottom: 1px solid rgba(246,241,235,0.1);
-}
-#s-success .suc-row:last-child { border-bottom: none; }
-#s-success .suc-row span:first-child { font-size: 13px; color: rgba(246,241,235,0.5); }
-#s-success .suc-row span:last-child  { font-size: 13px; font-weight: 600; color: #F6F1EB; }
-#s-success .suc-btn-wrap { padding: 0 24px; width: 100%; }
-
-/* ══════════════════════════════════════════
-   SCREEN 7 · COMMUNITY
-══════════════════════════════════════════ */
-#s-community .comm-hero {
-  background: #1C3530; padding: 28px 24px 28px;
-  display: flex; align-items: center; gap: 16px; flex-shrink: 0;
-}
-#s-community .comm-logo { font-size: 36px; }
-#s-community .comm-hero-text {}
-#s-community .comm-hero-title {
-  font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600;
-  color: #F6F1EB; margin-bottom: 4px;
-}
-#s-community .comm-hero-sub { font-size: 13px; color: rgba(246,241,235,0.6); }
-
-.comm-card {
-  background: #fff; border-radius: 20px;
-  border: 1px solid rgba(28,53,48,0.07); padding: 20px;
-  margin-bottom: 12px;
-}
-.comm-card-title { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 6px; }
-.comm-card-body { font-size: 13px; color: #7A6B5A; line-height: 1.6; margin-bottom: 14px; }
-.comm-invite-row {
-  display: flex; align-items: center; gap: 12px;
-  background: #F6F1EB; border-radius: 12px; padding: 12px;
-}
-.comm-invite-code {
-  flex: 1; font-size: 17px; font-weight: 700; color: #1C3530;
-  letter-spacing: 2px; font-family: 'DM Sans', monospace;
-}
-.comm-copy-btn {
-  padding: 8px 16px; border-radius: 10px;
-  background: #1C3530; color: #F6F1EB;
-  font-size: 13px; font-weight: 600; border: none; cursor: pointer;
-}
-.comm-stat-row {
-  display: flex; gap: 10px; margin-bottom: 12px;
-}
-.comm-stat {
-  flex: 1; background: #fff; border-radius: 16px;
-  border: 1px solid rgba(28,53,48,0.07);
-  padding: 16px 14px; text-align: center;
-}
-.comm-stat-num {
-  font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700;
-  color: #C4623A; margin-bottom: 2px;
-}
-.comm-stat-lbl { font-size: 11px; color: #8B8680; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-
-.activity-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 0; border-bottom: 1px solid rgba(28,53,48,0.06);
-}
-.activity-row:last-child { border-bottom: none; }
-.act-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: #E8E2DA; display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: #1C3530; flex-shrink: 0;
-}
-.act-text { flex: 1; font-size: 13px; color: #7A6B5A; line-height: 1.4; }
-.act-time { font-size: 11px; color: #A09890; }
-
-/* ══════════════════════════════════════════
-   SCREEN 8 · SCHEDULED TRANSFERS
-══════════════════════════════════════════ */
-#s-scheduled .sched-list { padding: 8px 0 0; }
-.sched-card {
-  background: #fff; border-radius: 20px;
-  border: 1px solid rgba(28,53,48,0.07);
-  padding: 18px; margin: 0 24px 12px;
-}
-.sched-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.sched-card-info { flex: 1; }
-.sched-card-name { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 2px; }
-.sched-card-next { font-size: 12px; color: #8B8680; }
-.sched-card-amt { font-size: 16px; font-weight: 700; color: #C4623A; }
-.sched-card-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-top: 12px; border-top: 1px solid rgba(28,53,48,0.06);
-}
-.sched-freq-pill {
-  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
-  background: rgba(28,53,48,0.07); color: #1C3530; letter-spacing: 0.3px;
-}
-.sched-pause-btn {
-  font-size: 12px; font-weight: 600; color: #8B8680;
-  background: none; border: none; cursor: pointer;
-}
-
-.sched-form-section { padding: 0 24px 0; }
-.sched-field { margin-bottom: 16px; }
-
-.sched-toggle {
-  display: flex; background: #E8E2DA; border-radius: 12px; padding: 4px; margin-bottom: 16px;
-}
-.stog-opt {
-  flex: 1; padding: 10px; border-radius: 9px; text-align: center;
-  font-size: 14px; font-weight: 600; color: #8B8680;
-  cursor: pointer; background: none; border: none;
-}
-.stog-opt.active { background: #fff; color: #1C3530; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-
-#send-on-sec { margin-bottom: 16px; }
-.sched-days {
-  display: flex; gap: 6px; flex-wrap: wrap;
-}
-.sched-day {
-  width: 40px; height: 40px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 600; color: #8B8680;
-  background: #E8E2DA; border: none; cursor: pointer;
-}
-.sched-day.active { background: #1C3530; color: #F6F1EB; }
-
-/* ══════════════════════════════════════════
-   SCREEN 9 · TRANSACTION HISTORY
-══════════════════════════════════════════ */
-.tx-filter {
-  display: flex; gap: 8px; padding: 4px 24px 12px; flex-shrink: 0; overflow-x: auto;
-}
-.tx-filter::-webkit-scrollbar { display: none; }
-.tx-chip {
-  padding: 7px 14px; border-radius: 20px; white-space: nowrap;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  background: #E8E2DA; color: #8B8680; border: none;
-}
-.tx-chip.active { background: #1C3530; color: #F6F1EB; }
-
-.tx-month { font-size: 11px; font-weight: 700; color: #A09890; letter-spacing: 0.8px; text-transform: uppercase; padding: 12px 24px 6px; }
-.tx-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 24px; border-bottom: 1px solid rgba(28,53,48,0.05);
-  cursor: pointer;
-}
-.tx-row:active { background: #EDE8E2; }
-.tx-icon {
-  width: 44px; height: 44px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-}
-.tx-icon.sent { background: rgba(28,53,48,0.07); }
-.tx-icon.recv { background: rgba(196,98,58,0.1); }
-.tx-icon.sched { background: rgba(120,100,80,0.1); }
-.tx-info { flex: 1; }
-.tx-name { font-size: 15px; font-weight: 600; color: #1C3530; margin-bottom: 2px; }
-.tx-date { font-size: 12px; color: #8B8680; }
-.tx-right { text-align: right; }
-.tx-amt { font-size: 15px; font-weight: 700; color: #1C3530; margin-bottom: 2px; }
-.tx-recv { font-size: 12px; color: #8B8680; }
-.tx-recurring { font-size: 11px; font-weight: 600; color: #C4623A; margin-top: 2px; cursor: pointer; }
-
-/* ══════════════════════════════════════════
-   SCREEN 10 · PROFILE
-══════════════════════════════════════════ */
-#s-profile .prof-hero {
-  background: #1C3530; padding: 32px 24px 28px; text-align: center; flex-shrink: 0;
-}
-#s-profile .prof-avatar-wrap {
-  width: 80px; height: 80px; border-radius: 50%;
-  background: rgba(246,241,235,0.15);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; font-weight: 700; color: #F6F1EB;
-  margin: 0 auto 12px;
-}
-#s-profile .prof-name {
-  font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600;
-  color: #F6F1EB; margin-bottom: 4px;
-}
-#s-profile .prof-email { font-size: 13px; color: rgba(246,241,235,0.55); }
-#s-profile .prof-verified {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: rgba(196,98,58,0.3); color: #F6C095;
-  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
-  letter-spacing: 0.4px; margin-top: 10px;
-}
-
-.prof-section-title {
-  font-size: 11px; font-weight: 700; color: #A09890;
-  letter-spacing: 0.8px; text-transform: uppercase;
-  padding: 20px 24px 8px; flex-shrink: 0;
-}
-.prof-menu-item {
-  display: flex; align-items: center; gap: 14px;
-  padding: 16px 24px; border-bottom: 1px solid rgba(28,53,48,0.05);
-  cursor: pointer;
-}
-.prof-menu-icon {
-  width: 38px; height: 38px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center; font-size: 18px;
-}
-.prof-menu-icon.green { background: rgba(28,53,48,0.08); }
-.prof-menu-icon.orange { background: rgba(196,98,58,0.1); }
-.prof-menu-icon.gray { background: rgba(139,134,128,0.12); }
-.prof-menu-label { flex: 1; font-size: 15px; font-weight: 500; color: #1C3530; }
-.prof-menu-arrow { color: #C4623A; font-size: 16px; }
-.prof-menu-badge {
-  font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;
-  background: #C4623A; color: #fff;
-}
-
-.prof-scroll { flex: 1; overflow-y: auto; }
-.prof-scroll::-webkit-scrollbar { display: none; }
+@keyframes prog { from{width:0} to{width:100%} }
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
 <div class="device">
 
-<!-- ══════════════════════════════════════════
-     SCREEN 1 · HOME
-══════════════════════════════════════════ -->
+<!-- S1: HOME -->
 <div class="screen active" id="s-home">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="16" height="12" viewBox="0 0 24 12" fill="#1C3530"><path d="M1 3.5C3.6 1.3 7.1 0 11 0s7.4 1.3 10 3.5" stroke="#1C3530" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M4 7c1.8-1.7 4.3-2.8 7-2.8s5.2 1.1 7 2.8" stroke="#1C3530" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="11" cy="11" r="1.5" fill="#1C3530"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-logo">
+    <div class="nav-logo-left">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      <span class="nav-wordmark">akoma</span>
+    </div>
+    <div class="nav-logo-right">
+      <button class="nav-icon-btn" style="position:relative;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span style="position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:#C4623A;border:2px solid #F2EDE8;"></span>
+      </button>
+      <div class="nav-avatar">KO</div>
     </div>
   </div>
-
-  <div class="home-hero">
-    <div class="home-greeting">Good morning, Kofi ✦</div>
-    <div class="home-balance-label">Available Balance</div>
-    <div class="home-balance"><sup>$</sup>1,240<span style="font-size:28px">.00</span></div>
-  </div>
-
-  <div class="quick-actions">
-    <button class="qa-btn" onclick="go('s-amount')">
-      <span class="qa-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C3530" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></span>
-      <span class="qa-label">Send</span>
-    </button>
-    <button class="qa-btn" onclick="openScheduled('s-home')">
-      <span class="qa-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C3530" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-      <span class="qa-label">Schedule</span>
-    </button>
-    <button class="qa-btn" onclick="go('s-history')">
-      <span class="qa-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C3530" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-      <span class="qa-label">History</span>
-    </button>
-  </div>
-
-  <div class="section-heading">Recent Recipients</div>
-
-  <div class="recip-list">
-    <div class="recip-row" onclick="pickRec('kwame'); go('s-amount')">
-      <div class="avatar av-kwame">KM</div>
-      <div class="recip-info">
-        <div class="recip-name">Kwame Mensah</div>
-        <div class="recip-sub">MTN MoMo · Ghana</div>
-      </div>
-      <span class="recip-arrow">›</span>
+  <div class="scroll">
+    <div class="hero-card">
+      <div class="hero-greeting">Good morning, Kofi</div>
+      <div class="hero-heading">Ready to send?</div>
+      <button class="hero-cta" onclick="go('s-send')">
+        <span class="hero-cta-text">Send money</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <div class="hero-rate"><div class="hero-rate-dot"></div><span class="hero-rate-text">$1 = GHS 16.00 &nbsp;·&nbsp; No fees today</span></div>
     </div>
-    <div class="recip-row" onclick="pickRec('amara'); go('s-amount')">
-      <div class="avatar av-amara">AC</div>
-      <div class="recip-info">
-        <div class="recip-name">Amara Conteh</div>
-        <div class="recip-sub">M-Pesa · Kenya</div>
-      </div>
-      <span class="recip-arrow">›</span>
+    <div class="sec-hdr"><span class="sec-title">Recent</span><span class="sec-link">Add new</span></div>
+    <div class="contacts-row">
+      <div class="contact-item" onclick="pickRec('kwame');go('s-send')"><div class="contact-av pav-km">KM</div><span class="contact-name">Kwame</span></div>
+      <div class="contact-item" onclick="pickRec('amara');go('s-send')"><div class="contact-av pav-ac">AC</div><span class="contact-name">Amara</span></div>
+      <div class="contact-item" onclick="pickRec('fatou');go('s-send')"><div class="contact-av pav-fd">FD</div><span class="contact-name">Fatou</span></div>
+      <div class="contact-item"><div class="contact-av" style="background:#E8E2DA;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><span class="contact-name" style="color:#9B9390;">New</span></div>
     </div>
-    <div class="recip-row" onclick="pickRec('fatou'); go('s-amount')">
-      <div class="avatar av-fatou">FD</div>
-      <div class="recip-info">
-        <div class="recip-name">Fatou Diallo</div>
-        <div class="recip-sub">Orange Money · Senegal</div>
-      </div>
-      <span class="recip-arrow">›</span>
-    </div>
+    <div class="sec-hdr"><span class="sec-title">Activity</span><span class="sec-link" onclick="go('s-transfers')">See all</span></div>
+    <div class="act-row" onclick="go('s-transfers')"><div class="net-av av-mtn">MTN</div><div class="act-info"><div class="act-name">Kwame Mensah</div><div class="act-sub">Today · MTN MoMo · 🇬🇭 Ghana</div></div><div class="act-right"><div class="act-amt">−$200.00</div><span class="pill pill-green">Delivered</span></div></div>
+    <div class="act-row" onclick="go('s-transfers')"><div class="net-av av-mpesa">M-PESA</div><div class="act-info"><div class="act-name">Amara Conteh</div><div class="act-sub">Mar 8 · M-Pesa · 🇰🇪 Kenya</div></div><div class="act-right"><div class="act-amt">−$75.00</div><span class="pill pill-green">Delivered</span></div></div>
+    <div class="act-row" onclick="go('s-transfers')"><div class="net-av av-orange">ORANGE</div><div class="act-info"><div class="act-name">Fatou Diallo</div><div class="act-sub">Mar 5 · Orange Money · 🇸🇳 Senegal</div></div><div class="act-right"><div class="act-amt">−$150.00</div><span class="pill pill-orange">Pending</span></div></div>
+    <div style="height:16px;"></div>
   </div>
-
-  <div class="bottom-nav">
-    <button class="bnav-item active" onclick="go('s-home')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-      <span class="bnav-label">Home</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-history')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-      <span class="bnav-label">History</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-community')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>
-      <span class="bnav-label">Community</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-profile')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-      <span class="bnav-label">Profile</span>
-    </button>
+  <div class="bnav">
+    <button class="bi on" onclick="go('s-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+    <button class="bi" onclick="go('s-transfers')"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span>Transfers</span></button>
+    <button class="bi" onclick="go('s-community')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Community</span></button>
+    <button class="bi" onclick="go('s-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 2 · AMOUNT
-══════════════════════════════════════════ -->
-<div class="screen" id="s-amount">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
-    </div>
+<!-- S2: SEND MONEY -->
+<div class="screen" id="s-send">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span class="nav-center-word">akoma</span></div>
+    <button class="nav-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></button>
   </div>
-
-  <div class="amt-header">
-    <button class="back-btn" onclick="go('s-home')">←</button>
-    <div id="recip-pill" class="recip-pill">
-      <div id="amt-pill-init" class="recip-pill-init av-kwame">KM</div>
-      <span id="amt-pill-name" class="recip-pill-name">Kwame Mensah</span>
-    </div>
-    <button class="back-btn" onclick="go('s-recipient')" style="background:transparent;font-size:13px;font-weight:600;color:#C4623A;width:auto;padding:0 4px;">Change</button>
+  <div class="recip-card" onclick="go('s-recipient')">
+    <div id="send-av" class="pav pav-km">KM</div>
+    <div class="recip-info"><div id="send-name" class="recip-name">Kwame Mensah</div><div id="send-sub" class="recip-sub">MTN MoMo · +233 24 123 4567</div></div>
+    <div id="send-flag" class="flag-badge">🇬🇭 GH</div>
   </div>
-
-  <div class="flow-bar">
-    <div class="fd active" id="fd-1"></div>
-    <div class="fd" id="fd-2"></div>
-    <div class="fd" id="fd-3"></div>
-    <div class="fd" id="fd-4"></div>
-    <div class="fd" id="fd-5"></div>
-  </div>
-
-  <div class="big-amount">
-    <div class="amt-currency">USD</div>
-    <div id="amt-num" class="amt-num">200</div>
-  </div>
-
-  <div class="gets-row">
-    <span id="gets-lbl" class="gets-lbl">Kwame gets</span>
-    <span id="gets-val" class="gets-val">GHS 3,200.00</span>
-  </div>
-  <div id="rate-note" class="rate-note">1 USD = 16.00 GHS · No transfer fee today</div>
-
+  <div class="you-send-lbl">You send</div>
+  <div class="amount-display"><span class="amt-sym">$</span><span id="amt-num" class="amt-big">200</span></div>
+  <div class="rate-line"><div class="rate-dash"></div><span id="rate-txt" class="rate-txt">$1 = GHS 16.00 · arrives in minutes</span><div class="rate-dash"></div></div>
   <div class="keypad">
-    <button class="key" onclick="kp('1')">1</button>
-    <button class="key" onclick="kp('2')">2</button>
-    <button class="key" onclick="kp('3')">3</button>
-    <button class="key" onclick="kp('4')">4</button>
-    <button class="key" onclick="kp('5')">5</button>
-    <button class="key" onclick="kp('6')">6</button>
-    <button class="key" onclick="kp('7')">7</button>
-    <button class="key" onclick="kp('8')">8</button>
-    <button class="key" onclick="kp('9')">9</button>
-    <button class="key" onclick="kp('.')">.</button>
-    <button class="key" onclick="kp('0')">0</button>
-    <button class="key key-del" onclick="kp('del')">⌫</button>
+    <button class="key" onclick="kp('1')">1</button><button class="key" onclick="kp('2')">2</button><button class="key" onclick="kp('3')">3</button>
+    <button class="key" onclick="kp('4')">4</button><button class="key" onclick="kp('5')">5</button><button class="key" onclick="kp('6')">6</button>
+    <button class="key" onclick="kp('7')">7</button><button class="key" onclick="kp('8')">8</button><button class="key" onclick="kp('9')">9</button>
+    <button class="key" onclick="kp('.')">.</button><button class="key" onclick="kp('0')">0</button>
+    <button class="key" onclick="kp('del')"><svg width="22" height="16" viewBox="0 0 24 18" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><path d="M9 3H19a2 2 0 012 2v8a2 2 0 01-2 2H9l-6-6z"/><line x1="12" y1="7" x2="17" y2="12"/><line x1="17" y1="7" x2="12" y2="12"/></svg></button>
   </div>
-
-  <div class="amt-footer">
-    <button class="btn-primary" onclick="go('s-review')">Continue →</button>
+  <div class="cta-bar">
+    <button class="btn" id="send-cta" onclick="go('s-delivery')">Continue · $200.00</button>
+    <div id="send-cta-sub" class="cta-sub">No fees · GHS 3,200.00 delivered · Est. 2 min</div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 3 · RECIPIENT
-══════════════════════════════════════════ -->
+<!-- S3: SELECT RECIPIENT -->
 <div class="screen" id="s-recipient">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
-    </div>
-  </div>
-
-  <div class="nav-header">
-    <button class="back-btn" onclick="go('s-amount')">←</button>
-    <span class="nav-title">Select Recipient</span>
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-send')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Select Recipient</span></div>
     <div class="nav-spacer"></div>
   </div>
-
-  <div class="flow-bar">
-    <div class="fd active" id="fd2-1"></div>
-    <div class="fd active" id="fd2-2"></div>
-    <div class="fd" id="fd2-3"></div>
-    <div class="fd" id="fd2-4"></div>
-    <div class="fd" id="fd2-5"></div>
-  </div>
-
-  <div style="padding: 12px 24px 0; flex-shrink:0;">
-    <input class="form-input" placeholder="Search recipients..." style="margin-bottom:4px;">
-  </div>
-
-  <div class="rec-list" style="flex:1; overflow-y:auto;">
-    <div class="rec-row selected" id="rr-kwame" onclick="pickRec('kwame'); go('s-amount')">
-      <div class="avatar av-kwame">KM</div>
-      <div class="rec-info">
-        <div class="rec-name">Kwame Mensah</div>
-        <div class="rec-phone">+233 24 123 4567</div>
-        <span class="net-badge mtn-badge">MTN MoMo</span>
-      </div>
-      <span class="rec-check">✓</span>
-    </div>
-    <div class="rec-row" id="rr-amara" onclick="pickRec('amara'); go('s-amount')">
-      <div class="avatar av-amara">AC</div>
-      <div class="rec-info">
-        <div class="rec-name">Amara Conteh</div>
-        <div class="rec-phone">+254 712 345 678</div>
-        <span class="net-badge mpesa-badge">M-Pesa</span>
-      </div>
-      <span class="rec-check">✓</span>
-    </div>
-    <div class="rec-row" id="rr-fatou" onclick="pickRec('fatou'); go('s-amount')">
-      <div class="avatar av-fatou">FD</div>
-      <div class="rec-info">
-        <div class="rec-name">Fatou Diallo</div>
-        <div class="rec-phone">+221 77 123 4567</div>
-        <span class="net-badge orange-badge">Orange Money</span>
-      </div>
-      <span class="rec-check">✓</span>
-    </div>
+  <div class="search-bar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input placeholder="Search recipients…" readonly></div>
+  <div class="scroll" style="padding-top:4px;">
+    <div class="rec-row" id="rr-kwame" onclick="pickRec('kwame');go('s-send')"><div class="pav pav-km">KM</div><div class="ri"><div class="ri-name">Kwame Mensah</div><div class="ri-phone">+233 24 123 4567</div><span class="nbadge nb-mtn">MTN MoMo</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <div class="rec-row" id="rr-amara" onclick="pickRec('amara');go('s-send')"><div class="pav pav-ac">AC</div><div class="ri"><div class="ri-name">Amara Conteh</div><div class="ri-phone">+254 712 345 678</div><span class="nbadge nb-mpesa">M-Pesa</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D0C9C1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg></div>
+    <div class="rec-row" id="rr-fatou" onclick="pickRec('fatou');go('s-send')"><div class="pav pav-fd">FD</div><div class="ri"><div class="ri-name">Fatou Diallo</div><div class="ri-phone">+221 77 123 4567</div><span class="nbadge nb-orange">Orange Money</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D0C9C1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 4 · REVIEW  (USD-primary, CFPB §1073)
-══════════════════════════════════════════ -->
+<!-- S4: DELIVERY METHOD -->
+<div class="screen" id="s-delivery">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-send')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span class="nav-center-word">akoma</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="dm-hdr"><div id="dm-title" class="dm-title">How should Kwame<br>receive it?</div><div class="dm-sub">Choose a delivery method</div></div>
+  <div class="dm-card selected" onclick="go('s-review')">
+    <div class="dm-icon dm-icon-mtn">💛</div>
+    <div class="dm-body"><div class="dm-name">MTN Mobile Money</div><div class="dm-desc">Sent straight to MoMo wallet</div><div class="dm-meta"><div class="dm-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Instant</div><div class="dm-meta-item"><span class="dm-free">No fee</span></div></div></div>
+    <span class="dm-badge">FASTEST</span>
+    <div class="dm-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F6F1EB" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+  </div>
+  <div class="dm-card" onclick="go('s-review')">
+    <div class="dm-icon dm-icon-bank">🏦</div>
+    <div class="dm-body"><div class="dm-name">Bank Transfer</div><div class="dm-desc">GCB, Ecobank, Stanbic &amp; more</div><div class="dm-meta"><div class="dm-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>~2 minutes</div><div class="dm-meta-item"><span class="dm-free">No fee</span></div></div></div>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D0C9C1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg>
+  </div>
+  <div class="dm-card" onclick="go('s-review')">
+    <div class="dm-icon dm-icon-cash">💳</div>
+    <div class="dm-body"><div class="dm-name">Cash Pickup</div><div class="dm-desc">140+ agent locations in Accra</div><div class="dm-meta"><div class="dm-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Within 1 hour</div><div class="dm-meta-item"><span class="dm-free">No fee</span></div></div></div>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D0C9C1" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg>
+  </div>
+  <div class="cta-bar" style="margin-top:auto;"><button class="btn" onclick="go('s-review')">Continue with MoMo</button></div>
+</div>
+
+<!-- S5: REVIEW -->
 <div class="screen" id="s-review">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
-    </div>
-  </div>
-
-  <div class="nav-header">
-    <button class="back-btn" onclick="go('s-amount')">←</button>
-    <span class="nav-title">Review Transfer</span>
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-delivery')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Review Transfer</span></div>
     <div class="nav-spacer"></div>
   </div>
-
-  <div class="flow-bar">
-    <div class="fd active"></div>
-    <div class="fd active"></div>
-    <div class="fd active"></div>
-    <div class="fd" id="fd3-4"></div>
-    <div class="fd" id="fd3-5"></div>
-  </div>
-
-  <div class="review-body scroll-body">
-
-    <!-- USD Hero -->
-    <div class="rv-hero">
-      <div class="rv-hero-label">You are sending</div>
-      <div id="rv-send" class="rv-hero-usd">$200.00</div>
-      <div id="rv-hero-sub" class="rv-hero-sub">USD · United States Dollar</div>
+  <div class="scroll">
+    <div class="rv-big"><div id="rv-send" class="rv-big-num">$200.00</div><div class="rv-big-sub">total charged to your account (USD)</div></div>
+    <div class="rv-table">
+      <div class="rv-tr"><div class="rv-td-l">Transfer amount<br><span style="font-size:12px;color:#C0B9B0;" id="rv-to">to Kwame Mensah</span></div><div id="rv-amount" class="rv-td-r">$200.00</div></div>
+      <div class="rv-tr"><div class="rv-td-l">Transfer fee</div><div class="rv-td-r"><div class="free-row"><span style="text-decoration:line-through;color:#C0B9B0;font-weight:400;">$2.00</span><span class="free-pill">Free</span></div></div></div>
+      <div class="rv-tr"><div class="rv-td-l">Exchange rate</div><div id="rv-rate" class="rv-td-r">1 USD = 16.00 GHS</div></div>
+      <div class="rv-tr" style="background:rgba(28,53,48,0.02);"><div class="rv-td-l" style="font-weight:700;color:#1C3530;">Total charged</div><div id="rv-total" class="rv-td-r" style="font-size:16px;">$200.00</div></div>
     </div>
-
-    <!-- Transfer breakdown — all USD on left, local equiv on right -->
-    <div class="rv-card">
-      <div class="rv-row">
-        <span class="rv-row-label">Transfer amount</span>
-        <span id="rv-send-row" class="rv-row-value">$200.00 USD</span>
-      </div>
-      <div class="rv-row">
-        <span class="rv-row-label">Transfer fee</span>
-        <span class="rv-row-value accent">$0.00 USD <span style="font-size:11px;background:#D4EDDA;color:#1A6B2F;padding:2px 6px;border-radius:4px;margin-left:4px;">FREE</span></span>
-      </div>
-      <div class="rv-row">
-        <span class="rv-row-label">Exchange rate</span>
-        <span id="rv-rate" class="rv-row-value">1 USD = 16.00 GHS</span>
-      </div>
-      <div class="rv-row">
-        <span class="rv-row-label" style="font-weight:700;color:#1C3530;">Total charged (USD)</span>
-        <span id="rv-total" class="rv-row-value large" style="color:#1C3530;">$200.00 USD</span>
-      </div>
+    <div class="rv-recv-card"><div id="rv-recv-lbl" class="rv-recv-lbl">Kwame receives</div><div id="rv-recv-num" class="rv-recv-num">GHS 3,200.00</div></div>
+    <div class="rv-recip-row">
+      <div id="rv-av" class="pav pav-km">KM</div>
+      <div style="flex:1;"><div id="rv-name" style="font-size:15px;font-weight:700;color:#1C3530;margin-bottom:2px;">Kwame Mensah</div><div style="font-size:13px;color:#9B9390;display:flex;align-items:center;gap:6px;"><span id="rv-badge"><span class="nbadge nb-mtn">MTN MoMo</span></span><span id="rv-phone">· +233 24 123 4567</span></div></div>
+      <div style="display:flex;align-items:center;gap:5px;background:#F2EDE8;border-radius:8px;padding:5px 9px;"><span style="font-size:13px;">⏱</span><span id="timer" style="font-size:13px;font-weight:700;color:#C4623A;font-variant-numeric:tabular-nums;">28:43</span></div>
     </div>
-
-    <!-- Recipient receives -->
-    <div class="rv-card">
-      <div class="rv-row">
-        <span class="rv-row-label">Recipient receives</span>
-        <span id="rv-recv" class="rv-row-value large" style="color:#C4623A;">GHS 3,200.00</span>
-      </div>
-      <div class="rv-row">
-        <span class="rv-row-label">Delivery time</span>
-        <span class="rv-row-value">Instant · &lt; 5 min</span>
-      </div>
-    </div>
-
-    <!-- Recipient -->
-    <div class="rv-recip-card">
-      <div id="rv-initials" class="avatar av-kwame">KM</div>
-      <div class="rv-recip-info">
-        <div id="rv-name" class="rv-recip-name">Kwame Mensah</div>
-        <div class="rv-recip-net">
-          <span id="rv-badge"><span class="net-badge mtn-badge">MTN MoMo</span></span>
-          <span id="rv-network" style="color:#8B8680;">· +233 24 123 4567</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Rate-lock timer -->
-    <div class="rv-timer">
-      <span class="rv-timer-icon">⏱</span>
-      <span class="rv-timer-text">Rate locked for</span>
-      <span id="timer" class="rv-timer-num">28:43</span>
-    </div>
-
-    <!-- CFPB §1073 Disclosure -->
-    <div class="rv-cfpb">
-      <p id="rv-cfpb">
-        <strong>Important Disclosure (Reg. E / 12 CFR §1073):</strong> You are sending <strong>$200.00 USD</strong> to Kwame Mensah. The total amount charged to your account is <strong>$200.00 USD</strong> (including a $0.00 fee). The exchange rate is <strong>1 USD = 16.00 GHS</strong>. The recipient will receive approximately <strong>GHS 3,200.00</strong>. Exchange rates may vary. You have the right to cancel this transfer within <strong>30 minutes</strong> at no cost. To cancel, contact support@akoma.app or call 1-800-AKOMA-US. For error resolution, contact us within 180 days of the transfer date.
-      </p>
-    </div>
-
-    <button class="btn-primary" onclick="go('s-sending')" style="margin-bottom:12px;">Confirm &amp; Send $<span id="rv-btn-amt">200.00</span> USD</button>
-    <button class="btn-ghost" onclick="go('s-amount')">Go Back</button>
+    <div class="rv-cfpb"><div class="rv-cfpb-title">Required Disclosure · Reg. E / 12 CFR §1073</div><div id="rv-cfpb" class="rv-cfpb-text">You are sending $200.00 USD to Kwame Mensah. Total charged: $200.00 USD (fee: $0.00). Rate: 1 USD = 16.00 GHS. Recipient receives approx. GHS 3,200.00. Cancel within 30 min at no cost — support@akoma.app or 1-800-AKOMA-US. Error resolution: 180 days.</div></div>
+    <div style="padding:0 16px 8px;"><button class="btn" onclick="go('s-sending')">Confirm &amp; Send $<span id="rv-btn-amt">200.00</span></button></div>
+    <div style="height:16px;"></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 5 · SENDING
-══════════════════════════════════════════ -->
-<div class="screen" id="s-sending">
-  <div style="position:absolute;top:14px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:15px;font-weight:600;color:rgba(246,241,235,0.5);">9:41</span>
-  </div>
-  <div class="snd-icon">🌍</div>
-  <h2 id="snd-h2" class="snd-h2">Sending $200.00 to Kwame…</h2>
-  <p id="snd-p" class="snd-p">Routing your transfer via MTN MoMo. This usually takes less than a minute.</p>
-  <div class="prog-bar">
-    <div id="prog-fill" class="prog-fill"></div>
-  </div>
+<!-- S6: SENDING -->
+<div class="screen" id="s-sending" style="background:#1C3530;align-items:center;justify-content:center;">
+  <div style="font-size:52px;margin-bottom:24px;animation:spin 2s linear infinite;">🌍</div>
+  <div id="snd-h2" style="font-size:26px;font-weight:800;color:#F6F1EB;text-align:center;padding:0 32px;margin-bottom:10px;letter-spacing:-0.5px;">Sending $200.00…</div>
+  <div id="snd-p" style="font-size:14px;color:rgba(246,241,235,0.6);text-align:center;padding:0 40px;line-height:1.6;margin-bottom:32px;">Routing via MTN MoMo. Usually takes less than a minute.</div>
+  <div style="width:200px;height:3px;background:rgba(246,241,235,0.15);border-radius:2px;overflow:hidden;"><div id="prog-fill" style="height:100%;border-radius:2px;background:#C4623A;animation:prog 2.8s ease-in-out forwards;"></div></div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 6 · SUCCESS
-══════════════════════════════════════════ -->
+<!-- S7: SUCCESS -->
 <div class="screen" id="s-success">
-  <div style="position:absolute;top:14px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:15px;font-weight:600;color:rgba(246,241,235,0.5);">9:41</span>
-  </div>
-  <div class="suc-icon">✅</div>
-  <div id="suc-amt" class="suc-amt">$200.00 Sent</div>
-  <p id="suc-p" class="suc-p">Kwame Mensah will receive GHS 3,200.00 via MTN MoMo within minutes.</p>
-  <div class="suc-details">
-    <div class="suc-row">
-      <span>Amount sent</span>
-      <span id="suc-sent">$200.00 USD</span>
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.45);">9:41</span></div>
+  <div style="flex:1;background:#1C3530;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 0 24px;">
+    <div class="suc-icon-wrap"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <div id="suc-heading" class="suc-heading">$200.00 Sent!</div>
+    <div id="suc-sub" class="suc-sub">Kwame gets GHS 3,200.00 · est. 2 min</div>
+    <div class="suc-receipt">
+      <div class="suc-row"><span class="suc-row-l">Amount sent</span><span id="suc-sent" class="suc-row-r">$200.00 USD</span></div>
+      <div class="suc-row"><span class="suc-row-l">Recipient receives</span><span id="suc-recv" class="suc-row-r">GHS 3,200.00</span></div>
+      <div class="suc-row"><span class="suc-row-l">Transfer fee</span><span class="suc-row-r">$0.00 USD</span></div>
+      <div class="suc-row"><span class="suc-row-l">Reference #</span><span class="suc-row-r">AKM-2025-0089</span></div>
     </div>
-    <div class="suc-row">
-      <span>Recipient receives</span>
-      <span id="suc-recv">GHS 3,200.00</span>
+    <div style="padding:0 16px;width:100%;display:flex;flex-direction:column;gap:10px;">
+      <button class="btn" style="background:rgba(246,241,235,0.15);color:#F6F1EB;" onclick="hardReset();go('s-home')">Back to Home</button>
+      <button class="btn" style="background:rgba(246,241,235,0.08);color:rgba(246,241,235,0.7);" onclick="go('s-transfers')">View Transfers</button>
     </div>
-    <div class="suc-row">
-      <span>Transfer fee</span>
-      <span>$0.00 USD</span>
-    </div>
-    <div class="suc-row">
-      <span>Reference #</span>
-      <span>AKM-2025-0089</span>
-    </div>
-  </div>
-  <div class="suc-btn-wrap">
-    <button class="btn-primary" style="background:rgba(246,241,235,0.15);color:#F6F1EB;margin-bottom:10px;" onclick="hardReset(); go('s-home')">Back to Home</button>
-    <button class="btn-ghost" style="border-color:rgba(246,241,235,0.2);color:rgba(246,241,235,0.7);" onclick="go('s-history')">View History</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 7 · COMMUNITY
-══════════════════════════════════════════ -->
+<!-- S8: TRANSFERS -->
+<div class="screen" id="s-transfers">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 20px 0;"><div class="tx-page-title" style="padding:0;">Transfers</div><button class="nav-icon-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button></div>
+  <div class="tx-filters"><button class="tx-chip on">All</button><button class="tx-chip">Completed</button><button class="tx-chip">Pending</button><button class="tx-chip">Failed</button></div>
+  <div class="scroll">
+    <div class="tx-month-lbl">March 2025</div>
+    <div class="tx-card"><div class="net-av av-mtn">MTN</div><div class="tx-info"><div class="tx-name">Kwame Mensah</div><div class="tx-meta">MTN MoMo · 🇬🇭 Ghana · Mar 10</div></div><div class="tx-right"><div class="tx-amt">$200</div><span class="pill pill-green">Delivered</span></div></div>
+    <div class="tx-card"><div class="net-av av-mpesa">M-PESA</div><div class="tx-info"><div class="tx-name">Amara Conteh</div><div class="tx-meta">M-Pesa · 🇰🇪 Kenya · Mar 8</div></div><div class="tx-right"><div class="tx-amt">$75</div><span class="pill pill-green">Delivered</span></div></div>
+    <div class="tx-card"><div class="net-av av-orange">ORANGE</div><div class="tx-info"><div class="tx-name">Fatou Diallo</div><div class="tx-meta">Orange Money · 🇸🇳 Senegal · Mar 5</div></div><div class="tx-right"><div class="tx-amt">$150</div><span class="pill pill-orange">Pending</span></div></div>
+    <div class="tx-month-lbl">February 2025</div>
+    <div class="tx-card"><div class="net-av av-mpesa">M-PESA</div><div class="tx-info"><div class="tx-name">Amara Conteh</div><div class="tx-meta">M-Pesa · 🇰🇪 Kenya · Feb 28</div></div><div class="tx-right"><div class="tx-amt">$120</div><span class="pill pill-green">Delivered</span></div></div>
+    <div class="tx-card"><div class="net-av av-airtel">AIRTEL TIGO</div><div class="tx-info"><div class="tx-name">Kofi Asante</div><div class="tx-meta">AirtelTigo · 🇬🇭 Ghana · Feb 22</div></div><div class="tx-right"><div class="tx-amt">$50</div><span class="pill pill-red">Failed</span></div></div>
+    <div style="height:16px;"></div>
+  </div>
+  <div class="bnav">
+    <button class="bi" onclick="go('s-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+    <button class="bi on" onclick="go('s-transfers')"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span>Transfers</span></button>
+    <button class="bi" onclick="go('s-community')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Community</span></button>
+    <button class="bi" onclick="go('s-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
+  </div>
+</div>
+
+<!-- S9: COMMUNITY -->
 <div class="screen" id="s-community">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
-    </div>
-  </div>
-
-  <div class="comm-hero">
-    <div class="comm-logo">🤝</div>
-    <div class="comm-hero-text">
-      <div class="comm-hero-title">Akoma Community</div>
-      <div class="comm-hero-sub">Refer friends, earn rewards</div>
-    </div>
-  </div>
-
-  <div class="scroll-body" style="padding-top:16px;">
-
-    <div class="comm-stat-row">
-      <div class="comm-stat">
-        <div class="comm-stat-num">7</div>
-        <div class="comm-stat-lbl">Referred</div>
-      </div>
-      <div class="comm-stat">
-        <div class="comm-stat-num">$35</div>
-        <div class="comm-stat-lbl">Earned</div>
-      </div>
-      <div class="comm-stat">
-        <div class="comm-stat-num">3</div>
-        <div class="comm-stat-lbl">Pending</div>
-      </div>
-    </div>
-
-    <div class="comm-card">
-      <div class="comm-card-title">Invite Friends &amp; Earn</div>
-      <div class="comm-card-body">Share your code. When a friend sends their first transfer, you both get $5 in free transfers.</div>
-      <div class="comm-invite-row">
-        <span class="comm-invite-code">KOFI25</span>
-        <button class="comm-copy-btn" onclick="this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
-      </div>
-    </div>
-
-    <div class="comm-card">
-      <div class="comm-card-title">Recent Activity</div>
-      <div class="activity-row">
-        <div class="act-avatar">YK</div>
-        <div class="act-text"><strong>Yaa Kyei</strong> joined using your code</div>
-        <div class="act-time">2h ago</div>
-      </div>
-      <div class="activity-row">
-        <div class="act-avatar">JA</div>
-        <div class="act-text"><strong>Joe Asante</strong> completed first transfer · You earned $5</div>
-        <div class="act-time">1d ago</div>
-      </div>
-      <div class="activity-row">
-        <div class="act-avatar">EO</div>
-        <div class="act-text"><strong>Esi Owusu</strong> joined using your code</div>
-        <div class="act-time">3d ago</div>
-      </div>
-    </div>
-
-    <div class="comm-card">
-      <div class="comm-card-title">How it works</div>
-      <div class="comm-card-body">
-        1. Share your code with friends &amp; family<br>
-        2. They sign up and send their first transfer<br>
-        3. You both receive $5 credit instantly<br><br>
-        No limit on referrals. Rewards never expire.
-      </div>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <button class="bnav-item" onclick="go('s-home')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-      <span class="bnav-label">Home</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-history')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-      <span class="bnav-label">History</span>
-    </button>
-    <button class="bnav-item active" onclick="go('s-community')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>
-      <span class="bnav-label">Community</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-profile')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-      <span class="bnav-label">Profile</span>
-    </button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     SCREEN 8 · SCHEDULED TRANSFERS
-══════════════════════════════════════════ -->
-<div class="screen" id="s-scheduled">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
-    </div>
-  </div>
-  <div class="nav-header">
-    <button class="back-btn" onclick="goSchedBack()">←</button>
-    <span class="nav-title">Scheduled Transfers</span>
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.45);">9:41</span></div>
+  <div class="comm-nav">
+    <button class="back-btn" style="background:rgba(246,241,235,0.1);" onclick="go('s-home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(246,241,235,0.7)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <span class="comm-nav-title">Invite friends</span>
     <div class="nav-spacer"></div>
   </div>
-
-  <div class="scroll-body" style="padding:0 0 24px;">
-    <div style="padding: 8px 24px 16px; font-size:13px; color:#8B8680;">Active schedules</div>
-
-    <div class="sched-card">
-      <div class="sched-card-header">
-        <div class="avatar av-kwame">KM</div>
-        <div class="sched-card-info">
-          <div class="sched-card-name">Kwame Mensah</div>
-          <div class="sched-card-next">Next: Mon, Jan 13 · MTN MoMo</div>
-        </div>
-        <div class="sched-card-amt">$200 USD</div>
-      </div>
-      <div class="sched-card-footer">
-        <span class="sched-freq-pill">Weekly</span>
-        <button class="sched-pause-btn">Pause</button>
-      </div>
+  <div class="scroll" style="background:#1C3530;">
+    <div class="comm-hero-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></div>
+    <div class="comm-heading">Give $10,<br>get $10</div>
+    <div class="comm-sub">When a friend sends their first transfer, you both earn a $10 reward</div>
+    <div class="comm-stats">
+      <div class="comm-stat"><div class="comm-stat-num">3</div><div class="comm-stat-lbl">Friends invited</div></div>
+      <div class="comm-stat"><div class="comm-stat-num">$30</div><div class="comm-stat-lbl">Earned</div></div>
+      <div class="comm-stat"><div class="comm-stat-num">2</div><div class="comm-stat-lbl">Pending</div></div>
     </div>
-
-    <div class="sched-card">
-      <div class="sched-card-header">
-        <div class="avatar av-fatou">FD</div>
-        <div class="sched-card-info">
-          <div class="sched-card-name">Fatou Diallo</div>
-          <div class="sched-card-next">Next: Feb 1 · Orange Money</div>
-        </div>
-        <div class="sched-card-amt">$150 USD</div>
-      </div>
-      <div class="sched-card-footer">
-        <span class="sched-freq-pill">Monthly</span>
-        <button class="sched-pause-btn">Pause</button>
-      </div>
+    <div class="comm-code-box"><div class="comm-code-lbl">Your referral code</div><div class="comm-code-row"><span class="comm-code-val">AKOMA-KO3</span><button class="btn-terra" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</button></div></div>
+    <div class="comm-section-title">How it works</div>
+    <div class="comm-steps">
+      <div class="comm-step"><div class="comm-step-num">1</div><div class="comm-step-lbl">Share your code with a friend</div></div>
+      <div class="comm-step"><div class="comm-step-num">2</div><div class="comm-step-lbl">They sign up &amp; complete first transfer</div></div>
+      <div class="comm-step"><div class="comm-step-num">3</div><div class="comm-step-lbl">You both get $10 — automatically</div></div>
     </div>
-
-    <div style="padding: 16px 24px 8px; font-size:13px; color:#8B8680;">New schedule</div>
-    <div class="sched-form-section">
-      <div class="sched-field">
-        <div class="form-label">Frequency</div>
-        <div class="sched-toggle">
-          <button class="stog-opt active" id="tog-once" onclick="setFreq('once')">One-time</button>
-          <button class="stog-opt" id="tog-weekly" onclick="setFreq('weekly')">Weekly</button>
-          <button class="stog-opt" id="tog-monthly" onclick="setFreq('monthly')">Monthly</button>
-        </div>
-      </div>
-
-      <div class="sched-field" id="send-on-sec" style="display:none;">
-        <div class="form-label">Send on</div>
-        <div class="sched-days">
-          <button class="sched-day" onclick="toggleDay(this)">M</button>
-          <button class="sched-day active" onclick="toggleDay(this)">T</button>
-          <button class="sched-day" onclick="toggleDay(this)">W</button>
-          <button class="sched-day" onclick="toggleDay(this)">T</button>
-          <button class="sched-day" onclick="toggleDay(this)">F</button>
-          <button class="sched-day" onclick="toggleDay(this)">S</button>
-          <button class="sched-day" onclick="toggleDay(this)">S</button>
-        </div>
-      </div>
-
-      <div class="sched-field">
-        <div class="form-label">Start date</div>
-        <input class="form-input" type="text" value="Jan 13, 2025">
-      </div>
-
-      <div class="sched-field">
-        <div class="form-label">Amount (USD)</div>
-        <input class="form-input" type="text" placeholder="$0.00">
-      </div>
-
-      <button class="btn-primary">Create Schedule</button>
-    </div>
+    <div style="padding:0 16px 12px;"><button class="btn" style="background:#C4623A;display:flex;align-items:center;justify-content:center;gap:10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share invite link</button></div>
+    <div style="height:8px;"></div>
+  </div>
+  <div class="comm-bnav">
+    <button class="cbi" onclick="go('s-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+    <button class="cbi" onclick="go('s-transfers')"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span>Transfers</span></button>
+    <button class="cbi on"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Community</span></button>
+    <button class="cbi" onclick="go('s-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCREEN 9 · TRANSACTION HISTORY
-══════════════════════════════════════════ -->
-<div class="screen" id="s-history">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
-    </div>
-  </div>
-  <div class="nav-header">
-    <button class="back-btn" onclick="go('s-home')">←</button>
-    <span class="nav-title">History</span>
-    <div class="nav-spacer"></div>
-  </div>
-
-  <div class="tx-filter">
-    <button class="tx-chip active">All</button>
-    <button class="tx-chip">Sent</button>
-    <button class="tx-chip">Received</button>
-    <button class="tx-chip">Scheduled</button>
-  </div>
-
-  <div style="flex:1;overflow-y:auto;">
-    <div class="tx-month">January 2025</div>
-
-    <div class="tx-row">
-      <div class="tx-icon sent">↑</div>
-      <div class="tx-info">
-        <div class="tx-name">Kwame Mensah</div>
-        <div class="tx-date">Jan 10, 2025 · MTN MoMo</div>
-        <div class="tx-recurring" onclick="openScheduled('s-history')">↻ Recurring</div>
-      </div>
-      <div class="tx-right">
-        <div class="tx-amt">-$200.00</div>
-        <div class="tx-recv">GHS 3,200.00</div>
-      </div>
-    </div>
-
-    <div class="tx-row">
-      <div class="tx-icon sent">↑</div>
-      <div class="tx-info">
-        <div class="tx-name">Fatou Diallo</div>
-        <div class="tx-date">Jan 8, 2025 · Orange Money</div>
-      </div>
-      <div class="tx-right">
-        <div class="tx-amt">-$150.00</div>
-        <div class="tx-recv">XOF 93,000</div>
-      </div>
-    </div>
-
-    <div class="tx-row">
-      <div class="tx-icon recv">↓</div>
-      <div class="tx-info">
-        <div class="tx-name">Referral Bonus</div>
-        <div class="tx-date">Jan 5, 2025 · Akoma Credit</div>
-      </div>
-      <div class="tx-right">
-        <div class="tx-amt" style="color:#1A6B2F;">+$5.00</div>
-      </div>
-    </div>
-
-    <div class="tx-month">December 2024</div>
-
-    <div class="tx-row">
-      <div class="tx-icon sent">↑</div>
-      <div class="tx-info">
-        <div class="tx-name">Kwame Mensah</div>
-        <div class="tx-date">Dec 30, 2024 · MTN MoMo</div>
-        <div class="tx-recurring" onclick="openScheduled('s-history')">↻ Recurring</div>
-      </div>
-      <div class="tx-right">
-        <div class="tx-amt">-$200.00</div>
-        <div class="tx-recv">GHS 3,200.00</div>
-      </div>
-    </div>
-
-    <div class="tx-row">
-      <div class="tx-icon sent">↑</div>
-      <div class="tx-info">
-        <div class="tx-name">Amara Conteh</div>
-        <div class="tx-date">Dec 22, 2024 · M-Pesa</div>
-      </div>
-      <div class="tx-right">
-        <div class="tx-amt">-$75.00</div>
-        <div class="tx-recv">KES 9,750.00</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <button class="bnav-item" onclick="go('s-home')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-      <span class="bnav-label">Home</span>
-    </button>
-    <button class="bnav-item active" onclick="go('s-history')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-      <span class="bnav-label">History</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-community')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>
-      <span class="bnav-label">Community</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-profile')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-      <span class="bnav-label">Profile</span>
-    </button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     SCREEN 10 · PROFILE
-══════════════════════════════════════════ -->
+<!-- S10: PROFILE -->
 <div class="screen" id="s-profile">
-  <div class="status-bar">
-    <span>9:41</span>
-    <div class="status-icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg>
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="prof-title">Profile</div>
+  <div class="scroll">
+    <div class="prof-user-card">
+      <div class="prof-av">KO</div>
+      <div class="prof-user-info"><div class="prof-user-name">Kofi Acheampong</div><div class="prof-user-email">kofi@gmail.com</div><div class="prof-badges"><span class="pb pb-green">Verified</span><span class="pb pb-gray">US sender</span></div></div>
+      <svg style="color:rgba(246,241,235,0.5);cursor:pointer;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
     </div>
+    <div class="prof-sec-lbl">Account</div>
+    <div class="prof-menu">
+      <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span><span class="prof-item-lbl">Phone number</span><span class="prof-item-val">+1 ••• 7890</span><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+      <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span class="prof-item-lbl">Identity verification</span><span class="prof-item-badge">Complete</span></div>
+      <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span><span class="prof-item-lbl">Change password</span><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+    <div class="prof-sec-lbl">Payments</div>
+    <div class="prof-menu">
+      <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span><span class="prof-item-lbl">Payment methods</span><span class="prof-item-val">2 saved</span><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+      <div class="prof-item"><span class="prof-item-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span class="prof-item-lbl">Transfer limits</span><span class="prof-item-val">$5K / transfer</span><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+    <div class="prof-so"><button class="prof-so-btn"><svg style="color:#C4623A;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span style="font-size:15px;font-weight:600;color:#C4623A;">Sign out</span></button></div>
+    <div style="height:8px;"></div>
   </div>
-
-  <div class="prof-hero">
-    <div class="prof-avatar-wrap">KA</div>
-    <div class="prof-name">Kofi Acheampong</div>
-    <div class="prof-email">kofi@example.com</div>
-    <div class="prof-verified">✓ Identity Verified</div>
-  </div>
-
-  <div class="prof-scroll">
-    <div class="prof-section-title">Account</div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon green">👤</div>
-      <span class="prof-menu-label">Personal Information</span>
-      <span class="prof-menu-arrow">›</span>
-    </div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon green">🔒</div>
-      <span class="prof-menu-label">Security &amp; Password</span>
-      <span class="prof-menu-arrow">›</span>
-    </div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon green">💳</div>
-      <span class="prof-menu-label">Payment Methods</span>
-      <span class="prof-menu-arrow">›</span>
-    </div>
-
-    <div class="prof-section-title">Transfers</div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon orange">🌍</div>
-      <span class="prof-menu-label">Transfer Limits</span>
-      <div class="prof-menu-badge">$3,000/mo</div>
-    </div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon orange">🗓</div>
-      <span class="prof-menu-label">Scheduled Transfers</span>
-      <span class="prof-menu-arrow">›</span>
-    </div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon orange">📄</div>
-      <span class="prof-menu-label">Statements &amp; Receipts</span>
-      <span class="prof-menu-arrow">›</span>
-    </div>
-
-    <div class="prof-section-title">Support</div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon gray">❓</div>
-      <span class="prof-menu-label">Help Center</span>
-      <span class="prof-menu-arrow">›</span>
-    </div>
-    <div class="prof-menu-item">
-      <div class="prof-menu-icon gray">⚖️</div>
-      <span class="prof-menu-label">Legal &amp; Compliance</span>
-      <span class="prof-menu-arrow">›</span>
-    </div>
-    <div class="prof-menu-item" style="border:none;">
-      <div class="prof-menu-icon gray" style="background:rgba(196,98,58,0.1);">🚪</div>
-      <span class="prof-menu-label" style="color:#C4623A;">Sign Out</span>
-    </div>
-  </div>
-
-  <div class="bottom-nav">
-    <button class="bnav-item" onclick="go('s-home')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-      <span class="bnav-label">Home</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-history')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-      <span class="bnav-label">History</span>
-    </button>
-    <button class="bnav-item" onclick="go('s-community')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>
-      <span class="bnav-label">Community</span>
-    </button>
-    <button class="bnav-item active" onclick="go('s-profile')">
-      <span class="bnav-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-      <span class="bnav-label">Profile</span>
-    </button>
+  <div class="bnav">
+    <button class="bi" onclick="go('s-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+    <button class="bi" onclick="go('s-transfers')"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span>Transfers</span></button>
+    <button class="bi" onclick="go('s-community')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Community</span></button>
+    <button class="bi on" onclick="go('s-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
   </div>
 </div>
 
-</div><!-- /device -->
-
+</div>
 <script>
-// ── RECIPIENT DATA ──────────────────────────────────────────────
-const RCPS = {
-  kwame: {
-    name: 'Kwame Mensah', short: 'Kwame', init: 'KM', avClass: 'av-kwame',
-    cur: 'GHS', rate: 16, rateStr: '16.00',
-    net: 'MTN MoMo', phone: '+233 24 123 4567',
-    badgeHTML: '<span class="net-badge mtn-badge">MTN MoMo</span>'
-  },
-  amara: {
-    name: 'Amara Conteh', short: 'Amara', init: 'AC', avClass: 'av-amara',
-    cur: 'KES', rate: 130, rateStr: '130.00',
-    net: 'M-Pesa', phone: '+254 712 345 678',
-    badgeHTML: '<span class="net-badge mpesa-badge">M-Pesa</span>'
-  },
-  fatou: {
-    name: 'Fatou Diallo', short: 'Fatou', init: 'FD', avClass: 'av-fatou',
-    cur: 'XOF', rate: 620, rateStr: '620',
-    net: 'Orange Money', phone: '+221 77 123 4567',
-    badgeHTML: '<span class="net-badge orange-badge">Orange Money</span>'
-  }
-};
-
-let amt = '200';
-let rec = 'kwame';
-let schedBack = 's-home';
-let timerInterval = null;
-
-// ── KEYPAD ──────────────────────────────────────────────────────
-function kp(k) {
-  if (k === 'del') {
-    amt = amt.length > 1 ? amt.slice(0, -1) : '0';
-  } else if (k === '.') {
-    if (!amt.includes('.')) amt += '.';
-  } else {
-    if (amt === '0') amt = k;
-    else if (amt.split('.')[1] && amt.split('.')[1].length >= 2) return;
-    else amt += k;
-  }
-  syncAmtScreen();
-}
-
-// ── RECIPIENT PICK ───────────────────────────────────────────────
-function pickRec(key) {
-  rec = key;
-  document.querySelectorAll('.rec-row').forEach(r => r.classList.remove('selected'));
-  const row = document.getElementById('rr-' + key);
-  if (row) row.classList.add('selected');
-  syncAmtScreen();
-}
-
-// ── SYNC: AMOUNT SCREEN ─────────────────────────────────────────
-function syncAmtScreen() {
-  const r = RCPS[rec];
-  const n = parseFloat(amt) || 0;
-  const local = (n * r.rate).toFixed(r.cur === 'XOF' ? 0 : 2);
-  const localFmt = parseFloat(local).toLocaleString('en-US', { minimumFractionDigits: r.cur === 'XOF' ? 0 : 2, maximumFractionDigits: r.cur === 'XOF' ? 0 : 2 });
-
-  document.getElementById('amt-num').textContent = amt;
-  document.getElementById('gets-lbl').textContent = r.short + ' gets';
-  document.getElementById('gets-val').textContent = r.cur + ' ' + localFmt;
-  document.getElementById('rate-note').textContent = '1 USD = ' + r.rateStr + ' ' + r.cur + ' · No transfer fee today';
-
-  // Pill
-  const pi = document.getElementById('amt-pill-init');
-  pi.className = 'recip-pill-init ' + r.avClass;
-  pi.textContent = r.init;
-  document.getElementById('amt-pill-name').textContent = r.name;
-}
-
-// ── SYNC: REVIEW SCREEN ─────────────────────────────────────────
-function syncReview() {
-  const r = RCPS[rec];
-  const n = parseFloat(amt) || 0;
-  const usdFmt = '$' + n.toFixed(2);
-  const local = (n * r.rate);
-  const localFmt = r.cur + ' ' + local.toLocaleString('en-US', { minimumFractionDigits: r.cur === 'XOF' ? 0 : 2, maximumFractionDigits: r.cur === 'XOF' ? 0 : 2 });
-
-  // Hero
-  document.getElementById('rv-send').textContent = usdFmt;
-  document.getElementById('rv-hero-sub').textContent = 'USD · United States Dollar';
-
-  // Breakdown rows
-  document.getElementById('rv-send-row').textContent = usdFmt + ' USD';
-  document.getElementById('rv-rate').textContent = '1 USD = ' + r.rateStr + ' ' + r.cur;
-  document.getElementById('rv-total').textContent = usdFmt + ' USD';
-
-  // Recipient receives (local currency)
-  document.getElementById('rv-recv').textContent = localFmt;
-
-  // Recipient card
-  const ri = document.getElementById('rv-initials');
-  ri.className = 'avatar ' + r.avClass;
-  ri.textContent = r.init;
-  document.getElementById('rv-name').textContent = r.name;
-  document.getElementById('rv-badge').innerHTML = r.badgeHTML;
-  document.getElementById('rv-network').textContent = '· ' + r.phone;
-
-  // Confirm button amount
-  document.getElementById('rv-btn-amt').textContent = n.toFixed(2);
-
-  // CFPB §1073 disclosure (all amounts in USD, local as secondary)
-  document.getElementById('rv-cfpb').innerHTML =
-    '<strong>Important Disclosure (Reg. E / 12 CFR §1073):</strong> You are sending <strong>' + usdFmt + ' USD</strong> to ' + r.name + '. ' +
-    'The total amount charged to your account is <strong>' + usdFmt + ' USD</strong> (including a $0.00 fee). ' +
-    'The exchange rate is <strong>1 USD = ' + r.rateStr + ' ' + r.cur + '</strong>. ' +
-    'The recipient will receive approximately <strong>' + localFmt + '</strong>. ' +
-    'Exchange rates may vary. You have the right to cancel this transfer within <strong>30 minutes</strong> at no cost. ' +
-    'To cancel, contact support@akoma.app or call 1-800-AKOMA-US. ' +
-    'For error resolution, contact us within 180 days of the transfer date.';
-}
-
-// ── SYNC: SENDING SCREEN ────────────────────────────────────────
-function syncSending() {
-  const r = RCPS[rec];
-  const n = parseFloat(amt) || 0;
-  document.getElementById('snd-h2').textContent = 'Sending $' + n.toFixed(2) + ' to ' + r.short + '…';
-  document.getElementById('snd-p').textContent = 'Routing your transfer via ' + r.net + '. This usually takes less than a minute.';
-  // Restart progress bar animation
-  const pf = document.getElementById('prog-fill');
-  pf.style.animation = 'none';
-  pf.offsetWidth; // reflow
-  pf.style.animation = 'prog 2.8s ease-in-out forwards';
-}
-
-// ── SYNC: SUCCESS SCREEN ────────────────────────────────────────
-function syncSuccess() {
-  const r = RCPS[rec];
-  const n = parseFloat(amt) || 0;
-  const usdFmt = '$' + n.toFixed(2);
-  const local = (n * r.rate);
-  const localFmt = r.cur + ' ' + local.toLocaleString('en-US', { minimumFractionDigits: r.cur === 'XOF' ? 0 : 2, maximumFractionDigits: r.cur === 'XOF' ? 0 : 2 });
-
-  document.getElementById('suc-amt').textContent = usdFmt + ' Sent';
-  document.getElementById('suc-p').textContent = r.name + ' will receive ' + localFmt + ' via ' + r.net + ' within minutes.';
-  document.getElementById('suc-sent').textContent = usdFmt + ' USD';
-  document.getElementById('suc-recv').textContent = localFmt;
-}
-
-// ── TIMER ────────────────────────────────────────────────────────
-function startTimer() {
-  clearInterval(timerInterval);
-  let secs = 28 * 60 + 43; // local var → resets every visit
-  function tick() {
-    const m = Math.floor(secs / 60);
-    const s = secs % 60;
-    const el = document.getElementById('timer');
-    if (el) el.textContent = m + ':' + String(s).padStart(2, '0');
-    if (secs <= 0) { clearInterval(timerInterval); return; }
-    secs--;
-  }
-  tick();
-  timerInterval = setInterval(tick, 1000);
-}
-
-// ── SCHEDULED HELPERS ────────────────────────────────────────────
-function openScheduled(from) {
-  schedBack = from;
-  go('s-scheduled');
-}
-function goSchedBack() {
-  go(schedBack);
-}
-function setFreq(f) {
-  ['once','weekly','monthly'].forEach(k => {
-    document.getElementById('tog-' + k).classList.toggle('active', k === f);
-  });
-  document.getElementById('send-on-sec').style.display = f === 'weekly' ? 'block' : 'none';
-}
-function toggleDay(btn) {
-  btn.classList.toggle('active');
-}
-
-// ── NAVIGATION ───────────────────────────────────────────────────
-function go(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-
-  if (id === 's-amount') syncAmtScreen();
-  if (id === 's-review') { syncReview(); startTimer(); }
-  if (id === 's-sending') {
-    syncSending();
-    setTimeout(() => go('s-success'), 3200);
-  }
-  if (id === 's-success') syncSuccess();
-}
-
-// ── HARD RESET ───────────────────────────────────────────────────
-function hardReset() {
-  amt = '200';
-  pickRec('kwame');
-  schedBack = 's-home';
-  clearInterval(timerInterval);
-}
-
-// ── TX CHIP FILTER (visual only) ─────────────────────────────────
-document.querySelectorAll('.tx-chip').forEach(c => {
-  c.addEventListener('click', () => {
-    document.querySelectorAll('.tx-chip').forEach(x => x.classList.remove('active'));
-    c.classList.add('active');
-  });
-});
-
-// Init
-syncAmtScreen();
+const RCPS={kwame:{name:'Kwame Mensah',short:'Kwame',init:'KM',avClass:'pav-km',cur:'GHS',rate:16,rateStr:'16.00',net:'MTN MoMo',phone:'+233 24 123 4567',flag:'🇬🇭 GH',badgeHTML:'<span class="nbadge nb-mtn">MTN MoMo</span>'},amara:{name:'Amara Conteh',short:'Amara',init:'AC',avClass:'pav-ac',cur:'KES',rate:130,rateStr:'130.00',net:'M-Pesa',phone:'+254 712 345 678',flag:'🇰🇪 KE',badgeHTML:'<span class="nbadge nb-mpesa">M-Pesa</span>'},fatou:{name:'Fatou Diallo',short:'Fatou',init:'FD',avClass:'pav-fd',cur:'XOF',rate:620,rateStr:'620',net:'Orange Money',phone:'+221 77 123 4567',flag:'🇸🇳 SN',badgeHTML:'<span class="nbadge nb-orange">Orange Money</span>'}};
+let amt='200',rec='kwame',timerInterval=null;
+function fmt(n,cur){return n.toLocaleString('en-US',{minimumFractionDigits:cur==='XOF'?0:2,maximumFractionDigits:cur==='XOF'?0:2});}
+function kp(k){if(k==='del'){amt=amt.length>1?amt.slice(0,-1):'0';}else if(k==='.'){if(!amt.includes('.'))amt+='.';}else{if(amt==='0')amt=k;else if(amt.split('.')[1]?.length>=2)return;else amt+=k;}syncSend();}
+function pickRec(key){rec=key;syncSend();}
+function syncSend(){const r=RCPS[rec],n=parseFloat(amt)||0,local=fmt(n*r.rate,r.cur);document.getElementById('amt-num').textContent=amt;document.getElementById('rate-txt').textContent=`$1 = ${r.cur} ${r.rateStr} · arrives in minutes`;document.getElementById('send-cta').textContent=`Continue · $${(parseFloat(amt)||0).toFixed(2)}`;document.getElementById('send-cta-sub').textContent=`No fees · ${r.cur} ${local} delivered · Est. 2 min`;const av=document.getElementById('send-av');av.className=`pav ${r.avClass}`;av.textContent=r.init;document.getElementById('send-name').textContent=r.name;document.getElementById('send-sub').textContent=`${r.net} · ${r.phone}`;document.getElementById('send-flag').textContent=r.flag;document.getElementById('dm-title').innerHTML=`How should ${r.short}<br>receive it?`;}
+function syncReview(){const r=RCPS[rec],n=parseFloat(amt)||0,usd=`$${n.toFixed(2)}`,local=fmt(n*r.rate,r.cur),localFmt=`${r.cur} ${local}`;document.getElementById('rv-send').textContent=usd;document.getElementById('rv-amount').textContent=usd;document.getElementById('rv-rate').textContent=`1 USD = ${r.rateStr} ${r.cur}`;document.getElementById('rv-total').textContent=usd;document.getElementById('rv-recv-lbl').textContent=`${r.short} receives`;document.getElementById('rv-recv-num').textContent=localFmt;document.getElementById('rv-to').textContent=`to ${r.name}`;const av=document.getElementById('rv-av');av.className=`pav ${r.avClass}`;av.textContent=r.init;document.getElementById('rv-name').textContent=r.name;document.getElementById('rv-badge').innerHTML=r.badgeHTML;document.getElementById('rv-phone').textContent=`· ${r.phone}`;document.getElementById('rv-btn-amt').textContent=n.toFixed(2);document.getElementById('rv-cfpb').textContent=`You are sending ${usd} USD to ${r.name}. Total charged: ${usd} USD (fee: $0.00). Rate: 1 USD = ${r.rateStr} ${r.cur}. Recipient receives approx. ${localFmt}. Cancel within 30 min at no cost — support@akoma.app or 1-800-AKOMA-US. Error resolution: 180 days.`;}
+function syncSending(){const r=RCPS[rec],n=parseFloat(amt)||0;document.getElementById('snd-h2').textContent=`Sending $${n.toFixed(2)}…`;document.getElementById('snd-p').textContent=`Routing via ${r.net}. Usually takes less than a minute.`;const pf=document.getElementById('prog-fill');pf.style.animation='none';pf.offsetWidth;pf.style.animation='prog 2.8s ease-in-out forwards';}
+function syncSuccess(){const r=RCPS[rec],n=parseFloat(amt)||0,usd=`$${n.toFixed(2)}`,localFmt=`${r.cur} ${fmt(n*r.rate,r.cur)}`;document.getElementById('suc-heading').textContent=`${usd} Sent!`;document.getElementById('suc-sub').textContent=`${r.name} gets ${localFmt} · est. 2 min`;document.getElementById('suc-sent').textContent=`${usd} USD`;document.getElementById('suc-recv').textContent=localFmt;}
+function startTimer(){clearInterval(timerInterval);let secs=28*60+43;function tick(){const el=document.getElementById('timer');if(el)el.textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0');if(secs-- >0){}else clearInterval(timerInterval);}tick();timerInterval=setInterval(tick,1000);}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='s-send')syncSend();if(id==='s-review'){syncReview();startTimer();}if(id==='s-sending'){syncSending();setTimeout(()=>go('s-success'),3000);}if(id==='s-success')syncSuccess();}
+function hardReset(){amt='200';rec='kwame';clearInterval(timerInterval);}
+document.querySelectorAll('.tx-chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.tx-chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');}));
+syncSend();
 </script>
 </body>
 </html>
