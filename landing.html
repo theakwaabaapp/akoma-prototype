@@ -1092,7 +1092,7 @@
         </p>
         <div class="hero__ctas fade-up delay-3">
           <button class="btn-hero-primary">Send money now</button>
-          <a href="https://akoma-prototype.vercel.app/" target="_blank" class="btn-hero-outline" style="text-decoration:none;">See how it works</a>
+          <a href="https://akoma-prototype.vercel.app/" class="btn-hero-outline" style="text-decoration:none;">See how it works</a>
         </div>
       </div>
 
@@ -1378,6 +1378,12 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Force-show elements already in the viewport on load (hero content)
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('visible');
+    });
 
     // ── Live rate ticker simulation ──────────────────────────────
     const rateEl = document.querySelector('.phone__rate-main');
