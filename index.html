@@ -261,6 +261,58 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
 .seg-toggle { display:flex; background:rgba(28,53,48,0.07); border-radius:10px; padding:3px; margin:0 16px 16px; }
 .seg-btn { flex:1; padding:9px; border-radius:8px; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; color:#9B9390; cursor:pointer; }
 .seg-btn.on { background:#fff; color:#1C3530; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+
+/* ── ONBOARDING SLIDES ── */
+#s-onboard1, #s-onboard2, #s-onboard3 { background:#1C3530; }
+.ob-skip { font-size:14px; color:rgba(246,241,235,0.5); background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.ob-circle { width:220px; height:220px; border-radius:50%; background:rgba(196,98,58,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.ob-badge { font-size:11px; font-weight:600; color:rgba(246,241,235,0.5); background:rgba(255,255,255,0.1); border-radius:20px; padding:4px 12px; margin-top:28px; }
+.ob-heading { font-size:38px; font-weight:800; color:#F6F1EB; letter-spacing:-1px; text-align:center; margin-top:20px; line-height:1.1; }
+.ob-sub { font-size:16px; color:rgba(246,241,235,0.6); text-align:center; line-height:1.6; padding:0 32px; margin-top:12px; }
+.ob-dots { display:flex; gap:8px; justify-content:center; }
+.ob-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.2); }
+.ob-dot.active { background:#C4623A; width:20px; border-radius:4px; }
+.ob-btn-full { width:100%; padding:17px; border-radius:14px; background:#C4623A; color:#fff; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:600; border:none; cursor:pointer; }
+.ob-btn-full:active { opacity:0.88; }
+.ob-signin-link { text-align:center; font-size:13px; color:rgba(246,241,235,0.45); cursor:pointer; font-family:'DM Sans',sans-serif; }
+.ob-signin-link span { color:rgba(246,241,235,0.7); font-weight:600; }
+
+/* ── EMPTY HOME ── */
+.empty-contact-card { border:1.5px dashed #D0C9C1; border-radius:14px; padding:20px 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; cursor:pointer; min-width:80px; }
+.empty-contact-label { font-size:13px; color:#9B9390; text-align:center; line-height:1.3; }
+.empty-activity-block { background:#fff; border-radius:16px; padding:32px 20px; margin:0 16px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.empty-activity-title { font-size:16px; font-weight:700; color:#1C3530; margin-top:12px; }
+.empty-activity-sub { font-size:13px; color:#9B9390; margin-top:4px; }
+.empty-activity-cta { font-size:13px; color:#C4623A; font-weight:700; cursor:pointer; margin-top:16px; border:none; background:none; font-family:'DM Sans',sans-serif; }
+
+/* ── TRANSFER TRACKING ── */
+.track-ref { font-size:13px; font-family:monospace; color:#9B9390; text-align:center; padding:8px 20px; }
+.track-recip-card { background:#fff; border-radius:16px; padding:16px; margin:0 16px 24px; display:flex; align-items:center; gap:12px; }
+.track-recip-av { width:40px; height:40px; border-radius:50%; background:#C4623A; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#fff; flex-shrink:0; }
+.track-recip-info { flex:1; }
+.track-recip-name { font-size:15px; font-weight:700; color:#1C3530; margin-bottom:2px; }
+.track-recip-sub { font-size:12px; color:#9B9390; }
+.track-recip-amt { font-size:16px; font-weight:700; color:#1C3530; }
+.timeline { display:flex; flex-direction:column; padding:0 24px; margin-bottom:8px; }
+.tl-step { display:flex; align-items:flex-start; gap:14px; }
+.tl-left { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+.tl-circle-done { width:20px; height:20px; border-radius:50%; background:#C4623A; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.tl-circle-active { width:20px; height:20px; border-radius:50%; border:2.5px solid #C4623A; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.tl-circle-active-dot { width:8px; height:8px; border-radius:50%; background:#C4623A; animation:pulse 1.2s ease-in-out infinite; }
+.tl-circle-pending { width:20px; height:20px; border-radius:50%; border:2px solid #D0C9C1; flex-shrink:0; }
+.tl-connector { width:2px; height:32px; background:#D0C9C1; }
+.tl-connector-done { background:#C4623A; }
+.tl-text { padding-top:1px; padding-bottom:8px; }
+.tl-label-done { font-size:14px; font-weight:700; color:#1C3530; }
+.tl-label-active { font-size:14px; font-weight:700; color:#1C3530; }
+.tl-label-pending { font-size:14px; font-weight:500; color:#9B9390; }
+.tl-sub-done { font-size:12px; color:#9B9390; margin-top:2px; }
+.tl-sub-active { font-size:12px; color:#C4623A; font-weight:600; margin-top:2px; }
+.tl-sub-pending { font-size:12px; color:#9B9390; margin-top:2px; }
+.track-cfpb { text-align:center; font-size:11px; color:#9B9390; padding:0 24px 16px; }
+.track-btn-outline { width:100%; padding:15px; border-radius:14px; background:none; border:1.5px solid #C4623A; color:#C4623A; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; cursor:pointer; }
+.track-cancel-link { text-align:center; font-size:13px; color:#C62828; cursor:pointer; font-family:'DM Sans',sans-serif; margin-top:12px; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
 </style>
 </head>
 <body>
@@ -507,7 +559,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
   <div class="tx-filters"><button class="tx-chip on">All</button><button class="tx-chip">Completed</button><button class="tx-chip">Pending</button><button class="tx-chip">Failed</button></div>
   <div class="scroll">
     <div class="tx-month-lbl">March 2025</div>
-    <div class="tx-card"><div class="net-av av-mtn">MTN</div><div class="tx-info"><div class="tx-name">Kwame Mensah</div><div class="tx-meta">MTN MoMo · 🇬🇭 Ghana · Mar 10</div></div><div class="tx-right"><div class="tx-amt">$200</div><span class="pill pill-green">Delivered</span></div></div>
+    <div class="tx-card" onclick="go('s-tracking')"><div class="net-av av-mtn">MTN</div><div class="tx-info"><div class="tx-name">Kwame Mensah</div><div class="tx-meta">MTN MoMo · 🇬🇭 Ghana · Mar 10</div></div><div class="tx-right"><div class="tx-amt">$200</div><span class="pill pill-green">Delivered</span></div></div>
     <div class="tx-card"><div class="net-av av-mpesa">M-PESA</div><div class="tx-info"><div class="tx-name">Amara Conteh</div><div class="tx-meta">M-Pesa · 🇰🇪 Kenya · Mar 8</div></div><div class="tx-right"><div class="tx-amt">$75</div><span class="pill pill-green">Delivered</span></div></div>
     <div class="tx-card"><div class="net-av av-orange">ORANGE</div><div class="tx-info"><div class="tx-name">Fatou Diallo</div><div class="tx-meta">Orange Money · 🇸🇳 Senegal · Mar 5</div></div><div class="tx-right"><div class="tx-amt">$150</div><span class="pill pill-orange">Pending</span></div></div>
     <div class="tx-month-lbl">February 2025</div>
@@ -622,7 +674,7 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     </div>
   </div>
   <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:14px;">
-    <button class="btn" style="background:#C4623A;font-size:17px;" onclick="go('s-signup')">Get started &mdash; it&rsquo;s free</button>
+    <button class="btn" style="background:#C4623A;font-size:17px;" onclick="go('s-onboard1')">Get started &mdash; it&rsquo;s free</button>
     <div style="text-align:center;"><span style="color:rgba(246,241,235,0.45);font-size:14px;font-family:'DM Sans',sans-serif;">Already have an account? </span><span onclick="go('s-signin')" style="color:#C4623A;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;">Sign in</span></div>
   </div>
 </div>
@@ -1822,6 +1874,178 @@ body { background: #E2DDD7; display: flex; align-items: center; justify-content:
     <div style="padding:20px 16px 32px;">
       <button class="btn" style="background:rgba(198,40,40,0.08);color:#C62828;" onclick="go('s-transfers')">Cancel recurring transfer</button>
     </div>
+  </div>
+</div>
+
+
+<!-- ONBOARDING SLIDE s-onboard1 -->
+<div class="screen" id="s-onboard1">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="rgba(246,241,235,0.4)"/><rect x="2" y="2" width="16" height="8" rx="2" fill="rgba(246,241,235,0.8)"/></svg></div></div>
+  <div style="display:flex;justify-content:flex-end;padding:4px 20px 0;">
+    <button class="ob-skip" onclick="go('s-signup')">Skip</button>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px 8px;">
+    <div class="ob-circle"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+    <div class="ob-badge">1 of 3</div>
+    <div class="ob-heading">Send money home.</div>
+    <div class="ob-sub">Zero fees. Real exchange rates. Your family gets more.</div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:14px;">
+    <div class="ob-dots"><div class="ob-dot active"></div><div class="ob-dot"></div><div class="ob-dot"></div></div>
+    <button class="ob-btn-full" onclick="go('s-onboard2')">Next &rarr;</button>
+    <div class="ob-signin-link" onclick="go('s-signin')">Already have an account? <span>Sign in</span></div>
+  </div>
+</div>
+
+<!-- ONBOARDING SLIDE s-onboard2 -->
+<div class="screen" id="s-onboard2">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="rgba(246,241,235,0.4)"/><rect x="2" y="2" width="16" height="8" rx="2" fill="rgba(246,241,235,0.8)"/></svg></div></div>
+  <div style="display:flex;justify-content:flex-end;padding:4px 20px 0;">
+    <button class="ob-skip" onclick="go('s-signup')">Skip</button>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px 8px;">
+    <div class="ob-circle"><svg width="64" height="64" viewBox="0 0 24 24" fill="rgba(196,98,58,0.3)" stroke="#C4623A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+    <div class="ob-badge">2 of 3</div>
+    <div class="ob-heading">Give back automatically.</div>
+    <div class="ob-sub">Round up every transfer to support education, clean water, and healthcare in Ghana.</div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:14px;">
+    <div class="ob-dots"><div class="ob-dot"></div><div class="ob-dot active"></div><div class="ob-dot"></div></div>
+    <button class="ob-btn-full" onclick="go('s-onboard3')">Next &rarr;</button>
+    <div class="ob-signin-link" onclick="go('s-signin')">Already have an account? <span>Sign in</span></div>
+  </div>
+</div>
+
+<!-- ONBOARDING SLIDE s-onboard3 -->
+<div class="screen" id="s-onboard3">
+  <div class="sb" style="background:#1C3530;"><span class="sb-time" style="color:rgba(246,241,235,0.5);">9:41</span><div class="sb-icons"><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="rgba(246,241,235,0.4)"/><rect x="2" y="2" width="16" height="8" rx="2" fill="rgba(246,241,235,0.8)"/></svg></div></div>
+  <div style="display:flex;justify-content:flex-end;padding:4px 20px 0;">
+    <button class="ob-skip" onclick="go('s-signup')">Skip</button>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px 8px;">
+    <div class="ob-circle"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C4623A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+    <div class="ob-badge">3 of 3</div>
+    <div class="ob-heading">Your community, rewarded.</div>
+    <div class="ob-sub">Invite friends and earn $10 for every transfer they complete. Together we&rsquo;re stronger.</div>
+  </div>
+  <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:14px;">
+    <div class="ob-dots"><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot active"></div></div>
+    <button class="ob-btn-full" onclick="go('s-signup')">Get started</button>
+    <div class="ob-signin-link" onclick="go('s-signin')">Already have an account? <span>Sign in</span></div>
+  </div>
+</div>
+
+<!-- EMPTY HOME STATE -->
+<div class="screen" id="s-empty-home">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-logo">
+    <div class="nav-logo-left">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#C4623A"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      <span class="nav-wordmark">akoma</span>
+    </div>
+    <div class="nav-logo-right">
+      <button class="nav-icon-btn" style="position:relative;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      </button>
+      <div class="nav-avatar">KO</div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="hero-card">
+      <div class="hero-greeting">Good morning, Kofi</div>
+      <div class="hero-heading">Ready to send?</div>
+      <button class="hero-cta" onclick="go('s-send')">
+        <span class="hero-cta-text">Send money</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <div class="hero-rate"><div class="hero-rate-dot"></div><span class="hero-rate-text">$1 = GHS 16.00 &nbsp;&middot;&nbsp; No fees today</span></div>
+    </div>
+    <div class="sec-hdr"><span class="sec-title">Recent</span><span class="sec-link">Add new</span></div>
+    <div style="padding:0 20px 4px;">
+      <div class="empty-contact-card" onclick="go('s-recipient')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9B9390" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <div class="empty-contact-label">Add your first<br>recipient</div>
+      </div>
+    </div>
+    <div class="sec-hdr"><span class="sec-title">Activity</span></div>
+    <div class="empty-activity-block">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C0B9B0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+      <div class="empty-activity-title">No transfers yet</div>
+      <div class="empty-activity-sub">Send money to someone you trust.</div>
+      <button class="empty-activity-cta" onclick="go('s-send')">Send now &rarr;</button>
+    </div>
+    <div style="height:16px;"></div>
+  </div>
+  <div class="bnav">
+    <button class="bi on" onclick="go('s-home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+    <button class="bi" onclick="go('s-transfers')"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span>Transfers</span></button>
+    <button class="bi" onclick="go('s-community')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Community</span></button>
+    <button class="bi" onclick="go('s-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
+  </div>
+</div>
+
+<!-- TRANSFER TRACKING -->
+<div class="screen" id="s-tracking">
+  <div class="sb"><span class="sb-time">9:41</span><div class="sb-icons"><svg width="16" height="12" viewBox="0 0 16 12" fill="#1C3530"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#1C3530" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C3530"/><path d="M23 4.5v3a2 2 0 000-3z" fill="#1C3530" opacity=".4"/></svg></div></div>
+  <div class="nav-back">
+    <button class="back-btn" onclick="go('s-transfers')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><span class="nav-center-word">Transfer status</span></div>
+    <div class="nav-spacer"></div>
+  </div>
+  <div class="scroll">
+    <div class="track-ref">AKM-2025-0089</div>
+    <div class="track-recip-card">
+      <div class="track-recip-av">KM</div>
+      <div class="track-recip-info">
+        <div class="track-recip-name">Kwame Mensah</div>
+        <div class="track-recip-sub">MTN MoMo &middot; &#127468;&#127469; Ghana</div>
+      </div>
+      <div class="track-recip-amt">$200.00</div>
+    </div>
+    <div class="timeline">
+      <!-- Step 1: Done -->
+      <div class="tl-step">
+        <div class="tl-left">
+          <div class="tl-circle-done">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="tl-connector tl-connector-done"></div>
+        </div>
+        <div class="tl-text">
+          <div class="tl-label-done">Transfer initiated</div>
+          <div class="tl-sub-done">Mar 10, 9:41 AM</div>
+        </div>
+      </div>
+      <!-- Step 2: Active -->
+      <div class="tl-step">
+        <div class="tl-left">
+          <div class="tl-circle-active">
+            <div class="tl-circle-active-dot"></div>
+          </div>
+          <div class="tl-connector"></div>
+        </div>
+        <div class="tl-text">
+          <div class="tl-label-active">Processing payment</div>
+          <div class="tl-sub-active">Est. 1&ndash;2 minutes</div>
+        </div>
+      </div>
+      <!-- Step 3: Pending -->
+      <div class="tl-step">
+        <div class="tl-left">
+          <div class="tl-circle-pending"></div>
+        </div>
+        <div class="tl-text">
+          <div class="tl-label-pending">Delivered to MoMo</div>
+          <div class="tl-sub-pending">Pending</div>
+        </div>
+      </div>
+    </div>
+    <div class="track-cfpb">Cancel within 30 min &middot; support@akoma.app</div>
+    <div style="padding:0 16px;display:flex;flex-direction:column;">
+      <button class="track-btn-outline">View receipt</button>
+      <div class="track-cancel-link">Cancel transfer</div>
+    </div>
+    <div style="height:24px;"></div>
   </div>
 </div>
 
