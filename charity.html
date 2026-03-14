@@ -715,6 +715,10 @@
 
       <!-- Form (shown by default) -->
       <form id="partnerForm" novalidate>
+        <input type="hidden" name="access_key" value="b48ee3ed-d41e-4c6d-9fbd-bfe671eb5b1d">
+        <input type="hidden" name="subject" value="New Akoma Charity Partner Application">
+        <input type="hidden" name="from_name" value="Akoma Give Back Program">
+        <input type="checkbox" name="botcheck" style="display:none;">
 
         <!-- Section 1 -->
         <div class="form-section">
@@ -1084,21 +1088,42 @@
       });
 
       if (!valid) {
-        // Scroll to first error
         const firstError = form.querySelector('.field--error');
-        if (firstError) {
-          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
-      // Success
-      const emailVal = document.getElementById('email').value.trim();
-      confirmedEl.textContent = emailVal;
-      form.style.display = 'none';
-      successState.classList.add('visible');
-      // Scroll to top of card
-      successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Disable button + show loading state
+      const submitBtn = form.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      // Build FormData (Web3Forms supports multipart)
+      const formData = new FormData(form);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const emailVal = document.getElementById('email').value.trim();
+          confirmedEl.textContent = emailVal;
+          form.style.display = 'none';
+          successState.classList.add('visible');
+          successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit application';
+          alert('Something went wrong. Please try again or email us at support@akoma.app');
+        }
+      })
+      .catch(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit application';
+        alert('Network error. Please check your connection and try again.');
+      });
     });
   </script>
 
