@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Give Back Partner Program — Akoma</title>
+  <meta name="description" content="Apply to list your Ghana charity or NGO as a verified cause in the Akoma app. Free to apply. No platform fees. Direct disbursement." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Design Tokens ─────────────────────────────────────────────── */
+    :root {
+      --cream:      #F2EDE8;
+      --forest:     #1C3530;
+      --forest-mid: #243f39;
+      --forest-lt:  #2e5148;
+      --terra:      #C4623A;
+      --terra-dark: #a8512f;
+      --terra-pale: rgba(196, 98, 58, 0.08);
+      --muted:      #9B9390;
+      --white:      #ffffff;
+      --card-bg:    #ffffff;
+      --border:     rgba(28, 53, 48, 0.12);
+
+      --radius-card:  16px;
+      --radius-input: 12px;
+      --radius-pill:  100px;
+
+      --font: 'DM Sans', system-ui, sans-serif;
+
+      --max-w: 1200px;
+      --transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ─── Reset ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font);
+      background: var(--cream);
+      color: var(--forest);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Utility ────────────────────────────────────────────────────── */
+    .container {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: clamp(20px, 5vw, 80px);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════════════════════════ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(28, 53, 48, 0.08);
+      backdrop-filter: blur(12px);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: clamp(20px, 5vw, 80px);
+    }
+    .nav__wordmark {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--forest);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--forest);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+      text-decoration: none;
+    }
+    .btn-ghost:hover {
+      background: rgba(28, 53, 48, 0.06);
+      border-color: rgba(28, 53, 48, 0.22);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════════════════════════ */
+    .hero {
+      background: var(--cream);
+      padding: clamp(56px, 7vw, 96px) clamp(20px, 5vw, 80px) clamp(48px, 6vw, 80px);
+      text-align: center;
+    }
+    .hero__eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--terra);
+      margin-bottom: 20px;
+    }
+    .hero__headline {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--forest);
+      margin-bottom: 20px;
+      max-width: 640px;
+      margin-inline: auto;
+    }
+    .hero__headline span {
+      color: var(--terra);
+    }
+    .hero__sub {
+      font-size: clamp(15px, 2vw, 18px);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 560px;
+      margin-inline: auto;
+      margin-bottom: 36px;
+    }
+    .hero__pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--forest);
+    }
+    .pill__check {
+      width: 16px;
+      height: 16px;
+      background: var(--terra);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       MAIN LAYOUT
+    ══════════════════════════════════════════════════════════════════ */
+    .layout {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding: 0 clamp(20px, 5vw, 80px) 80px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       FORM CARD
+    ══════════════════════════════════════════════════════════════════ */
+    .form-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: clamp(28px, 4vw, 48px);
+      border: 1px solid var(--border);
+    }
+
+    .form-section {
+      margin-bottom: 40px;
+    }
+    .form-section:last-of-type {
+      margin-bottom: 32px;
+    }
+    .form-section__title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--terra);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+    .field:last-child {
+      margin-bottom: 0;
+    }
+    .field__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 560px) {
+      .field__row {
+        grid-template-columns: 1fr;
+      }
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: 6px;
+    }
+    label .optional {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--forest);
+      background: var(--cream);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-input);
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--muted);
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--forest);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(28, 53, 48, 0.08);
+    }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231C3530' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.55;
+    }
+
+    /* Validation error state */
+    .field--error input,
+    .field--error select,
+    .field--error textarea {
+      border-color: var(--terra) !important;
+      box-shadow: 0 0 0 3px rgba(196, 98, 58, 0.12) !important;
+    }
+    .field__error-msg {
+      display: none;
+      font-size: 12px;
+      color: var(--terra);
+      margin-top: 5px;
+      font-weight: 500;
+    }
+    .field--error .field__error-msg {
+      display: block;
+    }
+
+    /* ─── File Upload Zone ───────────────────────────────────────────── */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-input);
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      position: relative;
+      background: var(--cream);
+    }
+    .upload-zone:hover {
+      border-color: var(--forest);
+      background: rgba(28, 53, 48, 0.03);
+    }
+    .upload-zone.drag-over {
+      border-color: var(--terra);
+      background: var(--terra-pale);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .upload-zone input[type="file"]:focus {
+      box-shadow: none;
+      border: none;
+    }
+    .upload-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+    }
+    .upload-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--terra);
+    }
+    .upload-zone__primary {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: 4px;
+    }
+    .upload-zone__primary span {
+      color: var(--terra);
+    }
+    .upload-zone__secondary {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .upload-zone__filename {
+      font-size: 12px;
+      color: var(--terra);
+      font-weight: 500;
+      margin-top: 6px;
+      display: none;
+    }
+    .upload-zone.has-file .upload-zone__filename {
+      display: block;
+    }
+    .upload-zone.has-file .upload-zone__primary span {
+      color: var(--forest);
+    }
+
+    /* ─── Submit Button ──────────────────────────────────────────────── */
+    .btn-submit {
+      width: 100%;
+      padding: 16px 24px;
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--terra);
+      border: none;
+      border-radius: var(--radius-input);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      margin-top: 8px;
+    }
+    .btn-submit:hover {
+      background: var(--terra-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(196, 98, 58, 0.28);
+    }
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+    .form-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 14px;
+    }
+
+    /* ─── Success State ──────────────────────────────────────────────── */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: clamp(48px, 6vw, 80px) 24px;
+    }
+    .success-state.visible {
+      display: block;
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(28, 53, 48, 0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-icon svg {
+      width: 34px;
+      height: 34px;
+      color: var(--forest);
+    }
+    .success-headline {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--forest);
+      margin-bottom: 12px;
+    }
+    .success-body {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 400px;
+      margin: 0 auto 28px;
+    }
+    .success-body strong {
+      color: var(--forest);
+      font-weight: 500;
+    }
+    .btn-back {
+      display: inline-block;
+      padding: 12px 28px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--forest);
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-back:hover {
+      background: var(--forest-mid);
+      transform: translateY(-1px);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SIDEBAR
+    ══════════════════════════════════════════════════════════════════ */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 88px;
+    }
+    @media (max-width: 860px) {
+      .sidebar {
+        position: static;
+        order: -1;
+      }
+    }
+
+    .sidebar-card {
+      border-radius: var(--radius-card);
+      padding: 24px;
+      border: 1px solid transparent;
+    }
+    .sidebar-card--dark {
+      background: var(--forest);
+      color: var(--white);
+    }
+    .sidebar-card--white {
+      background: var(--white);
+      border-color: var(--border);
+    }
+    .sidebar-card--cream {
+      background: var(--cream);
+      border-color: var(--terra);
+      border-width: 1.5px;
+    }
+    .sidebar-card__title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .sidebar-card--dark .sidebar-card__title {
+      color: rgba(255, 255, 255, 0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+    }
+    .sidebar-card--white .sidebar-card__title,
+    .sidebar-card--cream .sidebar-card__title {
+      color: var(--forest);
+    }
+
+    /* Next steps list */
+    .next-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .next-steps li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--white);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text {
+      font-size: 14px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .step-text strong {
+      display: block;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    /* Requirements list */
+    .req-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .req-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--forest);
+      line-height: 1.4;
+    }
+    .req-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(28, 53, 48, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .req-check svg {
+      width: 10px;
+      height: 10px;
+      color: var(--forest);
+    }
+
+    /* Partner login card */
+    .partner-body {
+      font-size: 14px;
+      color: var(--forest);
+      line-height: 1.55;
+      margin-bottom: 14px;
+      opacity: 0.75;
+    }
+    .partner-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--terra);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s ease;
+    }
+    .partner-link:hover {
+      gap: 8px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--forest);
+      padding: 36px clamp(20px, 5vw, 80px);
+    }
+    .footer__inner {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer__wordmark {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--white);
+    }
+    .footer__right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer__link {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.2s ease;
+    }
+    .footer__link:hover { color: var(--white); }
+    .footer__copy {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════════════ -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="./landing.html" class="nav__wordmark">akoma</a>
+      <a href="./landing.html" class="btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to site
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════ -->
+  <section class="hero">
+    <p class="hero__eyebrow">GIVE BACK PARTNER PROGRAM</p>
+    <h1 class="hero__headline">Partner with Akoma. <span>Fund the change.</span></h1>
+    <p class="hero__sub">Apply to list your organization as a verified cause. When Akoma users send money, they can round up to support your work&nbsp;— at no cost to you.</p>
+    <div class="hero__pills">
+      <div class="pill"><span class="pill__check">✓</span>Free to apply</div>
+      <div class="pill"><span class="pill__check">✓</span>No platform fees</div>
+      <div class="pill"><span class="pill__check">✓</span>Direct disbursement</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       MAIN LAYOUT
+  ═══════════════════════════════════════════════ -->
+  <div class="layout">
+
+    <!-- ─── LEFT: FORM ──────────────────────────── -->
+    <div class="form-card">
+
+      <!-- Success state (hidden by default) -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h2 class="success-headline">Application received!</h2>
+        <p class="success-body">We'll review your application and be in touch within 5–7 business days at <strong id="confirmedEmail"></strong>.</p>
+        <a href="./landing.html" class="btn-back">Back to Akoma →</a>
+      </div>
+
+      <!-- Form (shown by default) -->
+      <form id="partnerForm" novalidate>
+
+        <!-- Section 1 -->
+        <div class="form-section">
+          <p class="form-section__title">Organization details</p>
+
+          <div class="field" id="f-orgName">
+            <label for="orgName">Organization name</label>
+            <input type="text" id="orgName" name="orgName" placeholder="e.g. Ghana Water & Sanitation Foundation" required />
+            <span class="field__error-msg">Please enter your organization name</span>
+          </div>
+
+          <div class="field" id="f-regNumber">
+            <label for="regNumber">Ghana NGO / Charity Registration Number</label>
+            <input type="text" id="regNumber" name="regNumber" placeholder="DSW/NGO/XXXX" required />
+            <span class="field__error-msg">Please enter your registration number</span>
+          </div>
+
+          <div class="field__row">
+            <div class="field" id="f-orgType">
+              <label for="orgType">Organization type</label>
+              <select id="orgType" name="orgType" required>
+                <option value="" disabled selected>Select type</option>
+                <option value="ngo">NGO</option>
+                <option value="charity">Registered Charity</option>
+                <option value="foundation">Foundation</option>
+                <option value="community">Community Group</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="field__error-msg">Please select an organization type</span>
+            </div>
+
+            <div class="field" id="f-yearFounded">
+              <label for="yearFounded">Year founded</label>
+              <input type="number" id="yearFounded" name="yearFounded" placeholder="e.g. 2008" min="1800" max="2026" required />
+              <span class="field__error-msg">Please enter a valid year</span>
+            </div>
+          </div>
+
+          <div class="field" id="f-website">
+            <label for="website">Website URL <span class="optional">(optional)</span></label>
+            <input type="url" id="website" name="website" placeholder="https://yourorganization.org" />
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="form-section">
+          <p class="form-section__title">Cause &amp; mission</p>
+
+          <div class="field__row">
+            <div class="field" id="f-cause">
+              <label for="cause">Primary cause category</label>
+              <select id="cause" name="cause" required>
+                <option value="" disabled selected>Select cause</option>
+                <option value="education">Education</option>
+                <option value="water">Clean Water &amp; Sanitation</option>
+                <option value="health">Maternal &amp; Child Health</option>
+                <option value="food">Food Security</option>
+                <option value="economic">Economic Empowerment</option>
+                <option value="environment">Environment</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="field__error-msg">Please select a cause category</span>
+            </div>
+
+            <div class="field" id="f-region">
+              <label for="region">Region of operation</label>
+              <select id="region" name="region" required>
+                <option value="" disabled selected>Select region</option>
+                <option value="greater-accra">Greater Accra</option>
+                <option value="ashanti">Ashanti</option>
+                <option value="western">Western</option>
+                <option value="eastern">Eastern</option>
+                <option value="northern">Northern</option>
+                <option value="upper-east">Upper East</option>
+                <option value="upper-west">Upper West</option>
+                <option value="volta">Volta</option>
+                <option value="central">Central</option>
+                <option value="bono">Bono</option>
+                <option value="nationwide">Nationwide</option>
+              </select>
+              <span class="field__error-msg">Please select a region</span>
+            </div>
+          </div>
+
+          <div class="field" id="f-mission">
+            <label for="mission">Mission statement</label>
+            <textarea id="mission" name="mission" rows="3" placeholder="Describe your organization's mission in 2–3 sentences..." required></textarea>
+            <span class="field__error-msg">Please describe your mission</span>
+          </div>
+
+          <div class="field" id="f-fundsUse">
+            <label for="fundsUse">How funds will be used</label>
+            <textarea id="fundsUse" name="fundsUse" rows="3" placeholder="Explain specifically how Akoma round-up donations will be used..." required></textarea>
+            <span class="field__error-msg">Please explain how funds will be used</span>
+          </div>
+
+          <div class="field" id="f-beneficiaries">
+            <label for="beneficiaries">Estimated beneficiaries per year</label>
+            <input type="number" id="beneficiaries" name="beneficiaries" placeholder="e.g. 2000" min="1" required />
+            <span class="field__error-msg">Please enter an estimated number of beneficiaries</span>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="form-section">
+          <p class="form-section__title">Contact information</p>
+
+          <div class="field__row">
+            <div class="field" id="f-contactName">
+              <label for="contactName">Contact person full name</label>
+              <input type="text" id="contactName" name="contactName" placeholder="Abena Mensah" required />
+              <span class="field__error-msg">Please enter the contact person's name</span>
+            </div>
+
+            <div class="field" id="f-jobTitle">
+              <label for="jobTitle">Job title / role</label>
+              <input type="text" id="jobTitle" name="jobTitle" placeholder="Executive Director" required />
+              <span class="field__error-msg">Please enter a job title</span>
+            </div>
+          </div>
+
+          <div class="field__row">
+            <div class="field" id="f-email">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="contact@yourorg.org" required />
+              <span class="field__error-msg">Please enter a valid email address</span>
+            </div>
+
+            <div class="field" id="f-phone">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+233 XX XXX XXXX" required />
+              <span class="field__error-msg">Please enter a phone number</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="form-section">
+          <p class="form-section__title">Supporting documents</p>
+
+          <div class="field" id="f-regCert">
+            <label for="regCert">Registration certificate</label>
+            <div class="upload-zone" id="zone-regCert">
+              <input type="file" id="regCert" name="regCert" accept=".pdf,.jpg,.jpeg,.png" required />
+              <div class="upload-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <p class="upload-zone__primary"><span>Click to upload</span> or drag &amp; drop</p>
+              <p class="upload-zone__secondary">PDF, JPG, PNG · Max 5MB</p>
+              <p class="upload-zone__filename" id="fn-regCert"></p>
+            </div>
+            <span class="field__error-msg">Please upload your registration certificate</span>
+          </div>
+
+          <div class="field" id="f-annualReport" style="margin-top: 16px;">
+            <label for="annualReport">Annual report or financial statement <span class="optional">(optional)</span></label>
+            <div class="upload-zone" id="zone-annualReport">
+              <input type="file" id="annualReport" name="annualReport" accept=".pdf,.jpg,.jpeg,.png" />
+              <div class="upload-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <p class="upload-zone__primary"><span>Click to upload</span> or drag &amp; drop</p>
+              <p class="upload-zone__secondary">PDF, JPG, PNG · Max 5MB</p>
+              <p class="upload-zone__filename" id="fn-annualReport"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <button type="submit" class="btn-submit">Submit application</button>
+        <p class="form-note">We review all applications within 5–7 business days. You'll hear from us at the email provided.</p>
+
+      </form>
+    </div>
+
+    <!-- ─── RIGHT: SIDEBAR ──────────────────────── -->
+    <aside class="sidebar">
+
+      <!-- What happens next -->
+      <div class="sidebar-card sidebar-card--dark">
+        <p class="sidebar-card__title">What happens next?</p>
+        <ol class="next-steps">
+          <li>
+            <span class="step-num">1</span>
+            <span class="step-text"><strong>Submit your application</strong>Fill out and submit this form.</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span class="step-text"><strong>Our team reviews</strong>Typically 5–7 business days.</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span class="step-text"><strong>Verification call</strong>We'll schedule a brief call to confirm details.</span>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <span class="step-text"><strong>Listed in the app</strong>Your cause goes live within 14 days of approval.</span>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Requirements -->
+      <div class="sidebar-card sidebar-card--white">
+        <p class="sidebar-card__title">Requirements</p>
+        <ul class="req-list">
+          <li>
+            <span class="req-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Must be registered in Ghana
+          </li>
+          <li>
+            <span class="req-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Active programs with documented impact
+          </li>
+          <li>
+            <span class="req-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Transparent financial reporting
+          </li>
+          <li>
+            <span class="req-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Dedicated contact person
+          </li>
+        </ul>
+      </div>
+
+      <!-- Already a partner -->
+      <div class="sidebar-card sidebar-card--cream">
+        <p class="sidebar-card__title">Already a partner?</p>
+        <p class="partner-body">Manage your cause listing, view donations received, and update your profile.</p>
+        <a href="#" class="partner-link">
+          Partner login
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__wordmark">akoma</span>
+      <div class="footer__right">
+        <a href="mailto:support@akoma.app" class="footer__link">support@akoma.app</a>
+        <span class="footer__copy">© 2025 Akoma Technologies Inc.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ─── File Upload UX ─────────────────────────────── */
+    function initUploadZone(zoneId, inputId, filenameId) {
+      const zone = document.getElementById(zoneId);
+      const input = document.getElementById(inputId);
+      const fnEl  = document.getElementById(filenameId);
+      if (!zone || !input) return;
+
+      input.addEventListener('change', () => {
+        if (input.files && input.files[0]) {
+          fnEl.textContent = input.files[0].name;
+          zone.classList.add('has-file');
+        }
+      });
+
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('drag-over');
+      });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          // Transfer to the actual input
+          const dt = new DataTransfer();
+          dt.items.add(e.dataTransfer.files[0]);
+          input.files = dt.files;
+          fnEl.textContent = e.dataTransfer.files[0].name;
+          zone.classList.add('has-file');
+        }
+      });
+    }
+
+    initUploadZone('zone-regCert',      'regCert',      'fn-regCert');
+    initUploadZone('zone-annualReport', 'annualReport', 'fn-annualReport');
+
+    /* ─── Form Validation & Submit ───────────────────── */
+    const form         = document.getElementById('partnerForm');
+    const successState = document.getElementById('successState');
+    const confirmedEl  = document.getElementById('confirmedEmail');
+
+    // Fields that are required (fieldWrapId, inputId, custom validator)
+    const requiredFields = [
+      { wrap: 'f-orgName',       id: 'orgName'       },
+      { wrap: 'f-regNumber',     id: 'regNumber'      },
+      { wrap: 'f-orgType',       id: 'orgType'        },
+      { wrap: 'f-yearFounded',   id: 'yearFounded'    },
+      { wrap: 'f-cause',         id: 'cause'          },
+      { wrap: 'f-region',        id: 'region'         },
+      { wrap: 'f-mission',       id: 'mission'        },
+      { wrap: 'f-fundsUse',      id: 'fundsUse'       },
+      { wrap: 'f-beneficiaries', id: 'beneficiaries'  },
+      { wrap: 'f-contactName',   id: 'contactName'    },
+      { wrap: 'f-jobTitle',      id: 'jobTitle'       },
+      { wrap: 'f-email',         id: 'email',         validator: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+      { wrap: 'f-phone',         id: 'phone'          },
+      { wrap: 'f-regCert',       id: 'regCert',       isFile: true },
+    ];
+
+    function clearError(wrapId) {
+      const el = document.getElementById(wrapId);
+      if (el) el.classList.remove('field--error');
+    }
+
+    // Clear errors on input
+    requiredFields.forEach(({ wrap, id }) => {
+      const input = document.getElementById(id);
+      if (input) {
+        input.addEventListener('input', () => clearError(wrap));
+        input.addEventListener('change', () => clearError(wrap));
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let valid = true;
+
+      requiredFields.forEach(({ wrap, id, validator, isFile }) => {
+        const input = document.getElementById(id);
+        const wrapEl = document.getElementById(wrap);
+        if (!input || !wrapEl) return;
+
+        let isValid;
+        if (isFile) {
+          isValid = input.files && input.files.length > 0;
+        } else if (validator) {
+          isValid = validator(input.value.trim());
+        } else {
+          isValid = input.value.trim() !== '';
+        }
+
+        if (!isValid) {
+          wrapEl.classList.add('field--error');
+          valid = false;
+        } else {
+          wrapEl.classList.remove('field--error');
+        }
+      });
+
+      if (!valid) {
+        // Scroll to first error
+        const firstError = form.querySelector('.field--error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      // Success
+      const emailVal = document.getElementById('email').value.trim();
+      confirmedEl.textContent = emailVal;
+      form.style.display = 'none';
+      successState.classList.add('visible');
+      // Scroll to top of card
+      successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  </script>
+
+</body>
+</html>
