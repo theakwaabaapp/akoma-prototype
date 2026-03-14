@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers — Akoma</title>
+  <meta name="description" content="Join the team building Africa's most loved remittance app. Remote-first, mission-driven, equity for everyone." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F2EDE8; --forest: #1C3530; --terra: #C4623A; --muted: #9B9390; --white: #ffffff;
+      --radius-card: 16px; --font: 'DM Sans', system-ui, sans-serif; --max-w: 1200px;
+      --transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--cream); color: var(--forest); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s var(--transition), transform 0.6s var(--transition); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: 0.1s; } .fade-up.d2 { transition-delay: 0.2s; } .fade-up.d3 { transition-delay: 0.3s; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(242,237,232,0.92); border-bottom: 1px solid rgba(28,53,48,0.08); backdrop-filter: blur(12px); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; max-width: var(--max-w); margin-inline: auto; padding-inline: clamp(20px,5vw,80px); }
+    .nav__wordmark { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .nav__links { display: flex; align-items: center; gap: 4px; }
+    .nav__link { padding: 8px 14px; font-size: 14px; font-weight: 500; border-radius: 100px; transition: background var(--transition); }
+    .nav__link:hover { background: rgba(28,53,48,0.07); }
+    .nav__link--active { font-weight: 700; }
+    .nav__cta { background: var(--terra); color: var(--white); padding: 10px 20px; border-radius: 100px; font-size: 14px; font-weight: 600; transition: opacity var(--transition); }
+    .nav__cta:hover { opacity: 0.88; }
+
+    /* HERO */
+    .hero { background: var(--forest); padding: clamp(80px,10vw,140px) clamp(20px,5vw,80px) clamp(60px,8vw,100px); text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(196,98,58,0.10) 0%, transparent 70%); pointer-events: none; }
+    .hero__inner { max-width: 700px; margin-inline: auto; position: relative; z-index: 1; }
+    .hero__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 24px; }
+    .hero__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--terra); }
+    .hero__h1 { font-size: clamp(38px,6vw,72px); font-weight: 900; line-height: 1.05; letter-spacing: -0.04em; color: var(--white); margin-bottom: 20px; }
+    .hero__sub { font-size: clamp(16px,1.8vw,20px); line-height: 1.65; color: rgba(255,255,255,0.6); max-width: 480px; margin-inline: auto; }
+
+    /* PERKS */
+    .perks { padding: clamp(64px,8vw,112px) clamp(20px,5vw,80px); }
+    .perks__inner { max-width: var(--max-w); margin-inline: auto; }
+    .sec-tag { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 12px; }
+    .sec-h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 48px; }
+    .perks__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .perk { background: var(--white); border-radius: var(--radius-card); padding: clamp(24px,2.5vw,36px); border: 1px solid rgba(28,53,48,0.06); }
+    .perk__icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(196,98,58,0.10); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .perk__icon svg { width: 22px; height: 22px; stroke: var(--terra); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .perk__title { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .perk__body { font-size: 14px; line-height: 1.65; color: rgba(28,53,48,0.62); }
+
+    /* JOBS */
+    .jobs { border-top: 1px solid rgba(28,53,48,0.08); padding: clamp(64px,8vw,112px) clamp(20px,5vw,80px); }
+    .jobs__inner { max-width: var(--max-w); margin-inline: auto; }
+    .jobs__list { display: flex; flex-direction: column; gap: 12px; }
+    .job { background: var(--white); border-radius: var(--radius-card); padding: 24px 28px; border: 1px solid rgba(28,53,48,0.07); display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; transition: transform var(--transition), box-shadow var(--transition); }
+    .job:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(28,53,48,0.08); }
+    .job__left { flex: 1; }
+    .job__title { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .job__meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .job__tag { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 100px; background: rgba(28,53,48,0.07); color: rgba(28,53,48,0.6); }
+    .job__tag--terra { background: rgba(196,98,58,0.10); color: var(--terra); }
+    .job__arrow { width: 36px; height: 36px; border-radius: 50%; background: var(--forest); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background var(--transition); }
+    .job:hover .job__arrow { background: var(--terra); }
+    .job__arrow svg { width: 16px; height: 16px; stroke: var(--white); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* NO ROLE BAND */
+    .no-role { background: var(--forest); padding: clamp(56px,7vw,96px) clamp(20px,5vw,80px); text-align: center; }
+    .no-role__inner { max-width: 640px; margin-inline: auto; }
+    .no-role__h2 { font-size: clamp(24px,3vw,38px); font-weight: 800; line-height: 1.2; letter-spacing: -0.03em; color: var(--white); margin-bottom: 16px; }
+    .no-role__p { font-size: clamp(15px,1.5vw,17px); line-height: 1.65; color: rgba(255,255,255,0.58); margin-bottom: 32px; }
+    .no-role__btn { display: inline-flex; align-items: center; gap: 8px; background: var(--terra); color: var(--white); font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: 100px; transition: opacity var(--transition); cursor: pointer; }
+    .no-role__btn:hover { opacity: 0.88; }
+
+    /* FOOTER */
+    .footer { background: var(--forest); border-top: 1px solid rgba(255,255,255,0.05); padding: 52px clamp(20px,5vw,80px) 32px; }
+    .footer__inner { max-width: var(--max-w); margin-inline: auto; }
+    .footer__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 32px; }
+    .footer__logo { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; margin-bottom: 8px; }
+    .footer__tagline { font-size: 13px; color: rgba(255,255,255,0.38); max-width: 220px; line-height: 1.5; }
+    .footer__links { display: flex; gap: clamp(16px,2.5vw,36px); flex-wrap: wrap; align-items: center; }
+    .footer__link { font-size: 14px; color: rgba(255,255,255,0.5); transition: color var(--transition); }
+    .footer__link:hover { color: var(--white); }
+    .footer__copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .footer__note { font-size: 11px; color: rgba(255,255,255,0.2); line-height: 1.6; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 20px; }
+
+    @media (max-width: 960px) { .perks__grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) { .perks__grid { grid-template-columns: 1fr; } .nav__links { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="landing.html" class="nav__wordmark">akoma</a>
+      <nav class="nav__links">
+        <a href="about.html" class="nav__link">About</a>
+        <a href="careers.html" class="nav__link nav__link--active">Careers</a>
+        <a href="blog.html" class="nav__link">Blog</a>
+        <a href="charity.html" class="nav__link">For Charities</a>
+      </nav>
+      <a href="landing.html" class="nav__cta">Get the app</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__eyebrow fade-up"><span class="hero__dot"></span> We're hiring</div>
+      <h1 class="hero__h1 fade-up d1">Work on something that matters.</h1>
+      <p class="hero__sub fade-up d2">Join a small, focused team building the remittance app the African diaspora deserves. Remote-first, equity for everyone.</p>
+    </div>
+  </section>
+
+  <section class="perks">
+    <div class="perks__inner">
+      <p class="sec-tag fade-up">Why Akoma</p>
+      <h2 class="sec-h2 fade-up d1">What we offer</h2>
+      <div class="perks__grid">
+        <div class="perk fade-up d1">
+          <div class="perk__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3 class="perk__title">Remote-first, async-first</h3>
+          <p class="perk__body">Work from wherever you are best. No HQ, no daily standups, no time zone discrimination. We trust you to get it done.</p>
+        </div>
+        <div class="perk fade-up d2">
+          <div class="perk__icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          <h3 class="perk__title">Competitive comp + equity</h3>
+          <p class="perk__body">Benchmark salaries, equity that vests from day one, and a transparent pay framework anyone can read.</p>
+        </div>
+        <div class="perk fade-up d3">
+          <div class="perk__icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <h3 class="perk__title">Mission that moves you</h3>
+          <p class="perk__body">Every feature you ship puts more money in the hands of families across Ghana. The impact is direct and measurable.</p>
+        </div>
+        <div class="perk fade-up d1">
+          <div class="perk__icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+          <h3 class="perk__title">Learning budget</h3>
+          <p class="perk__body">$2,000 per year for courses, books, conferences, or anything that makes you better at your craft. No approval required.</p>
+        </div>
+        <div class="perk fade-up d2">
+          <div class="perk__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <h3 class="perk__title">Small team, big ownership</h3>
+          <p class="perk__body">No layers of management. You'll work directly with founders and see your decisions ship in days, not quarters.</p>
+        </div>
+        <div class="perk fade-up d3">
+          <div class="perk__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3 class="perk__title">Full benefits</h3>
+          <p class="perk__body">Health, dental, vision (US employees). 25 days PTO plus all public holidays in your country. Parental leave that's actually generous.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jobs">
+    <div class="jobs__inner">
+      <p class="sec-tag fade-up">Open roles</p>
+      <h2 class="sec-h2 fade-up d1">Current openings</h2>
+      <div class="jobs__list">
+        <div class="job fade-up d1">
+          <div class="job__left">
+            <p class="job__title">Senior iOS Engineer</p>
+            <div class="job__meta">
+              <span class="job__tag job__tag--terra">Engineering</span>
+              <span class="job__tag">Remote</span>
+              <span class="job__tag">Full-time</span>
+            </div>
+          </div>
+          <div class="job__arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="job fade-up d2">
+          <div class="job__left">
+            <p class="job__title">Senior Android Engineer</p>
+            <div class="job__meta">
+              <span class="job__tag job__tag--terra">Engineering</span>
+              <span class="job__tag">Remote</span>
+              <span class="job__tag">Full-time</span>
+            </div>
+          </div>
+          <div class="job__arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="job fade-up d3">
+          <div class="job__left">
+            <p class="job__title">Product Designer</p>
+            <div class="job__meta">
+              <span class="job__tag" style="background:rgba(28,53,48,0.07);color:rgba(28,53,48,0.6);">Design</span>
+              <span class="job__tag">Remote</span>
+              <span class="job__tag">Full-time</span>
+            </div>
+          </div>
+          <div class="job__arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="job fade-up d1">
+          <div class="job__left">
+            <p class="job__title">Compliance Manager — UK &amp; EU</p>
+            <div class="job__meta">
+              <span class="job__tag" style="background:rgba(28,53,48,0.07);color:rgba(28,53,48,0.6);">Legal &amp; Compliance</span>
+              <span class="job__tag">London or Remote</span>
+              <span class="job__tag">Full-time</span>
+            </div>
+          </div>
+          <div class="job__arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="job fade-up d2">
+          <div class="job__left">
+            <p class="job__title">Community Growth Lead — Ghana</p>
+            <div class="job__meta">
+              <span class="job__tag" style="background:rgba(28,53,48,0.07);color:rgba(28,53,48,0.6);">Growth</span>
+              <span class="job__tag">Accra, GH</span>
+              <span class="job__tag">Full-time</span>
+            </div>
+          </div>
+          <div class="job__arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="no-role">
+    <div class="no-role__inner">
+      <h2 class="no-role__h2 fade-up">Don't see your role?</h2>
+      <p class="no-role__p fade-up d1">We hire for character and craft. If you believe in the mission and think you can contribute, we'd love to hear from you regardless of current openings.</p>
+      <a href="mailto:jobs@akoma.app" class="no-role__btn fade-up d2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Send us a note
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div>
+          <div class="footer__logo">akoma</div>
+          <p class="footer__tagline">Send money home. Give back while you do.</p>
+        </div>
+        <div class="footer__links">
+          <a href="about.html" class="footer__link">About</a>
+          <a href="careers.html" class="footer__link">Careers</a>
+          <a href="blog.html" class="footer__link">Blog</a>
+          <a href="legal.html" class="footer__link">Legal</a>
+          <a href="privacy.html" class="footer__link">Privacy</a>
+          <a href="charity.html" class="footer__link">For Charities</a>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <p class="footer__copy">&copy; 2025 Akoma Technologies Inc. All rights reserved.</p>
+        <a href="mailto:hello@akoma.app" style="font-size:13px;color:rgba(255,255,255,0.45);">hello@akoma.app</a>
+      </div>
+      <p class="footer__note">Akoma Technologies Inc. is a licensed money transmitter. Licenses held in multiple US states. Services in the United Kingdom provided by Akoma UK Ltd, authorised by the Financial Conduct Authority.</p>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) el.classList.add('visible');
+      else obs.observe(el);
+    });
+  </script>
+</body>
+</html>

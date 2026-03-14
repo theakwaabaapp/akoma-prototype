@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Akoma</title>
+  <meta name="description" content="Akoma Terms of Service. Read our user agreement, including Regulation E disclosures, transfer policies, and your rights as a sender." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F2EDE8; --forest: #1C3530; --terra: #C4623A; --muted: #9B9390; --white: #ffffff;
+      --font: 'DM Sans', system-ui, sans-serif; --max-w: 1200px; --content-w: 760px;
+      --transition: 0.3s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--cream); color: var(--forest); -webkit-font-smoothing: antialiased; }
+    a { color: var(--terra); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(242,237,232,0.92); border-bottom: 1px solid rgba(28,53,48,0.08); backdrop-filter: blur(12px); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; max-width: var(--max-w); margin-inline: auto; padding-inline: clamp(20px,5vw,80px); }
+    .nav__wordmark { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: var(--forest); text-decoration: none; }
+    .nav__links { display: flex; align-items: center; gap: 4px; }
+    .nav__link { padding: 8px 14px; font-size: 14px; font-weight: 500; border-radius: 100px; transition: background var(--transition); color: var(--forest); }
+    .nav__link:hover { background: rgba(28,53,48,0.07); text-decoration: none; }
+    .nav__cta { background: var(--terra); color: var(--white); padding: 10px 20px; border-radius: 100px; font-size: 14px; font-weight: 600; transition: opacity var(--transition); }
+    .nav__cta:hover { opacity: 0.88; text-decoration: none; }
+
+    /* LAYOUT */
+    .layout { max-width: var(--max-w); margin-inline: auto; padding: clamp(48px,6vw,80px) clamp(20px,5vw,80px); display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 88px; }
+    .sidebar__title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .sidebar__nav { display: flex; flex-direction: column; gap: 2px; }
+    .sidebar__link { font-size: 14px; color: rgba(28,53,48,0.6); padding: 7px 12px; border-radius: 8px; transition: background var(--transition), color var(--transition); }
+    .sidebar__link:hover { background: rgba(28,53,48,0.06); color: var(--forest); text-decoration: none; }
+    .sidebar__link.active { background: rgba(196,98,58,0.10); color: var(--terra); font-weight: 600; }
+
+    /* CONTENT */
+    .content { max-width: var(--content-w); }
+    .content__header { margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(28,53,48,0.08); }
+    .content__tag { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 12px; }
+    .content__h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .content__meta { font-size: 14px; color: var(--muted); }
+    .content__effective { display: inline-flex; align-items: center; gap: 6px; background: rgba(196,98,58,0.10); color: var(--terra); font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 100px; margin-top: 16px; }
+
+    /* REG E NOTICE */
+    .reg-e { background: var(--forest); border-radius: 16px; padding: 24px 28px; margin-bottom: 40px; }
+    .reg-e__title { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--terra); margin-bottom: 10px; }
+    .reg-e__body { font-size: 14px; line-height: 1.65; color: rgba(255,255,255,0.75); }
+
+    /* PROSE */
+    .prose { display: flex; flex-direction: column; gap: 36px; }
+    .section { scroll-margin-top: 88px; }
+    .section__num { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 8px; }
+    .section__h2 { font-size: clamp(20px,2.2vw,26px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(28,53,48,0.07); }
+    .prose p, .prose li { font-size: 15px; line-height: 1.75; color: rgba(28,53,48,0.78); }
+    .prose ul, .prose ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .prose strong { color: var(--forest); font-weight: 600; }
+    .prose .indent { margin-top: 12px; }
+    .highlight-box { background: rgba(196,98,58,0.07); border-left: 3px solid var(--terra); border-radius: 0 8px 8px 0; padding: 16px 20px; margin-top: 12px; }
+    .highlight-box p { font-size: 14px; }
+
+    /* FOOTER */
+    .footer { background: var(--forest); border-top: 1px solid rgba(255,255,255,0.05); padding: 52px clamp(20px,5vw,80px) 32px; margin-top: 80px; }
+    .footer__inner { max-width: var(--max-w); margin-inline: auto; }
+    .footer__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 32px; }
+    .footer__logo { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; margin-bottom: 8px; }
+    .footer__tagline { font-size: 13px; color: rgba(255,255,255,0.38); max-width: 220px; line-height: 1.5; }
+    .footer__links { display: flex; gap: clamp(16px,2.5vw,36px); flex-wrap: wrap; align-items: center; }
+    .footer__link { font-size: 14px; color: rgba(255,255,255,0.5); transition: color var(--transition); }
+    .footer__link:hover { color: var(--white); text-decoration: none; }
+    .footer__copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .footer__note { font-size: 11px; color: rgba(255,255,255,0.2); line-height: 1.6; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 20px; }
+
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; display: none; } }
+    @media (max-width: 600px) { .nav__links { display: none; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="landing.html" class="nav__wordmark">akoma</a>
+      <nav class="nav__links">
+        <a href="about.html" class="nav__link">About</a>
+        <a href="careers.html" class="nav__link">Careers</a>
+        <a href="blog.html" class="nav__link">Blog</a>
+        <a href="charity.html" class="nav__link">For Charities</a>
+      </nav>
+      <a href="landing.html" class="nav__cta">Get the app</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <p class="sidebar__title">On this page</p>
+      <nav class="sidebar__nav">
+        <a href="#eligibility" class="sidebar__link active">1. Eligibility</a>
+        <a href="#services" class="sidebar__link">2. Services</a>
+        <a href="#reg-e" class="sidebar__link">3. Regulation E</a>
+        <a href="#fees" class="sidebar__link">4. Fees &amp; Rates</a>
+        <a href="#cancellation" class="sidebar__link">5. Cancellation</a>
+        <a href="#errors" class="sidebar__link">6. Errors &amp; Disputes</a>
+        <a href="#prohibited" class="sidebar__link">7. Prohibited Use</a>
+        <a href="#liability" class="sidebar__link">8. Liability</a>
+        <a href="#termination" class="sidebar__link">9. Termination</a>
+        <a href="#governing-law" class="sidebar__link">10. Governing Law</a>
+        <a href="#contact" class="sidebar__link">11. Contact</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="content__header">
+        <p class="content__tag">Legal</p>
+        <h1 class="content__h1">Terms of Service</h1>
+        <p class="content__meta">Akoma Technologies Inc.</p>
+        <div class="content__effective">Effective March 1, 2025</div>
+      </div>
+
+      <div class="reg-e">
+        <p class="reg-e__title">Regulation E — Required Disclosure</p>
+        <p class="reg-e__body">Under the Electronic Fund Transfer Act and Regulation E, you have rights as a consumer sending international remittances. Before each transfer, Akoma will disclose: the exact exchange rate, any fees charged, the amount to be delivered, and the estimated delivery date. You have the right to cancel a transfer within 30 minutes of authorization if the funds have not yet been picked up or deposited.</p>
+      </div>
+
+      <div class="prose">
+
+        <div class="section" id="eligibility">
+          <p class="section__num">01</p>
+          <h2 class="section__h2">Eligibility</h2>
+          <p>You may use Akoma only if you:</p>
+          <ul>
+            <li>Are at least 18 years of age;</li>
+            <li>Are a resident of a country in which Akoma is licensed to operate;</li>
+            <li>Can form a legally binding contract under applicable law; and</li>
+            <li>Are not prohibited from using money transmission services under any applicable law.</li>
+          </ul>
+          <p class="indent">By using Akoma, you represent and warrant that you meet all eligibility requirements. We may require you to verify your identity in accordance with our Know Your Customer (KYC) obligations under applicable law.</p>
+        </div>
+
+        <div class="section" id="services">
+          <p class="section__num">02</p>
+          <h2 class="section__h2">Services</h2>
+          <p>Akoma provides a digital money transmission service that allows you to send funds internationally to designated recipients. Our services include:</p>
+          <ul>
+            <li>International money transfers to Ghana (and additional corridors as expanded);</li>
+            <li>Optional charitable contributions through our Give Back program;</li>
+            <li>Account management tools and transaction history;</li>
+            <li>Customer support and dispute resolution.</li>
+          </ul>
+          <p class="indent">Akoma is a technology platform, not a bank. Funds held in connection with your transfers may be held by licensed banking partners. Akoma is not responsible for the acts or omissions of those banking partners beyond what is required by applicable law.</p>
+        </div>
+
+        <div class="section" id="reg-e">
+          <p class="section__num">03</p>
+          <h2 class="section__h2">Regulation E — Consumer Protections</h2>
+          <p>The following disclosures are made in compliance with the Consumer Financial Protection Bureau's Regulation E (12 CFR Part 1005, Subpart B — Remittance Transfers).</p>
+          <div class="highlight-box">
+            <p><strong>Pre-transfer disclosure:</strong> Before you authorize each transfer, Akoma will display and require your acknowledgment of: the exact transfer amount, any fees, the exchange rate applied, the estimated amount to be received by your recipient, and the estimated date of availability.</p>
+          </div>
+          <ul class="indent">
+            <li><strong>Cancellation right:</strong> You may cancel a transfer for a full refund within 30 minutes of authorization, provided the funds have not yet been picked up or deposited into your recipient's account.</li>
+            <li><strong>Error resolution:</strong> To report an error, contact us at support@akoma.app or call +1 (800) 555-0192 within 180 days of the transfer date. We will investigate and respond within 90 days.</li>
+            <li><strong>Refund timing:</strong> If a transfer is cancelled or an error is resolved in your favor, a full refund will be issued within three business days.</li>
+          </ul>
+        </div>
+
+        <div class="section" id="fees">
+          <p class="section__num">04</p>
+          <h2 class="section__h2">Fees &amp; Exchange Rates</h2>
+          <p>Akoma charges <strong>zero transfer fees</strong> on all standard transfers. The exchange rate applied to your transfer will be the mid-market rate at the time of your transaction, plus any applicable spread disclosed to you prior to authorization.</p>
+          <p class="indent">Certain optional services — including expedited delivery — may carry additional fees that will be clearly disclosed before you authorize any transaction. Akoma reserves the right to modify its fee structure with 30 days' notice to users.</p>
+        </div>
+
+        <div class="section" id="cancellation">
+          <p class="section__num">05</p>
+          <h2 class="section__h2">Cancellation &amp; Refunds</h2>
+          <p>You may cancel a transfer within 30 minutes of authorization for any reason, provided the funds have not been deposited into the recipient's account or made available for cash pickup. After the 30-minute window, cancellations may not be possible if the transfer is already in process.</p>
+          <p class="indent">To cancel, use the Akoma app or contact support immediately. Refunds will be returned to your original funding source within three business days of an approved cancellation.</p>
+        </div>
+
+        <div class="section" id="errors">
+          <p class="section__num">06</p>
+          <h2 class="section__h2">Errors &amp; Disputes</h2>
+          <p>An error may include: an incorrect amount debited; failure to make funds available by the disclosed date; incorrect recipient information applied by Akoma; or any other error described in applicable law.</p>
+          <ul class="indent">
+            <li>To report an error, contact us within 180 days of the scheduled delivery date.</li>
+            <li>We will acknowledge your report within 5 business days and complete our investigation within 90 days.</li>
+            <li>If we determine an error occurred, we will correct it and issue a refund where applicable.</li>
+          </ul>
+        </div>
+
+        <div class="section" id="prohibited">
+          <p class="section__num">07</p>
+          <h2 class="section__h2">Prohibited Use</h2>
+          <p>You may not use Akoma to send funds for any unlawful purpose, including but not limited to: money laundering; financing terrorism or illegal arms; fraud or willful misrepresentation; or transactions that violate any applicable law or regulation.</p>
+          <p class="indent">Akoma reserves the right to decline, freeze, or reverse any transaction that we reasonably believe may violate these terms or applicable law, and to report such transactions to relevant authorities as required.</p>
+        </div>
+
+        <div class="section" id="liability">
+          <p class="section__num">08</p>
+          <h2 class="section__h2">Limitation of Liability</h2>
+          <p>To the maximum extent permitted by applicable law, Akoma's aggregate liability to you for any claim arising from these Terms or your use of our services shall not exceed the amount of the transaction giving rise to such claim.</p>
+          <p class="indent">Akoma is not liable for: delays caused by acts of God, government actions, banking partner failures, or events outside our reasonable control; or any indirect, incidental, or consequential damages.</p>
+        </div>
+
+        <div class="section" id="termination">
+          <p class="section__num">09</p>
+          <h2 class="section__h2">Termination</h2>
+          <p>Akoma may suspend or terminate your account at any time for: violation of these Terms; suspected fraud or illegal activity; failure to comply with identity verification requirements; or inactivity for more than 24 consecutive months.</p>
+          <p class="indent">You may close your account at any time by contacting support@akoma.app. Account closure does not affect any pending transfers or obligations that arose prior to closure.</p>
+        </div>
+
+        <div class="section" id="governing-law">
+          <p class="section__num">10</p>
+          <h2 class="section__h2">Governing Law</h2>
+          <p>These Terms are governed by the laws of the State of Delaware, United States, without regard to conflict of law principles. Any disputes shall be resolved through binding arbitration under the American Arbitration Association's Consumer Arbitration Rules, except where prohibited by applicable law.</p>
+          <p class="indent">Nothing in this section limits your rights under applicable consumer protection laws, including Regulation E.</p>
+        </div>
+
+        <div class="section" id="contact">
+          <p class="section__num">11</p>
+          <h2 class="section__h2">Contact</h2>
+          <p>For questions about these Terms, to report an error, or to exercise your cancellation rights:</p>
+          <ul class="indent">
+            <li><strong>Email:</strong> <a href="mailto:support@akoma.app">support@akoma.app</a></li>
+            <li><strong>Phone:</strong> +1 (800) 555-0192 (Mon–Fri, 9am–6pm ET)</li>
+            <li><strong>Mail:</strong> Akoma Technologies Inc., Legal Department, 251 Little Falls Drive, Wilmington, DE 19808</li>
+          </ul>
+          <p class="indent">For UK users, complaints may also be referred to the Financial Conduct Authority or the Financial Ombudsman Service.</p>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div>
+          <div class="footer__logo">akoma</div>
+          <p class="footer__tagline">Send money home. Give back while you do.</p>
+        </div>
+        <div class="footer__links">
+          <a href="about.html" class="footer__link">About</a>
+          <a href="careers.html" class="footer__link">Careers</a>
+          <a href="blog.html" class="footer__link">Blog</a>
+          <a href="legal.html" class="footer__link">Legal</a>
+          <a href="privacy.html" class="footer__link">Privacy</a>
+          <a href="charity.html" class="footer__link">For Charities</a>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <p class="footer__copy">&copy; 2025 Akoma Technologies Inc. All rights reserved.</p>
+        <a href="mailto:hello@akoma.app" style="font-size:13px;color:rgba(255,255,255,0.45);">hello@akoma.app</a>
+      </div>
+      <p class="footer__note">Akoma Technologies Inc. is a licensed money transmitter. Licenses held in multiple US states. Services in the United Kingdom provided by Akoma UK Ltd, authorised by the Financial Conduct Authority. This page does not constitute legal advice.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Sidebar active link on scroll
+    const sections = document.querySelectorAll('.section');
+    const links = document.querySelectorAll('.sidebar__link');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const match = document.querySelector(`.sidebar__link[href="#${e.target.id}"]`);
+          if (match) match.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    sections.forEach(s => obs.observe(s));
+  </script>
+</body>
+</html>

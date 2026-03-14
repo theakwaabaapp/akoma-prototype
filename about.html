@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Akoma</title>
+  <meta name="description" content="Built for the diaspora, by the diaspora. Learn about the Akoma team and our mission to make sending money home affordable and meaningful." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F2EDE8;
+      --forest: #1C3530;
+      --terra: #C4623A;
+      --muted: #9B9390;
+      --white: #ffffff;
+      --radius-card: 16px;
+      --font: 'DM Sans', system-ui, sans-serif;
+      --max-w: 1200px;
+      --transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--cream); color: var(--forest); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s var(--transition), transform 0.6s var(--transition); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: 0.1s; }
+    .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; }
+    .fade-up.d4 { transition-delay: 0.4s; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(242,237,232,0.92); border-bottom: 1px solid rgba(28,53,48,0.08); backdrop-filter: blur(12px); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; max-width: var(--max-w); margin-inline: auto; padding-inline: clamp(20px,5vw,80px); }
+    .nav__wordmark { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .nav__links { display: flex; align-items: center; gap: 4px; }
+    .nav__link { padding: 8px 14px; font-size: 14px; font-weight: 500; border-radius: 100px; transition: background var(--transition); }
+    .nav__link:hover { background: rgba(28,53,48,0.07); }
+    .nav__link--active { font-weight: 700; }
+    .nav__cta { background: var(--terra); color: var(--white); padding: 10px 20px; border-radius: 100px; font-size: 14px; font-weight: 600; transition: opacity var(--transition); }
+    .nav__cta:hover { opacity: 0.88; }
+
+    /* HERO */
+    .hero { padding: clamp(80px,10vw,140px) clamp(20px,5vw,80px) clamp(60px,8vw,100px); text-align: center; }
+    .hero__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 24px; }
+    .hero__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--terra); }
+    .hero__h1 { font-size: clamp(38px,6vw,72px); font-weight: 900; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 20px; }
+    .hero__sub { font-size: clamp(16px,1.8vw,20px); line-height: 1.65; color: rgba(28,53,48,0.6); max-width: 540px; margin-inline: auto; }
+
+    /* MISSION BAND */
+    .mission { background: var(--forest); padding: clamp(64px,8vw,100px) clamp(20px,5vw,80px); text-align: center; }
+    .mission__inner { max-width: 800px; margin-inline: auto; }
+    .mission__mark { font-size: 72px; line-height: 0.5; color: var(--terra); opacity: 0.4; font-family: Georgia,serif; display: block; margin-bottom: 20px; }
+    .mission__q { font-size: clamp(20px,2.8vw,30px); font-weight: 500; line-height: 1.5; color: var(--white); letter-spacing: -0.02em; margin-bottom: 28px; }
+    .mission__attr { font-size: 14px; color: rgba(255,255,255,0.45); }
+    .mission__attr strong { color: var(--terra); }
+
+    /* STORY */
+    .story { padding: clamp(64px,8vw,112px) clamp(20px,5vw,80px); }
+    .story__inner { max-width: var(--max-w); margin-inline: auto; display: grid; grid-template-columns: 1fr 1.5fr; gap: clamp(48px,7vw,96px); align-items: start; }
+    .story__left { position: sticky; top: 88px; }
+    .story__tag { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 16px; }
+    .story__h2 { font-size: clamp(26px,3vw,40px); font-weight: 800; line-height: 1.12; letter-spacing: -0.03em; }
+    .story__bar { display: block; width: 40px; height: 4px; background: var(--terra); border-radius: 2px; margin-top: 20px; }
+    .story__body { display: flex; flex-direction: column; gap: 22px; }
+    .story__body p { font-size: clamp(15px,1.4vw,17px); line-height: 1.75; color: rgba(28,53,48,0.7); }
+    .story__body p:first-child { font-size: clamp(16px,1.6vw,19px); color: var(--forest); font-weight: 500; }
+
+    /* VALUES */
+    .values { border-top: 1px solid rgba(28,53,48,0.08); padding: clamp(64px,8vw,112px) clamp(20px,5vw,80px); }
+    .values__inner { max-width: var(--max-w); margin-inline: auto; }
+    .sec-tag { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 12px; }
+    .sec-h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 48px; }
+    .values__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .vcard { background: var(--white); border-radius: var(--radius-card); padding: clamp(28px,3vw,40px); border: 1px solid rgba(28,53,48,0.06); transition: transform var(--transition), box-shadow var(--transition); cursor: default; }
+    .vcard:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(28,53,48,0.10); }
+    .vcard__icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(196,98,58,0.10); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .vcard__icon svg { width: 22px; height: 22px; stroke: var(--terra); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .vcard__title { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .vcard__body { font-size: 14px; line-height: 1.65; color: rgba(28,53,48,0.62); }
+
+    /* TEAM */
+    .team { background: var(--forest); padding: clamp(64px,8vw,112px) clamp(20px,5vw,80px); }
+    .team__inner { max-width: var(--max-w); margin-inline: auto; }
+    .team__tag { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terra); margin-bottom: 12px; }
+    .team__h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--white); margin-bottom: 48px; }
+    .team__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .tcard { background: var(--white); border-radius: var(--radius-card); padding: 28px 22px; transition: transform var(--transition), box-shadow var(--transition); cursor: default; }
+    .tcard:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.25); }
+    .tcard__av { width: 52px; height: 52px; border-radius: 50%; background: var(--terra); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+    .tcard__name { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3px; }
+    .tcard__role { font-size: 12px; font-weight: 600; color: var(--terra); margin-bottom: 10px; }
+    .tcard__bio { font-size: 13px; line-height: 1.6; color: var(--muted); }
+
+    /* FOOTER */
+    .footer { background: var(--forest); border-top: 1px solid rgba(255,255,255,0.05); padding: 52px clamp(20px,5vw,80px) 32px; }
+    .footer__inner { max-width: var(--max-w); margin-inline: auto; }
+    .footer__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 32px; }
+    .footer__logo { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; margin-bottom: 8px; }
+    .footer__tagline { font-size: 13px; color: rgba(255,255,255,0.38); max-width: 220px; line-height: 1.5; }
+    .footer__links { display: flex; gap: clamp(16px,2.5vw,36px); flex-wrap: wrap; align-items: center; }
+    .footer__link { font-size: 14px; color: rgba(255,255,255,0.5); transition: color var(--transition); }
+    .footer__link:hover { color: var(--white); }
+    .footer__bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer__copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .footer__note { font-size: 11px; color: rgba(255,255,255,0.2); line-height: 1.6; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 20px; }
+
+    @media (max-width: 960px) {
+      .story__inner { grid-template-columns: 1fr; }
+      .story__left { position: static; }
+      .values__grid { grid-template-columns: 1fr; }
+      .team__grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 600px) {
+      .nav__links { display: none; }
+      .team__grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="landing.html" class="nav__wordmark">akoma</a>
+      <nav class="nav__links">
+        <a href="about.html" class="nav__link nav__link--active">About</a>
+        <a href="careers.html" class="nav__link">Careers</a>
+        <a href="blog.html" class="nav__link">Blog</a>
+        <a href="charity.html" class="nav__link">For Charities</a>
+      </nav>
+      <a href="landing.html" class="nav__cta">Get the app</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__eyebrow fade-up"><span class="hero__dot"></span> Our story</div>
+    <h1 class="hero__h1 fade-up d1">Built for the diaspora.<br>By the diaspora.</h1>
+    <p class="hero__sub fade-up d2">We got tired of paying $10 to send $100 home. So we built the thing we always needed.</p>
+  </section>
+
+  <section class="mission">
+    <div class="mission__inner">
+      <span class="mission__mark fade-up">"</span>
+      <blockquote class="mission__q fade-up d1">Our mission is to make sending money home as simple, affordable, and meaningful as it deserves to be.</blockquote>
+      <p class="mission__attr fade-up d2"><strong>Kwame Boateng</strong> — Co-Founder &amp; CEO</p>
+    </div>
+  </section>
+
+  <section class="story">
+    <div class="story__inner">
+      <div class="story__left fade-up">
+        <p class="story__tag">How it started</p>
+        <h2 class="story__h2">The story behind Akoma</h2>
+        <span class="story__bar"></span>
+      </div>
+      <div class="story__body">
+        <p class="fade-up d1">Kwame Boateng grew up watching his parents lose money to wire transfer fees. Each month, a portion of what they worked hard to earn simply vanished — absorbed by middlemen, exchange rate spreads, and charges nobody explained.</p>
+        <p class="fade-up d2">In 2023, after sending $500 home for a family emergency and learning his mother had received the equivalent of $460, he decided enough was enough. He called his former Stripe colleague Ama Sarpong that evening, and by the end of the call, Akoma was taking shape on a shared document.</p>
+        <p class="fade-up d3">The name means "heart" in Akan — because every transfer should feel like an act of love, not a transaction. Today, Akoma processes thousands of transfers monthly with zero fees and an optional contribution to a cause the sender cares about.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="values">
+    <div class="values__inner">
+      <p class="sec-tag fade-up">What we stand for</p>
+      <h2 class="sec-h2 fade-up d1">Our values</h2>
+      <div class="values__grid">
+        <div class="vcard fade-up d1">
+          <div class="vcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          </div>
+          <h3 class="vcard__title">Radical transparency</h3>
+          <p class="vcard__body">No hidden fees, ever. What you see is what your family gets. We publish our rates, margins, and methodology openly.</p>
+        </div>
+        <div class="vcard fade-up d2">
+          <div class="vcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3 class="vcard__title">Community first</h3>
+          <p class="vcard__body">Built with, not just for, the diaspora. Every feature comes from real feedback. Our product roadmap is shaped by the people who use Akoma daily.</p>
+        </div>
+        <div class="vcard fade-up d3">
+          <div class="vcard__icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <h3 class="vcard__title">Impact by default</h3>
+          <p class="vcard__body">Every transfer is an opportunity to give back. We make it effortless to support schools, clinics, and communities in Ghana with every send.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team">
+    <div class="team__inner">
+      <p class="team__tag fade-up">The people behind it</p>
+      <h2 class="team__h2 fade-up d1">The team</h2>
+      <div class="team__grid">
+        <div class="tcard fade-up d1">
+          <div class="tcard__av">KB</div>
+          <p class="tcard__name">Kwame Boateng</p>
+          <p class="tcard__role">Co-Founder &amp; CEO</p>
+          <p class="tcard__bio">Ex-Google. Originally from Accra, based in New York City. Passionate about financial inclusion across the African diaspora.</p>
+        </div>
+        <div class="tcard fade-up d2">
+          <div class="tcard__av">AS</div>
+          <p class="tcard__name">Ama Sarpong</p>
+          <p class="tcard__role">Co-Founder &amp; CTO</p>
+          <p class="tcard__bio">Ex-Stripe. Grew up in Kumasi, now in San Francisco. Built payments infrastructure at scale before founding Akoma.</p>
+        </div>
+        <div class="tcard fade-up d3">
+          <div class="tcard__av">DM</div>
+          <p class="tcard__name">David Mensah</p>
+          <p class="tcard__role">Head of Compliance</p>
+          <p class="tcard__bio">Ex-MoneyGram, based in London. Over a decade navigating financial regulation across the UK, EU, and West Africa.</p>
+        </div>
+        <div class="tcard fade-up d4">
+          <div class="tcard__av">EA</div>
+          <p class="tcard__name">Efua Asante</p>
+          <p class="tcard__role">Head of Partnerships</p>
+          <p class="tcard__bio">Ghana NGO sector veteran, based in Accra. Connects Akoma to the charities and communities that make every transfer matter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div>
+          <div class="footer__logo">akoma</div>
+          <p class="footer__tagline">Send money home. Give back while you do.</p>
+        </div>
+        <div class="footer__links">
+          <a href="about.html" class="footer__link">About</a>
+          <a href="careers.html" class="footer__link">Careers</a>
+          <a href="blog.html" class="footer__link">Blog</a>
+          <a href="legal.html" class="footer__link">Legal</a>
+          <a href="privacy.html" class="footer__link">Privacy</a>
+          <a href="charity.html" class="footer__link">For Charities</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2025 Akoma Technologies Inc. All rights reserved.</p>
+        <a href="mailto:hello@akoma.app" style="font-size:13px;color:rgba(255,255,255,0.45);transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">hello@akoma.app</a>
+      </div>
+      <p class="footer__note">Akoma Technologies Inc. is a licensed money transmitter. Licenses held in multiple US states. Services in the United Kingdom provided by Akoma UK Ltd, authorised by the Financial Conduct Authority. Transfers subject to regulatory review.</p>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) el.classList.add('visible');
+      else obs.observe(el);
+    });
+  </script>
+</body>
+</html>
