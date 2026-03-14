@@ -180,10 +180,10 @@
       50% { opacity: 0.5; transform: scale(0.7); }
     }
     .hero__headline {
-      font-size: clamp(38px, 5.5vw, 66px);
-      font-weight: 700;
-      line-height: 1.06;
-      letter-spacing: -2px;
+      font-size: clamp(40px, 5.8vw, 72px);
+      font-weight: 900;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
       color: var(--white);
       margin-bottom: 24px;
     }
@@ -507,7 +507,10 @@
       background: rgba(28,53,48,0.12);
     }
     .trust__value {
-      font-size: 20px;
+      /* overridden */ font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      /* overridden */ font-size: 20px;
       font-weight: 700;
       color: var(--forest);
       letter-spacing: -0.5px;
@@ -633,7 +636,7 @@
       flex-wrap: wrap;
       gap: 8px;
     }
-    .cause-pill {
+    .cause-pill { cursor: pointer;
       padding: 8px 16px;
       font-size: 13px;
       font-weight: 500;
@@ -801,7 +804,7 @@
       gap: 20px;
       margin-top: 56px;
     }
-    .feat-card {
+    .feat-card { cursor: pointer;
       background: var(--white);
       border-radius: var(--radius-card);
       padding: 32px 28px;
@@ -887,7 +890,7 @@
       position: relative;
       z-index: 1;
     }
-    .store-btn {
+    .store-btn { cursor: pointer;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -1057,6 +1060,13 @@
       .phone { width: 248px; height: 496px; }
       .phone__rate-main { font-size: 22px; }
     }
+
+    /* ── Accessibility: Reduced Motion ──────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .hero__eyebrow-dot { animation: none !important; }
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
@@ -1150,7 +1160,7 @@
           <!-- Give Back bar -->
           <div class="phone__giveback">
             <div class="phone__giveback-top">
-              <span class="phone__giveback-label">♥ Give Back</span>
+              <span class="phone__giveback-label" style="display:flex;align-items:center;gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#C4623A" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> Give Back</span>
               <span class="phone__giveback-pct">73%</span>
             </div>
             <div class="phone__giveback-cause">Ghana Education Trust</div>
@@ -1302,19 +1312,76 @@
       <h2 class="section-headline fade-up delay-1">Built different,<br />by design.</h2>
       <div class="features__grid">
         <div class="feat-card fade-up">
-          <div class="feat-card__icon feat-card__icon--green">🔒</div>
+          <div class="feat-card__icon feat-card__icon--green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
           <h3 class="feat-card__title">Rate Lock</h3>
           <p class="feat-card__desc">Lock in today's exchange rate for up to 24 hours. Send when you're ready — never lose to market swings again.</p>
         </div>
         <div class="feat-card fade-up delay-1">
-          <div class="feat-card__icon feat-card__icon--terra">✦</div>
+          <div class="feat-card__icon feat-card__icon--terra"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
           <h3 class="feat-card__title">Zero Fees</h3>
           <p class="feat-card__desc">We make money on the spread, not on you. $0 transfer fees, always. No subscriptions. No fine print.</p>
         </div>
         <div class="feat-card fade-up delay-2">
-          <div class="feat-card__icon feat-card__icon--blue">⚡</div>
+          <div class="feat-card__icon feat-card__icon--blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <h3 class="feat-card__title">Instant Delivery</h3>
           <p class="feat-card__desc">Funds hit MTN MoMo wallets in under 90 seconds on average. Bank transfers settle same business day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════════════════════════════ -->
+  <section style="background:var(--forest);padding:var(--section-pad);">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:clamp(36px,5vw,64px);">
+        <div class="section-label fade-up" style="color:var(--terra);">Real senders</div>
+        <h2 class="section-headline fade-up delay-1" style="color:#fff;">The diaspora trusts Akoma.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+        <div class="fade-up" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:28px 28px 24px;">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:16px;color:rgba(255,255,255,0.85);line-height:1.65;margin-bottom:20px;">"I've tried Wise, Remitly, all of them. Akoma is the only one that actually feels like it was made for us. My mum gets her money on MoMo in minutes, and I know exactly what she'll receive before I send."</p>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#C4623A,#e07a52);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;">KA</div>
+            <div><div style="font-size:14px;font-weight:700;color:#fff;">Kofi Asante</div><div style="font-size:12px;color:rgba(255,255,255,0.45);">Brooklyn, NY → Accra, Ghana</div></div>
+          </div>
+        </div>
+        <div class="fade-up delay-1" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:28px 28px 24px;">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:16px;color:rgba(255,255,255,0.85);line-height:1.65;margin-bottom:20px;">"The Give Back feature sold me. I send money home every month, and now I round up to support WaterAid Ghana. It's less than a dollar extra and it feels good knowing it goes somewhere real."</p>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1C3530,#2e5148);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;">AD</div>
+            <div><div style="font-size:14px;font-weight:700;color:#fff;">Abena Darko</div><div style="font-size:12px;color:rgba(255,255,255,0.45);">Toronto, CA → Kumasi, Ghana</div></div>
+          </div>
+        </div>
+        <div class="fade-up delay-2" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:28px 28px 24px;">
+          <div style="display:flex;gap:3px;margin-bottom:16px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C4623A"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:16px;color:rgba(255,255,255,0.85);line-height:1.65;margin-bottom:20px;">"Rate lock is the feature I didn't know I needed. I locked in at GHS 16.50 on Monday, rates dropped Tuesday, I still sent at my rate. That's real money saved every single month."</p>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#5a3e8a,#7b5db3);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;">EO</div>
+            <div><div style="font-size:14px;font-weight:700;color:#fff;">Esi Owusu</div><div style="font-size:12px;color:rgba(255,255,255,0.45);">London, UK → Takoradi, Ghana</div></div>
+          </div>
         </div>
       </div>
     </div>
