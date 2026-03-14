@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akoma — Investor Deck</title>
+  <meta name="description" content="Akoma investor deck. Zero-fee remittances for the African diaspora." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Tokens ───────────────────────────────────────────────────── */
+    :root {
+      --cream:   #F2EDE8;
+      --forest:  #1C3530;
+      --f-mid:   #243f39;
+      --f-lt:    #2e5148;
+      --terra:   #C4623A;
+      --terra-d: #a8512f;
+      --muted:   #9B9390;
+      --white:   #ffffff;
+      --font: 'DM Sans', system-ui, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ─── Reset ───────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font);
+      background: var(--forest);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── NAV ─────────────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px,4vw,60px);
+      height: 64px;
+      background: rgba(28,53,48,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav__logo { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+    .nav__slides {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav__dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .nav__dot.active { background: var(--terra); transform: scale(1.35); }
+    .nav__back {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .nav__back:hover { color: var(--white); }
+
+    /* ─── SLIDE ENGINE ─────────────────────────────────────────────── */
+    .deck {
+      padding-top: 64px; /* nav height */
+    }
+    .slide {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(48px,8vw,100px) clamp(24px,6vw,100px);
+      position: relative;
+      overflow: hidden;
+    }
+    .slide__inner {
+      width: 100%;
+      max-width: 1100px;
+      margin-inline: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* slide number */
+    .slide-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    /* ─── BACKGROUNDS ───────────────────────────────────────────────── */
+    .bg-forest  { background: var(--forest); }
+    .bg-dark    { background: #111f1d; }
+    .bg-cream   { background: var(--cream); color: var(--forest); }
+    .bg-terra   { background: var(--terra); }
+    .bg-fmid    { background: var(--f-mid); }
+
+    /* radial blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: 0.18;
+    }
+    .blob-terra { background: var(--terra); }
+    .blob-green { background: #4ade80; opacity: 0.06; }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────────────────────────── */
+    .display {
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+    }
+    .display--cream { color: var(--cream); }
+    .display--terra { color: var(--terra); }
+    .display--forest { color: var(--forest); }
+
+    .h2 {
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      font-size: clamp(16px, 1.8vw, 21px);
+      line-height: 1.65;
+      color: rgba(255,255,255,0.65);
+      max-width: 620px;
+    }
+    .lead--dark { color: rgba(28,53,48,0.65); }
+
+    .kicker {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .kicker--light { color: rgba(255,255,255,0.4); }
+
+    /* ─── UTILITY ─────────────────────────────────────────────────────── */
+    .gap-stack { display: flex; flex-direction: column; }
+    .gap-16 { gap: 16px; }
+    .gap-24 { gap: 24px; }
+    .gap-32 { gap: 32px; }
+    .gap-48 { gap: 48px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-32 { margin-top: 32px; }
+    .mt-48 { margin-top: 48px; }
+    .mt-56 { margin-top: 56px; }
+
+    /* two-col grid */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 80px);
+      align-items: center;
+    }
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .four-col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* ─── CARDS ────────────────────────────────────────────────────── */
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 20px;
+      padding: clamp(20px,2.5vw,36px);
+      backdrop-filter: blur(8px);
+    }
+    .card--cream {
+      background: var(--white);
+      border: 1px solid rgba(28,53,48,0.08);
+      color: var(--forest);
+    }
+    .card--terra {
+      background: rgba(196,98,58,0.15);
+      border: 1px solid rgba(196,98,58,0.30);
+    }
+
+    .card__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 10px;
+    }
+    .card__title { font-size: clamp(15px,1.5vw,18px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 8px; }
+    .card__body { font-size: 14px; line-height: 1.65; opacity: 0.65; }
+
+    /* ─── STAT BLOCK ────────────────────────────────────────────────── */
+    .stat-block { display: flex; flex-direction: column; gap: 4px; }
+    .stat-num {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--white);
+    }
+    .stat-num--terra { color: var(--terra); }
+    .stat-label { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 500; }
+
+    /* ─── ICON BOX ────────────────────────────────────────────────── */
+    .icon-box {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(196,98,58,0.15);
+      border: 1px solid rgba(196,98,58,0.25);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-bottom: 16px;
+    }
+    .icon-box svg { width: 20px; height: 20px; stroke: var(--terra); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-box--light { background: rgba(28,53,48,0.08); border-color: rgba(28,53,48,0.12); }
+    .icon-box--light svg { stroke: var(--terra); }
+
+    /* ─── DIVIDER ────────────────────────────────────────────────── */
+    .divider {
+      width: 48px; height: 4px;
+      background: var(--terra);
+      border-radius: 2px;
+      margin-top: 24px;
+      margin-bottom: 40px;
+    }
+
+    /* ─── PILL ────────────────────────────────────────────────── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(196,98,58,0.15);
+      color: var(--terra);
+      border: 1px solid rgba(196,98,58,0.3);
+    }
+    .pill__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--terra); }
+
+    /* ─── PROGRESS BAR ────────────────────────────────────────────── */
+    .progress-row { display: flex; flex-direction: column; gap: 8px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 14px; }
+    .progress-label span:first-child { color: rgba(255,255,255,0.75); font-weight: 500; }
+    .progress-label span:last-child { color: var(--terra); font-weight: 700; }
+    .progress-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 100px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--terra); border-radius: 100px; transition: width 1.2s var(--ease); }
+
+    /* ─── COMPARISON TABLE ──────────────────────────────────────── */
+    .comp-table { width: 100%; border-collapse: collapse; }
+    .comp-table th { padding: 12px 16px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: left; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .comp-table td { padding: 14px 16px; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.75); }
+    .comp-table tr.akoma-row td { color: var(--white); font-weight: 600; background: rgba(196,98,58,0.08); }
+    .comp-table td:first-child { font-weight: 600; color: var(--white); }
+    .comp-table .green { color: #4ade80; font-weight: 700; }
+    .comp-table .red { color: #f87171; }
+
+    /* ─── ASK BAND ─────────────────────────────────────────────── */
+    .ask-band {
+      background: var(--terra);
+      border-radius: 20px;
+      padding: clamp(32px,4vw,56px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .ask-band__amount {
+      font-size: clamp(40px,6vw,72px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--white);
+    }
+    .ask-band__label { font-size: 16px; color: rgba(255,255,255,0.65); font-weight: 500; margin-top: 4px; }
+    .ask-band__right { display: flex; flex-direction: column; gap: 16px; }
+    .ask-use { display: flex; align-items: center; gap: 12px; }
+    .ask-use__bar { width: 80px; height: 8px; border-radius: 100px; background: rgba(255,255,255,0.3); overflow: hidden; }
+    .ask-use__fill { height: 100%; background: var(--white); border-radius: 100px; }
+    .ask-use__text { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); }
+
+    /* ─── TIMELINE ─────────────────────────────────────────────── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: flex; gap: 20px; }
+    .tl-item__line { display: flex; flex-direction: column; align-items: center; }
+    .tl-item__dot { width: 12px; height: 12px; border-radius: 50%; background: var(--terra); flex-shrink: 0; margin-top: 4px; }
+    .tl-item__rule { flex: 1; width: 2px; background: rgba(255,255,255,0.08); margin-top: 4px; min-height: 40px; }
+    .tl-item:last-child .tl-item__rule { display: none; }
+    .tl-item__body { padding-bottom: 32px; }
+    .tl-item__period { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--terra); margin-bottom: 4px; }
+    .tl-item__title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .tl-item__desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.55; }
+
+    /* ─── TEAM CARD ────────────────────────────────────────────── */
+    .team-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px;
+      padding: 28px 24px;
+    }
+    .team-card__av {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .team-card__name { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+    .team-card__role { font-size: 12px; color: var(--terra); font-weight: 600; margin-bottom: 10px; letter-spacing: 0.5px; }
+    .team-card__bio { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.5); }
+    .team-card__pedigree { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .team-card__tag { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 100px; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.5); }
+
+    /* ─── SLIDE: COVER ─────────────────────────────────────────── */
+    .cover-logo { font-size: clamp(28px,4vw,44px); font-weight: 700; letter-spacing: -1px; margin-bottom: 40px; }
+    .cover-tagline { font-size: clamp(14px,1.5vw,17px); color: rgba(255,255,255,0.45); margin-top: 20px; letter-spacing: 0.5px; }
+    .cover-meta { display: flex; gap: 24px; margin-top: 48px; flex-wrap: wrap; }
+    .cover-meta__item { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .cover-meta__item strong { color: rgba(255,255,255,0.65); display: block; font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .two-col { grid-template-columns: 1fr; }
+      .three-col { grid-template-columns: 1fr; }
+      .four-col { grid-template-columns: 1fr 1fr; }
+      .ask-band { flex-direction: column; }
+    }
+    @media (max-width: 540px) {
+      .four-col { grid-template-columns: 1fr; }
+      .nav__slides { display: none; }
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    .deck-footer {
+      background: #0f1e1b;
+      padding: 36px clamp(24px,6vw,100px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .deck-footer__logo { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: rgba(255,255,255,0.5); }
+    .deck-footer__note { font-size: 12px; color: rgba(255,255,255,0.2); max-width: 560px; line-height: 1.6; }
+    .deck-footer__contact { font-size: 13px; color: rgba(255,255,255,0.4); }
+    .deck-footer__contact a { color: var(--terra); }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__logo">akoma</div>
+    <div class="nav__slides" id="navDots"></div>
+    <a href="landing.html" class="nav__back">← Back to site</a>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- ══════════════════════════════════════
+         SLIDE 1 — COVER
+    ══════════════════════════════════════ -->
+    <section class="slide bg-forest" id="s1">
+      <div class="blob blob-terra" style="width:600px;height:600px;top:-100px;right:-150px;"></div>
+      <div class="blob blob-terra" style="width:300px;height:300px;bottom:50px;left:-50px;opacity:0.10;"></div>
+      <div class="slide__inner">
+        <div class="cover-logo">akoma</div>
+        <div class="display display--cream">Zero-fee remittances<br><span class="display--terra">for the diaspora.</span></div>
+        <p class="cover-tagline">Seed Round — Confidential</p>
+        <div class="cover-meta">
+          <div class="cover-meta__item"><strong>$2.5M</strong>Raising</div>
+          <div class="cover-meta__item"><strong>$8M</strong>Pre-money valuation</div>
+          <div class="cover-meta__item"><strong>March 2025</strong>Date</div>
+          <div class="cover-meta__item"><strong>Kwame Boateng</strong>CEO · hello@akoma.app</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 2 — PROBLEM
+    ══════════════════════════════════════ -->
+    <section class="slide bg-dark" id="s2">
+      <div class="blob blob-terra" style="width:500px;height:500px;bottom:-100px;left:-100px;"></div>
+      <div class="slide__inner">
+        <span class="slide-num">01 / Problem</span>
+        <div class="h2">Sending money home costs<br><span style="color:var(--terra);">a fortune.</span></div>
+        <div class="divider"></div>
+        <div class="three-col">
+          <div class="card">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+            <p class="card__label">The fee problem</p>
+            <p class="card__title">Average global remittance fee is <span style="color:var(--terra);">6.5%</span></p>
+            <p class="card__body">On a $300 transfer — the most common amount — that's $19.50 that never reaches the family. World Bank data, Q4 2024.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <p class="card__label">The opacity problem</p>
+            <p class="card__title">Hidden FX spreads add another <span style="color:var(--terra);">2–4%</span> on top</p>
+            <p class="card__body">Most services advertise "low fees" but claw it back with unfavorable exchange rates. Senders rarely realize the true cost.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <p class="card__label">The experience problem</p>
+            <p class="card__title">Slow, clunky UX designed for compliance, <span style="color:var(--terra);">not people</span></p>
+            <p class="card__body">Western Union and MoneyGram were built for agents and tellers. Their apps show it. Diaspora users deserve better.</p>
+          </div>
+        </div>
+        <div class="mt-48" style="display:flex;gap:40px;flex-wrap:wrap;">
+          <div class="stat-block">
+            <span class="stat-num stat-num--terra">$800B</span>
+            <span class="stat-label">Global remittance flows annually</span>
+          </div>
+          <div class="stat-block">
+            <span class="stat-num stat-num--terra">$48B</span>
+            <span class="stat-label">Lost to fees &amp; FX spreads every year</span>
+          </div>
+          <div class="stat-block">
+            <span class="stat-num stat-num--terra">4.5M</span>
+            <span class="stat-label">Ghanaian diaspora globally</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 3 — SOLUTION
+    ══════════════════════════════════════ -->
+    <section class="slide bg-forest" id="s3">
+      <div class="blob blob-terra" style="width:500px;height:500px;top:-50px;right:-100px;"></div>
+      <div class="slide__inner">
+        <span class="slide-num">02 / Solution</span>
+        <div class="two-col">
+          <div>
+            <div class="h2">A remittance app built<br><em style="font-style:normal;color:var(--terra);">with love.</em></div>
+            <div class="divider"></div>
+            <div class="gap-stack gap-24">
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div class="icon-box" style="margin-bottom:0;flex-shrink:0;">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <p style="font-size:16px;font-weight:700;margin-bottom:4px;">Zero transfer fees, always</p>
+                  <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;">We make money on interchange revenue from the debit card we issue, not on fees. What senders see is what arrives.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div class="icon-box" style="margin-bottom:0;flex-shrink:0;">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <p style="font-size:16px;font-weight:700;margin-bottom:4px;">Mid-market exchange rate, disclosed upfront</p>
+                  <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;">No hidden FX spread. We show the exact rate before confirmation and lock it for 60 seconds.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div class="icon-box" style="margin-bottom:0;flex-shrink:0;">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <p style="font-size:16px;font-weight:700;margin-bottom:4px;">Give Back — charity built into every send</p>
+                  <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;">Users can optionally round up or add a fixed amount to support vetted charities in Ghana. No guilt, just impact.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div class="icon-box" style="margin-bottom:0;flex-shrink:0;">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <p style="font-size:16px;font-weight:700;margin-bottom:4px;">3-tap transfers, 15-second onboarding</p>
+                  <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;">Built for people who send home monthly, not quarterly. Saved recipients, one-tap repeat sends, instant confirmations.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Phone mockup -->
+          <div style="display:flex;justify-content:center;align-items:center;">
+            <div style="width:240px;background:linear-gradient(165deg,#243f39,#1C3530);border-radius:36px;padding:12px;box-shadow:0 40px 80px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.08);">
+              <div style="background:#1C3530;border-radius:28px;padding:24px 20px;min-height:420px;display:flex;flex-direction:column;gap:16px;">
+                <div style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:600;letter-spacing:1px;text-align:center;text-transform:uppercase;">Send Money</div>
+                <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:16px;">
+                  <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px;">You send</div>
+                  <div style="font-size:28px;font-weight:900;letter-spacing:-0.03em;">$250<span style="font-size:14px;font-weight:500;color:rgba(255,255,255,0.35);margin-left:4px;">USD</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:center;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+                  </div>
+                </div>
+                <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:16px;">
+                  <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px;">They receive</div>
+                  <div style="font-size:28px;font-weight:900;letter-spacing:-0.03em;color:#4ade80;">GHS 3,284<span style="font-size:14px;font-weight:500;color:rgba(255,255,255,0.35);margin-left:4px;">GHS</span></div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.35);text-align:center;">Fee: <strong style="color:#4ade80;">$0.00</strong> · Rate: 1 USD = 13.14 GHS</div>
+                <div style="background:var(--terra);border-radius:100px;padding:14px;text-align:center;font-weight:700;font-size:15px;cursor:pointer;">Send to Mama →</div>
+                <div style="background:rgba(196,98,58,0.12);border:1px solid rgba(196,98,58,0.25);border-radius:12px;padding:12px;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">
+                  <span style="color:var(--terra);font-weight:600;">Give Back</span> — Add $1 to support Kumasi Children's Foundation?
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 4 — MARKET
+    ══════════════════════════════════════ -->
+    <section class="slide bg-dark" id="s4">
+      <div class="blob blob-terra" style="width:700px;height:700px;top:50%;right:-200px;transform:translateY(-50%);"></div>
+      <div class="slide__inner">
+        <span class="slide-num">03 / Market</span>
+        <div class="h2">A massive, <span style="color:var(--terra);">underserved</span> market.</div>
+        <div class="divider"></div>
+        <div class="two-col">
+          <div class="gap-stack gap-32">
+            <div>
+              <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:20px;">Market sizing</p>
+              <div class="gap-stack gap-16">
+                <div style="display:flex;align-items:baseline;gap:16px;padding:16px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);">
+                  <span style="font-size:28px;font-weight:900;color:rgba(255,255,255,0.25);letter-spacing:-0.03em;flex-shrink:0;width:36px;">◯</span>
+                  <div>
+                    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:4px;">TAM — Total Addressable</p>
+                    <p style="font-size:22px;font-weight:900;letter-spacing:-0.03em;">$800B <span style="font-size:14px;color:rgba(255,255,255,0.4);font-weight:500;">global remittances</span></p>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:16px;padding:16px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);">
+                  <span style="font-size:28px;font-weight:900;color:rgba(255,255,255,0.40);letter-spacing:-0.03em;flex-shrink:0;width:36px;">◎</span>
+                  <div>
+                    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px;">SAM — Serviceable</p>
+                    <p style="font-size:22px;font-weight:900;letter-spacing:-0.03em;">$24B <span style="font-size:14px;color:rgba(255,255,255,0.4);font-weight:500;">Africa diaspora remittances</span></p>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:16px;padding:16px;border-radius:12px;background:rgba(196,98,58,0.10);border:1px solid rgba(196,98,58,0.25);">
+                  <span style="font-size:28px;font-weight:900;color:var(--terra);letter-spacing:-0.03em;flex-shrink:0;width:36px;">●</span>
+                  <div>
+                    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--terra);margin-bottom:4px;">SOM — Obtainable (Y5)</p>
+                    <p style="font-size:22px;font-weight:900;letter-spacing:-0.03em;">$480M <span style="font-size:14px;color:rgba(255,255,255,0.5);font-weight:500;">Ghana diaspora corridor</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gap-stack gap-24">
+            <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);">Why Ghana. Why now.</p>
+            <div class="card">
+              <p class="card__label">Diaspora concentration</p>
+              <p class="card__title">4.5M Ghanaians abroad — UK, US, Canada, Germany</p>
+              <p class="card__body">The highest-educated African diaspora per capita, with average household incomes of $62K (US). High frequency, high value senders.</p>
+            </div>
+            <div class="card">
+              <p class="card__label">Corridor growth</p>
+              <p class="card__title">Ghana received $4.7B in remittances in 2024 — up 11% YoY</p>
+              <p class="card__body">Ghana is Sub-Saharan Africa's fastest-growing remittance corridor. Mobile money penetration (MoMo) enables instant delivery.</p>
+            </div>
+            <div class="card">
+              <p class="card__label">Regulatory tailwind</p>
+              <p class="card__title">Ghana's BoG actively encouraging fintech innovation</p>
+              <p class="card__body">The Bank of Ghana's regulatory sandbox and FCA Fast Track (UK) give Akoma a clear licensing pathway in key markets.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 5 — COMPETITION
+    ══════════════════════════════════════ -->
+    <section class="slide bg-forest" id="s5">
+      <div class="slide__inner">
+        <span class="slide-num">04 / Competition</span>
+        <div class="h2">We win on <span style="color:var(--terra);">every dimension</span><br>that matters to users.</div>
+        <div class="divider"></div>
+        <div style="overflow-x:auto;">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Transfer fee</th>
+                <th>FX spread</th>
+                <th>Delivery time</th>
+                <th>Give Back</th>
+                <th>Ghana MoMo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="akoma-row">
+                <td>Akoma ✦</td>
+                <td class="green">$0.00</td>
+                <td class="green">0% (mid-market)</td>
+                <td class="green">Instant – 2 hrs</td>
+                <td class="green">Yes</td>
+                <td class="green">Yes</td>
+              </tr>
+              <tr>
+                <td>Western Union</td>
+                <td class="red">$4.99–$14.99</td>
+                <td class="red">2.5–4%</td>
+                <td>Minutes–5 days</td>
+                <td class="red">No</td>
+                <td>Partial</td>
+              </tr>
+              <tr>
+                <td>Wise</td>
+                <td class="red">0.4–1.2%</td>
+                <td class="green">~0%</td>
+                <td>1–3 days</td>
+                <td class="red">No</td>
+                <td class="red">No</td>
+              </tr>
+              <tr>
+                <td>Remitly</td>
+                <td class="red">$2.99–$3.99</td>
+                <td class="red">1–3%</td>
+                <td>Minutes–3 days</td>
+                <td class="red">No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>WorldRemit</td>
+                <td class="red">$1.99–$3.99</td>
+                <td class="red">1.5–2.5%</td>
+                <td>Minutes–1 day</td>
+                <td class="red">No</td>
+                <td>Yes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.3);margin-top:16px;">* Competitor data sourced from published rates as of Feb 2025. FX spreads are estimates based on $300 USD→GHS transfers.</p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 6 — BUSINESS MODEL
+    ══════════════════════════════════════ -->
+    <section class="slide bg-dark" id="s6">
+      <div class="blob blob-terra" style="width:500px;height:500px;bottom:-150px;right:-100px;"></div>
+      <div class="slide__inner">
+        <span class="slide-num">05 / Business Model</span>
+        <div class="h2">We make money.<br><span style="color:var(--terra);">Just not from our users.</span></div>
+        <div class="divider"></div>
+        <div class="three-col">
+          <div class="card card--terra">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            </div>
+            <p class="card__label">Primary (Today)</p>
+            <p class="card__title">Debit card interchange revenue</p>
+            <p class="card__body">Akoma issues a co-branded Visa debit card to senders. We earn 1.5% interchange on every card swipe. Projected: $18 ARPU at 100K users.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            <p class="card__label">Secondary (Q3 2025)</p>
+            <p class="card__title">Give Back platform fee</p>
+            <p class="card__body">Charities pay a 3% platform fee on donations processed through Akoma — far below Stripe Donate or Benevity. Projected: $4 ARPU at 100K users.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <p class="card__label">Future (2026+)</p>
+            <p class="card__title">Financial services expansion</p>
+            <p class="card__body">Savings accounts, credit products, and cross-border insurance for the diaspora. Leverages existing customer identity and trust.</p>
+          </div>
+        </div>
+        <div class="mt-48" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+          <div style="text-align:center;padding:20px;background:rgba(255,255,255,0.03);border-radius:16px;border:1px solid rgba(255,255,255,0.06);">
+            <p style="font-size:28px;font-weight:900;color:var(--terra);letter-spacing:-0.03em;">$22</p>
+            <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px;">LTV Year 1</p>
+          </div>
+          <div style="text-align:center;padding:20px;background:rgba(255,255,255,0.03);border-radius:16px;border:1px solid rgba(255,255,255,0.06);">
+            <p style="font-size:28px;font-weight:900;color:var(--terra);letter-spacing:-0.03em;">$8</p>
+            <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px;">CAC (community)</p>
+          </div>
+          <div style="text-align:center;padding:20px;background:rgba(255,255,255,0.03);border-radius:16px;border:1px solid rgba(255,255,255,0.06);">
+            <p style="font-size:28px;font-weight:900;color:var(--terra);letter-spacing:-0.03em;">2.8x</p>
+            <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px;">LTV/CAC</p>
+          </div>
+          <div style="text-align:center;padding:20px;background:rgba(196,98,58,0.10);border-radius:16px;border:1px solid rgba(196,98,58,0.20);">
+            <p style="font-size:28px;font-weight:900;color:var(--terra);letter-spacing:-0.03em;">$11</p>
+            <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px;">Projected ARPU (Y1)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 7 — TRACTION
+    ══════════════════════════════════════ -->
+    <section class="slide bg-forest" id="s7">
+      <div class="blob blob-terra" style="width:500px;height:500px;top:-100px;left:-100px;"></div>
+      <div class="slide__inner">
+        <span class="slide-num">06 / Traction</span>
+        <div class="h2">Early numbers are <span style="color:var(--terra);">telling.</span></div>
+        <div class="divider"></div>
+        <div class="two-col">
+          <div>
+            <div class="gap-stack gap-32">
+              <div>
+                <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:20px;">Key metrics — Beta (90 days)</p>
+                <div class="gap-stack gap-16">
+                  <div class="progress-row">
+                    <div class="progress-label"><span>Active senders</span><span>2,400+</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width:48%"></div></div>
+                  </div>
+                  <div class="progress-row">
+                    <div class="progress-label"><span>Transfers processed</span><span>$1.2M</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width:62%"></div></div>
+                  </div>
+                  <div class="progress-row">
+                    <div class="progress-label"><span>Give Back donations</span><span>$14,200</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width:29%"></div></div>
+                  </div>
+                  <div class="progress-row">
+                    <div class="progress-label"><span>30-day retention</span><span>71%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width:71%"></div></div>
+                  </div>
+                  <div class="progress-row">
+                    <div class="progress-label"><span>NPS score</span><span>+74</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width:74%"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gap-stack gap-16">
+            <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);">Milestones hit</p>
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-item__line"><div class="tl-item__dot"></div><div class="tl-item__rule"></div></div>
+                <div class="tl-item__body">
+                  <p class="tl-item__period">Jun 2024</p>
+                  <p class="tl-item__title">Founded — first code committed</p>
+                  <p class="tl-item__desc">Kwame and Ama begin building. Pre-seed bridge of $250K from angels.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item__line"><div class="tl-item__dot"></div><div class="tl-item__rule"></div></div>
+                <div class="tl-item__body">
+                  <p class="tl-item__period">Sep 2024</p>
+                  <p class="tl-item__title">Private beta — 500 users, waitlist of 8K</p>
+                  <p class="tl-item__desc">First transfers processed. Zero support escalations in first 30 days.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item__line"><div class="tl-item__dot"></div><div class="tl-item__rule"></div></div>
+                <div class="tl-item__body">
+                  <p class="tl-item__period">Dec 2024</p>
+                  <p class="tl-item__title">US MSB license — Delaware &amp; New York</p>
+                  <p class="tl-item__desc">Full money transmitter licensing secured in two key markets.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item__line"><div class="tl-item__dot"></div><div class="tl-item__rule"></div></div>
+                <div class="tl-item__body">
+                  <p class="tl-item__period">Feb 2025</p>
+                  <p class="tl-item__title">2,400 active senders, $1.2M processed</p>
+                  <p class="tl-item__desc">Fully organic growth. NPS of +74. 71% 30-day retention.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item__line"><div class="tl-item__dot" style="background:rgba(255,255,255,0.2);"></div><div class="tl-item__rule"></div></div>
+                <div class="tl-item__body">
+                  <p class="tl-item__period" style="color:rgba(255,255,255,0.3);">Q3 2025 (target)</p>
+                  <p class="tl-item__title" style="color:rgba(255,255,255,0.5);">UK FCA authorization + 25K senders</p>
+                  <p class="tl-item__desc">Post-seed expansion into the 700K Ghanaian community in the UK.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 8 — TEAM
+    ══════════════════════════════════════ -->
+    <section class="slide bg-dark" id="s8">
+      <div class="blob blob-terra" style="width:600px;height:600px;top:-200px;right:-150px;"></div>
+      <div class="slide__inner">
+        <span class="slide-num">07 / Team</span>
+        <div class="h2">Operators who've<br><span style="color:var(--terra);">done it before.</span></div>
+        <div class="divider"></div>
+        <div class="four-col">
+          <div class="team-card">
+            <div class="team-card__av">KB</div>
+            <p class="team-card__name">Kwame Boateng</p>
+            <p class="team-card__role">Co-Founder &amp; CEO</p>
+            <p class="team-card__bio">Built &amp; scaled 3 products at Google. Led growth to 2M+ users at Series B fintech. Accra-born, NYC-based.</p>
+            <div class="team-card__pedigree">
+              <span class="team-card__tag">Ex-Google</span>
+              <span class="team-card__tag">NYU MBA</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-card__av">AS</div>
+            <p class="team-card__name">Ama Sarpong</p>
+            <p class="team-card__role">Co-Founder &amp; CTO</p>
+            <p class="team-card__bio">Senior engineer at Stripe for 5 years, owned the Payouts API. Kumasi-born. Led tech team of 12 at Series A startup.</p>
+            <div class="team-card__pedigree">
+              <span class="team-card__tag">Ex-Stripe</span>
+              <span class="team-card__tag">MIT CS</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-card__av">DM</div>
+            <p class="team-card__name">David Mensah</p>
+            <p class="team-card__role">Head of Compliance</p>
+            <p class="team-card__bio">12 years at MoneyGram, led regulatory affairs across 14 markets. Secured MSB licenses in 8 US states independently.</p>
+            <div class="team-card__pedigree">
+              <span class="team-card__tag">Ex-MoneyGram</span>
+              <span class="team-card__tag">CAMS</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-card__av">EA</div>
+            <p class="team-card__name">Efua Asante</p>
+            <p class="team-card__role">Head of Partnerships</p>
+            <p class="team-card__bio">Former Director at Ghana NGO coalition. Built and managed a network of 80+ civil society organizations across West Africa.</p>
+            <div class="team-card__pedigree">
+              <span class="team-card__tag">NGO Sector</span>
+              <span class="team-card__tag">Accra-based</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-48" style="display:flex;gap:20px;flex-wrap:wrap;">
+          <div class="pill"><span class="pill__dot"></span>Backed by ex-PayPal, ex-Wise angels</div>
+          <div class="pill"><span class="pill__dot"></span>YC Fintech community member</div>
+          <div class="pill"><span class="pill__dot"></span>$250K pre-seed bridge closed</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 9 — ROADMAP
+    ══════════════════════════════════════ -->
+    <section class="slide bg-forest" id="s9">
+      <div class="blob blob-terra" style="width:400px;height:400px;bottom:-50px;left:-50px;opacity:0.14;"></div>
+      <div class="slide__inner">
+        <span class="slide-num">08 / Roadmap</span>
+        <div class="h2">18 months to<br><span style="color:var(--terra);">category leadership.</span></div>
+        <div class="divider"></div>
+        <div class="three-col" style="align-items:start;">
+          <div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--terra);margin-bottom:20px;">Now → Q2 2025</div>
+            <div class="gap-stack gap-12">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--terra);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;">US scale — all 50 states</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.55;">Complete MSB licensing nationwide. Target 15K active senders.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--terra);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;">Akoma Visa Debit Card</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.55;">Launch co-branded card program. Primary revenue driver goes live.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--terra);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;">Canada corridor launch</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.55;">700K+ Ghanaian diaspora in Canada. MSB application underway.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:20px;">Q3 → Q4 2025</div>
+            <div class="gap-stack gap-12">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;color:rgba(255,255,255,0.75);">UK launch — FCA authorized</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.55;">Largest Ghanaian diaspora outside West Africa. Accra→London corridor.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;color:rgba(255,255,255,0.75);">Give Back platform — open to all charities</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.55;">Self-serve charity onboarding. 20+ vetted partners at launch.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;color:rgba(255,255,255,0.75);">25K active senders</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.55;">Community-led growth via church networks, alumni associations, WhatsApp groups.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:20px;">2026 &amp; Beyond</div>
+            <div class="gap-stack gap-12">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.12);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;color:rgba(255,255,255,0.5);">Nigeria, Kenya corridors</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.55;">Pan-African expansion. Largest remittance corridors in Sub-Saharan Africa.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.12);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;color:rgba(255,255,255,0.5);">Diaspora savings &amp; credit</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.55;">Cross-border savings accounts, credit scored on remittance history.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.12);flex-shrink:0;margin-top:5px;"></div>
+                <div>
+                  <p style="font-weight:700;font-size:15px;margin-bottom:3px;color:rgba(255,255,255,0.5);">Series A — $12–15M</p>
+                  <p style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.55;">Target: 100K active senders, $50M annualized GMV, path to profitability.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 10 — THE ASK
+    ══════════════════════════════════════ -->
+    <section class="slide bg-dark" id="s10">
+      <div class="blob blob-terra" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.12;"></div>
+      <div class="slide__inner">
+        <span class="slide-num">09 / The Ask</span>
+        <div class="h2">Seed Round.</div>
+        <div class="divider"></div>
+        <div class="ask-band">
+          <div>
+            <div class="ask-band__amount">$2.5M</div>
+            <p class="ask-band__label">Seed · $8M pre-money · SAFE (20% discount)</p>
+          </div>
+          <div class="ask-band__right">
+            <div class="ask-use">
+              <div class="ask-use__bar"><div class="ask-use__fill" style="width:40%;"></div></div>
+              <span class="ask-use__text">40% — Licensing &amp; compliance (UK, Canada)</span>
+            </div>
+            <div class="ask-use">
+              <div class="ask-use__bar"><div class="ask-use__fill" style="width:30%;"></div></div>
+              <span class="ask-use__text">30% — Engineering &amp; product (3 hires)</span>
+            </div>
+            <div class="ask-use">
+              <div class="ask-use__bar"><div class="ask-use__fill" style="width:20%;"></div></div>
+              <span class="ask-use__text">20% — Community growth &amp; partnerships</span>
+            </div>
+            <div class="ask-use">
+              <div class="ask-use__bar"><div class="ask-use__fill" style="width:10%;"></div></div>
+              <span class="ask-use__text">10% — Working capital</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-48 three-col">
+          <div class="card">
+            <p class="card__label">What this gets us</p>
+            <p class="card__title">18-month runway to Series A milestones</p>
+            <p class="card__body">25K senders, UK live, card product launched, $12M annualized GMV. Clear Series A story at $12–15M.</p>
+          </div>
+          <div class="card">
+            <p class="card__label">Ideal investor profile</p>
+            <p class="card__title">Fintech, diaspora, or impact-focused funds</p>
+            <p class="card__body">Checks from $100K–$500K. Value: fintech regulatory experience, distribution into diaspora communities, Africa connections.</p>
+          </div>
+          <div class="card">
+            <p class="card__label">Current commitments</p>
+            <p class="card__title">$850K soft-circled from angels</p>
+            <p class="card__body">Ex-PayPal CPO, two ex-Wise employees, and a Ghanaian sovereign family office. Targeting close by May 2025.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SLIDE 11 — CLOSING
+    ══════════════════════════════════════ -->
+    <section class="slide bg-terra" id="s11">
+      <div class="slide__inner" style="text-align:center;">
+        <div style="font-size:clamp(20px,2.5vw,28px);font-weight:700;letter-spacing:-0.5px;margin-bottom:40px;opacity:0.8;">akoma</div>
+        <div class="display" style="color:var(--white);max-width:800px;margin-inline:auto;">Every transfer<br>should feel like<br>an act of love.</div>
+        <p style="font-size:clamp(15px,1.6vw,19px);color:rgba(255,255,255,0.6);margin-top:28px;line-height:1.65;max-width:520px;margin-inline:auto;">We're building the remittance app the African diaspora deserves. Come build it with us.</p>
+        <div style="display:flex;justify-content:center;gap:32px;margin-top:56px;flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:4px;">Email</p>
+            <p style="font-size:17px;font-weight:600;">hello@akoma.app</p>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,0.2);align-self:stretch;"></div>
+          <div style="text-align:center;">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:4px;">Website</p>
+            <p style="font-size:17px;font-weight:600;">akoma-prototype.vercel.app</p>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,0.2);align-self:stretch;"></div>
+          <div style="text-align:center;">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:4px;">CEO</p>
+            <p style="font-size:17px;font-weight:600;">Kwame Boateng</p>
+          </div>
+        </div>
+        <div style="margin-top:48px;display:flex;justify-content:center;">
+          <a href="landing.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:var(--white);font-size:14px;font-weight:600;padding:12px 24px;border-radius:100px;backdrop-filter:blur(8px);cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to site
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /deck -->
+
+  <!-- FOOTER -->
+  <div class="deck-footer">
+    <div class="deck-footer__logo">akoma</div>
+    <p class="deck-footer__note">This document is confidential and intended solely for the addressee. It does not constitute an offer or solicitation to buy or sell securities. Past performance and forward-looking statements are not guarantees of future results. Akoma Technologies Inc., Wilmington, DE.</p>
+    <p class="deck-footer__contact">Questions? <a href="mailto:hello@akoma.app">hello@akoma.app</a></p>
+  </div>
+
+  <script>
+    // Build nav dots
+    const slides = document.querySelectorAll('.slide');
+    const navDots = document.getElementById('navDots');
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'nav__dot' + (i === 0 ? ' active' : '');
+      dot.title = `Slide ${i + 1}`;
+      dot.addEventListener('click', () => {
+        slides[i].scrollIntoView({ behavior: 'smooth' });
+      });
+      navDots.appendChild(dot);
+    });
+
+    // Update active dot on scroll
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(slides).indexOf(entry.target);
+          document.querySelectorAll('.nav__dot').forEach((d, i) => {
+            d.classList.toggle('active', i === idx);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+
+    slides.forEach(s => obs.observe(s));
+
+    // Keyboard nav
+    document.addEventListener('keydown', e => {
+      const active = document.querySelector('.nav__dot.active');
+      const dots = Array.from(document.querySelectorAll('.nav__dot'));
+      const idx = dots.indexOf(active);
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        if (idx < slides.length - 1) slides[idx + 1].scrollIntoView({ behavior: 'smooth' });
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        if (idx > 0) slides[idx - 1].scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
+</body>
+</html>
